@@ -15,8 +15,6 @@ namespace octetos
 {
 namespace db
 {
-namespace clientdb
-{
 namespace mysql
 {        
         
@@ -91,7 +89,7 @@ namespace mysql
                 
 #endif
         }
-        Row::Row(void* row):db::clientdb::Row(row)
+        Row::Row(void* row):db::Row(row)
         {
 #ifdef COLLETION_ASSISTANT
                 
@@ -104,7 +102,7 @@ namespace mysql
         
        
         
-        db::clientdb::Row* Datresult::operator[](unsigned long long index)
+        db::Row* Datresult::operator[](unsigned long long index)
         {
                 Row* r = NULL;
                 if(mysql_num_rows((MYSQL_RES*)result)  < index)
@@ -129,11 +127,11 @@ namespace mysql
                 return r;
         }
         
-        Datresult::Datresult(void* result) : db::clientdb::Datresult(result)
+        Datresult::Datresult(void* result) : db::Datresult(result)
         {
         }
         
-        db::clientdb::Row* Datresult::next()
+        db::Row* Datresult::next()
         {
                 MYSQL_ROW row  = mysql_fetch_row((MYSQL_RES*)result);
                 Row* r = new Row(row);
@@ -171,17 +169,17 @@ namespace mysql
         Datconnect::Datconnect()
         {
         }
-        Datconnect::Datconnect(const Datconnect& obj) : db::clientdb::Datconnect(obj)
+        Datconnect::Datconnect(const Datconnect& obj) : db::Datconnect(obj)
         {
         }
         
         const Datconnect& Datconnect::operator=(const Datconnect& obj)
         {		
-             ((clientdb::Datconnect&)*this)=obj;//llamar el construc de la clase base
+             ((db::Datconnect&)*this)=obj;//llamar el construc de la clase base
              return *this;
         }
         
-        Datconnect::Datconnect(const std::string& host, unsigned int port,const std::string& database,const std::string& user,const std::string& password) : clientdb::Datconnect(ServerType::MySQL,host,port,database,user,password)
+        Datconnect::Datconnect(const std::string& host, unsigned int port,const std::string& database,const std::string& user,const std::string& password) : db::Datconnect(ServerType::MySQL,host,port,database,user,password)
         {
         }
         
@@ -201,7 +199,7 @@ namespace mysql
                 }
 #endif
         }
-        db::clientdb::Datresult* Connector::query(const char* str)
+        db::Datresult* Connector::query(const char* str)
         {
                 if (mysql_query((MYSQL*)serverConnector, str)  != 0) 
                 {
@@ -276,7 +274,7 @@ namespace mysql
         {
             return mysql_get_client_info();
         }
-        bool Connector::connect(const db::clientdb::Datconnect* conection)
+        bool Connector::connect(const db::Datconnect* conection)
         {
             serverConnector = (void*)mysql_init(NULL);
             if (serverConnector == NULL)
@@ -309,7 +307,6 @@ namespace mysql
             datconection = conection;
             return true;
         }
-}    
 }
 }
 }

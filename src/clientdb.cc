@@ -10,8 +10,6 @@ namespace octetos
 {
 namespace db
 {
-namespace clientdb
-{
         Datresult::~Datresult()
         {
                 
@@ -105,7 +103,7 @@ namespace clientdb
 	
         const char* Datconnect::getServerTypeString() const
         {
-            switch(serverType)
+            switch(driver)
             {                
                 case  MySQL:
                     return "MySQL";
@@ -115,31 +113,31 @@ namespace clientdb
             return "Unknow";
         }
         
-        Datconnect::ServerType Datconnect::getServerType() const
+        Driver Datconnect::getDriver() const
         {
-            return serverType;
+            return driver;
         }
 	
-        void Datconnect::set(ServerType serverType,const std::string& host, unsigned int port,const std::string& database,const std::string& usuario,const std::string& password)
+        void Datconnect::set(Driver driver,const std::string& host, unsigned int port,const std::string& database,const std::string& usuario,const std::string& password)
         {
             this->host = host;
             this->user = usuario;
             this->password = password;
             this->database = database;
             this->port = port;
-            this->serverType = serverType;        
+            this->driver = driver;        
         }
-        const Datconnect& Datconnect::operator=(const Datconnect& obj)
+        /*const Datconnect& Datconnect::operator=(const Datconnect& obj)
         {
             this->host = obj.host;
             this->user = obj.user;
             this->password = obj.password;
             this->database = obj.database;
             this->port = obj.port;		
-            this->serverType = obj.serverType;
+            this->driver = obj.driver;
             
             return obj;
-        }
+        }*/
         
         std::string Datconnect::toString() const
         {
@@ -177,14 +175,14 @@ namespace clientdb
             this->port = obj.port;		
         }
         
-        Datconnect::Datconnect(ServerType serverType,const std::string& host, unsigned int port,const std::string& database,const std::string& usuario,const std::string& password)
+        Datconnect::Datconnect(Driver driver,const std::string& host, unsigned int port,const std::string& database,const std::string& usuario,const std::string& password)
         {
             this->host = host;
             this->user = usuario;
             this->password = password;
             this->database = database;
             this->port = port;
-            this->serverType = serverType;
+            this->driver = driver;
         }
         
         const std::string& Datconnect::getHost()const
@@ -208,8 +206,17 @@ namespace clientdb
             return port;
         }
         
-        
-        
+
+
+
+
+
+
+	
+	std::string Connector::getVerionString()
+	{
+		return "";
+	}
         Connector::Connector(const Connector& obj)
         {
             this->serverConnector = obj.serverConnector;
@@ -340,6 +347,6 @@ namespace clientdb
             return datconection;
         }
         
-}	
+
 }
 }

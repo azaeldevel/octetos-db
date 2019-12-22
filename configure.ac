@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl Created by Anjuta application wizard.
 
-AC_INIT(octetos_db, 0.1.0-alpha)
+AC_INIT(octetos_db, 0.2.0-alpha)
 
 AC_CONFIG_HEADERS([config.h])
 
@@ -52,7 +52,7 @@ AM_CONDITIONAL(NATIVE_WIN32, test x"$native_win32" = "xyes")
 LT_INIT([win32-dll])
 
 
-PKG_CHECK_MODULES(OCTETOS_DB, [dbi ])
+PKG_CHECK_MODULES(OCTETOS_DB, [dbi])
 
 
 

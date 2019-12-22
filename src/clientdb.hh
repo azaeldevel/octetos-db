@@ -8,9 +8,7 @@ namespace octetos
 {
 namespace db
 {
-namespace clientdb
-{
-        
+      
         class SQLException : public std::exception
         {
         public:
@@ -38,27 +36,30 @@ namespace clientdb
                 NotSupportedExcetion(const std::string &description) throw();		
 	};
     
+	enum Driver
+	{
+		Unknow,
+		MySQL,/*deprecated*/
+		PostgreSQL,/*deprecated*/
+		OCTEOS_DB_MySQL_C,
+		OCTEOS_DBI_MYSQL,	
+	};
    	class Datconnect : public core::Object
 	{
 	public:
-                enum ServerType
-                {
-                        Unknow,
-                        MySQL,
-                        PostgreSQL
-                };            
-                Datconnect(const Datconnect&);
-                Datconnect();
-                const Datconnect& operator=(const Datconnect& obj);
-                void set(ServerType serverType,const std::string& host, unsigned int port,const std::string& database,const std::string& usuario,const std::string& password);
+   		//typedef Driver ServerType;/*deprecated*/
+   		Datconnect(const Datconnect&);
+		Datconnect();
+		//const Datconnect& operator=(const Datconnect& obj);
+		void set(Driver serverType,const std::string& host, unsigned int port,const std::string& database,const std::string& usuario,const std::string& password);
             
             virtual std::string toString()const;
             const std::string& getHost()const;
             const std::string& getUser()const;
             const std::string& getPassword()const;
             const std::string& getDatabase()const;
-            ServerType getServerType()const;
-            const char* getServerTypeString()const;
+			Driver getDriver()const;
+            const char* getServerTypeString()const;/*deprecated*/
             unsigned int getPort()const;
             void setHost(const std::string&);
             void setUser(const std::string&);
@@ -67,10 +68,10 @@ namespace clientdb
             void setPort(unsigned int);
             
 	protected:
-            Datconnect(ServerType serverType,const std::string& host, unsigned int port,const std::string& database,const std::string& user,const std::string& password);
+            Datconnect(Driver serverType,const std::string& host, unsigned int port,const std::string& database,const std::string& user,const std::string& password);
             
 	private:
-            ServerType serverType;
+            Driver driver;
             std::string host;
             std::string user;
             std::string password;
@@ -102,7 +103,7 @@ namespace clientdb
                 Datresult(void* result);
                 virtual ~Datresult();
                 virtual Row* operator[](unsigned long long index) = 0;             
-                virtual db::clientdb::Row* next()= 0;
+                virtual db::Row* next()= 0;
                 void* getResult() const;
         };
         
@@ -132,8 +133,9 @@ namespace clientdb
             void* getServerConnector();
             const Datconnect* getDatconection() const;  
             const Connector& operator=(const Connector& obj);
+			virtual std::string getVerionString();
 	};
-}
+
 }
 }
 

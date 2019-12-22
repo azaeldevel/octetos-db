@@ -18,10 +18,32 @@
  */
 
 #include <iostream>
+#include "clientdb-dbi.hh"
 
 int main()
 {
-	std::cout << "Hello world!" << std::endl;
+	octetos::db::dbi::Datconnect dat(octetos::db::Driver::OCTEOS_DBI_MYSQL,"192.168.0.101",3306,"sysappv2.alpha","develop","123456");
+	bool flag = false;
+	octetos::db::dbi::Connector connector;
+    try
+    {
+		flag = connector.connect(&dat);
+	}
+	catch(octetos::db::SQLException& ex)
+	{
+		std::cerr<<ex.what()<< std::endl;
+		return EXIT_FAILURE;
+	}
+    if(flag)
+    {
+        printf("SQL Server version: %s\n", connector.getVerionString().c_str());
+    }
+    else
+    {
+        printf("Fallo '%s' .\n",dat.toString().c_str());
+
+		return EXIT_FAILURE;
+    }
 	return 0;
 }
 
