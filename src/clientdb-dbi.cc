@@ -97,60 +97,58 @@ namespace dbi
         
         
        
+	bool Datresult::nextRow()
+	{
+		if (result) 
+		{
+			return dbi_result_next_row(result);
+		}
+
+		return false;
+	}
+	unsigned int Datresult::getuint(const std::string& field)const
+	{
+		return dbi_result_get_uint(result, field.c_str());
+	}
+	std::string Datresult::getString(const std::string& field)const
+	{
+		return dbi_result_get_string(result, field.c_str());
+	}
+	db::Row* Datresult::operator[](unsigned long long index)
+	{
+    	return NULL;
+	}
         
-        /*db::Row* Datresult::operator[](unsigned long long index)
-        {
-                Row* r = NULL;
-                if(mysql_num_rows((MYSQL_RES*)result)  < index)
-                {
-                        mysql_data_seek((MYSQL_RES*)result,index); 
-                        if(index >= 0) 
-                        {
-                                MYSQL_ROW row  = mysql_fetch_row((MYSQL_RES*)result);
-                                 r = new Row(row);
+	Datresult::Datresult(void* result) : db::Datresult(result)
+	{
+	}        
+	db::Row* Datresult::next()
+	{
+		throw NotSupportedExcetion("Datresult::next no tiene soporte en DBI, ademas, esta funcion esta desclasificada, use nextRow en su lugar.");
+	}
+	Datresult::~Datresult()
+	{
+		if(result != NULL)
+		{
+			dbi_result_free(result);
+			result = NULL;
+		}
 #ifdef COLLETION_ASSISTANT
-                                addChild(r);
-#endif                                 
-                                return r;
-                        }
-                        else
-                        {
-                                 r = new Row(NULL);
-                                  return r;
-                        }
-                        
-                }                
-                return r;
-        }*/
-        
-        /*Datresult::Datresult(void* result) : db::Datresult(result)
-        {
-        }*/
-        
-        /*db::Row* Datresult::next()
-        {
-                MYSQL_ROW row  = mysql_fetch_row((MYSQL_RES*)result);
-                Row* r = new Row(row);
-#ifdef COLLETION_ASSISTANT
-                addChild(r);
-#endif                                 
-                return r;
-        }*/
-        /*Datresult::~Datresult()
-        {
-                if(result != NULL)
-                {
-                        mysql_free_result((MYSQL_RES*)result);
-                        result = NULL;
-                }
-#ifdef COLLETION_ASSISTANT
-                if(getCountChilds() > 0)
-                {
-                        std::cerr << "Una instacia de '" << typeid(*this).name() << "' termino sin que todos sus hijos terminaran primero" << std::endl;
-                }
+		if(getCountChilds() > 0)
+		{
+			std::cerr << "Una instacia de '" << typeid(*this).name() << "' termino sin que todos sus hijos terminaran primero" << std::endl;
+		}
 #endif
-        }*/
-        
+	}
+
+
+
+
+
+
+
+
+	
    	std::string Datconnect::toString()const
 	{
 		std::string str = getStringDriver() + "://";
@@ -186,8 +184,7 @@ namespace dbi
 	{		
    		((db::Datconnect&)*this)=obj;//llamar el construc de la clase base
     	return *this;
-	}*/
-        
+	}*/        
 	Datconnect::Datconnect(Driver driver,const std::string& host, unsigned int port,const std::string& database,const std::string& user,const std::string& password) : db::Datconnect(driver,host,port,database,user,password)
     {			
 	}
@@ -215,8 +212,12 @@ namespace dbi
 	db::Datresult* Connector::query(const char* str)
 	{
 		dbi_result result = dbi_conn_queryf(serverConnector,str);
-		
-		return NULL;
+
+		Datresult* dtrs = new Datresult(result);
+#ifdef COLLETION_ASSISTANT
+     	addChild(dtrs);
+#endif    
+    	return dtrs;
 	}
 	bool Connector::begin()
 	{

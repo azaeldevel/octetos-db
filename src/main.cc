@@ -44,6 +44,19 @@ int main()
 
 		return EXIT_FAILURE;
     }
+
+	std::string query = "select * from Persons";
+	//std::cout << "Step 1" << "\n";
+	octetos::db::Datresult* rs = connector.query(query.c_str());
+	//std::cout << "Step 2" << "\n";
+	while(((octetos::db::dbi::Datresult*)rs)->nextRow())
+	{
+		//std::cout << "Step 3" << "\n";
+		std::cout << ((octetos::db::dbi::Datresult*)rs)->getString("name1") << "\n";
+		//std::cout << "Step 4" << "\n";
+	}
+
+	delete rs;
 	return 0;
 }
 

@@ -9,15 +9,15 @@ namespace octetos
 namespace db
 {
       
-        class SQLException : public std::exception
-        {
-        public:
-                virtual ~SQLException() throw();
-                virtual const char* what() const throw();
-                SQLException(const std::string &description) throw();
+	class SQLException : public std::exception
+	{
+	public:
+		virtual ~SQLException() throw();
+		virtual const char* what() const throw();
+		SQLException(const std::string &description) throw();
 	private:
-                std::string description;
-        };
+		std::string description;
+	};
         class SQLExceptionConnection : public SQLException
         {
         public:
@@ -30,10 +30,11 @@ namespace db
                 virtual ~SQLExceptionQuery() throw();
                 SQLExceptionQuery(const std::string &description) throw();
         };
-        class NotSupportedExcetion  : public SQLException
-        {
-                virtual ~NotSupportedExcetion() throw();
-                NotSupportedExcetion(const std::string &description) throw();		
+	class NotSupportedExcetion  : public SQLException
+	{
+	public:
+		virtual ~NotSupportedExcetion() throw();
+		NotSupportedExcetion(const std::string &description) throw();		
 	};
     
 	enum Driver
@@ -93,19 +94,19 @@ namespace db
                 Row(Row& row);
         };
         
-        class Datresult : public core::Object
-        {
-        protected:
-                void* result;
-                unsigned long long currentRow;
+	class Datresult : public core::Object
+	{
+	protected:
+		void* result;
+		unsigned long long currentRow;
                 
-        public:
-                Datresult(void* result);
-                virtual ~Datresult();
-                virtual Row* operator[](unsigned long long index) = 0;             
-                virtual db::Row* next()= 0;
-                void* getResult() const;
-        };
+	public:
+		Datresult(void* result);
+		virtual ~Datresult();
+		virtual Row* operator[](unsigned long long index) = 0;             
+		virtual db::Row* next() __attribute__ ((deprecated)) = 0 ;
+		void* getResult() const;
+	};
         
 	class Connector : public core::Object
 	{
