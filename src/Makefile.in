@@ -133,23 +133,36 @@ am__uninstall_files_from_dir = { \
 am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)" \
 	"$(DESTDIR)$(octetos_db_includedir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
-liboctetos_db_mysql_cc_la_LIBADD =
-am_liboctetos_db_mysql_cc_la_OBJECTS =
-liboctetos_db_mysql_cc_la_OBJECTS =  \
-	$(am_liboctetos_db_mysql_cc_la_OBJECTS)
+liboctetos_db_dbi_cc_la_LIBADD =
+am_liboctetos_db_dbi_cc_la_OBJECTS = clientdb-dbi.lo
+liboctetos_db_dbi_cc_la_OBJECTS =  \
+	$(am_liboctetos_db_dbi_cc_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
+liboctetos_db_dbi_cc_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
+	$(AM_CXXFLAGS) $(CXXFLAGS) $(liboctetos_db_dbi_cc_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
+liboctetos_db_mysql_cc_la_LIBADD =
+am_liboctetos_db_mysql_cc_la_OBJECTS = clientdb-mysql.lo
+liboctetos_db_mysql_cc_la_OBJECTS =  \
+	$(am_liboctetos_db_mysql_cc_la_OBJECTS)
 liboctetos_db_la_LIBADD =
 am_liboctetos_db_la_OBJECTS = clientdb.lo
 liboctetos_db_la_OBJECTS = $(am_liboctetos_db_la_OBJECTS)
+liboctetos_db_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
+	$(AM_CXXFLAGS) $(CXXFLAGS) $(liboctetos_db_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
 PROGRAMS = $(bin_PROGRAMS)
-am_octetos_db_OBJECTS = main.$(OBJEXT) clientdb-dbi.$(OBJEXT)
+am_octetos_db_OBJECTS = main.$(OBJEXT)
 octetos_db_OBJECTS = $(am_octetos_db_OBJECTS)
 am__DEPENDENCIES_1 =
-octetos_db_DEPENDENCIES = $(am__DEPENDENCIES_1) liboctetos-db.la \
-	/usr/local/lib/liboctetos-core-cc.a
+octetos_db_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+	/usr/local/lib/liboctetos-core-cc.a liboctetos-db.la \
+	liboctetos-db-dbi-cc.la
 octetos_db_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(octetos_db_LDFLAGS) $(LDFLAGS) -o $@
@@ -187,27 +200,11 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
-	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
-	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
-	$(AM_CFLAGS) $(CFLAGS)
-AM_V_CC = $(am__v_CC_@AM_V@)
-am__v_CC_ = $(am__v_CC_@AM_DEFAULT_V@)
-am__v_CC_0 = @echo "  CC      " $@;
-am__v_CC_1 = 
-CCLD = $(CC)
-LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
-	$(AM_LDFLAGS) $(LDFLAGS) -o $@
-AM_V_CCLD = $(am__v_CCLD_@AM_V@)
-am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
-am__v_CCLD_0 = @echo "  CCLD    " $@;
-am__v_CCLD_1 = 
-SOURCES = $(liboctetos_db_mysql_cc_la_SOURCES) \
+SOURCES = $(liboctetos_db_dbi_cc_la_SOURCES) \
+	$(liboctetos_db_mysql_cc_la_SOURCES) \
 	$(liboctetos_db_la_SOURCES) $(octetos_db_SOURCES)
-DIST_SOURCES = $(liboctetos_db_mysql_cc_la_SOURCES) \
+DIST_SOURCES = $(liboctetos_db_dbi_cc_la_SOURCES) \
+	$(liboctetos_db_mysql_cc_la_SOURCES) \
 	$(liboctetos_db_la_SOURCES) $(octetos_db_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
@@ -407,19 +404,23 @@ octetos_db_includedir = $(includedir)/octetos/db
 octetos_db_include_HEADERS = clientdb.hh clientdb-mysql.hh
 lib_LTLIBRARIES = \
 	liboctetos-db.la\
-	liboctetos-db-mysql-cc.la
+	liboctetos-db-mysql-cc.la\
+	liboctetos-db-dbi-cc.la
 
-liboctetos_db_la_LIBDADD = $(OCTETOS_DB_LIBS) /usr/local/lib/liboctetos-core-cc.a
-liboctetos_db_la_SOURCES = \
-	clientdb.cc 
-
-liboctetos_db_mysql_cc_la_SOURCES = 
-octetos_db_SOURCES = \
-	main.cc \
-	clientdb-dbi.cc
-
-octetos_db_LDFLAGS = $(am__append_1)
-octetos_db_LDADD = $(OCTETOS_DB_LIBS) liboctetos-db.la /usr/local/lib/liboctetos-core-cc.a
+liboctetos_db_la_LDFLAGS = /usr/local/lib/liboctetos-core-cc.a 
+liboctetos_db_la_LIBDADD = /usr/local/lib/liboctetos-core-cc.a
+liboctetos_db_la_SOURCES = clientdb.cc 
+liboctetos_db_mysql_cc_la_LIBDADD = $(OCTETOS_DB_LIBS) /usr/local/lib/liboctetos-core-cc.a liboctetos-db.la 
+liboctetos_db_mysql_cc_la_SOURCES = clientdb-mysql.cc 
+liboctetos_db_dbi_cc_la_LDFLAGS = $(OCTETOS_DB_LIBS) /usr/local/lib/liboctetos-core-cc.a liboctetos-db.la
+liboctetos_db_dbi_cc_la_LIBDADD = $(OCTETOS_DB_LIBS) /usr/local/lib/liboctetos-core-cc.a liboctetos-db.la 
+liboctetos_db_dbi_cc_la_SOURCES = clientdb-dbi.cc
+octetos_db_LDFLAGS = $(OCTETOS_DB_LIBS) \
+	/usr/local/lib/liboctetos-core-cc.a liboctetos-db.la \
+	liboctetos-db-dbi-cc.la $(am__append_1)
+octetos_db_LDADD = $(OCTETOS_DB_LIBS)  /usr/local/lib/liboctetos-core-cc.a liboctetos-db.la liboctetos-db-dbi-cc.la
+octetos_db_LIBDADD = $(OCTETOS_DB_LIBS)  /usr/local/lib/liboctetos-core-cc.a liboctetos-db.la liboctetos-db-dbi-cc.la
+octetos_db_SOURCES = main.cc 
 all: all-am
 
 .SUFFIXES:
@@ -489,11 +490,14 @@ clean-libLTLIBRARIES:
 	  rm -f $${locs}; \
 	}
 
+liboctetos-db-dbi-cc.la: $(liboctetos_db_dbi_cc_la_OBJECTS) $(liboctetos_db_dbi_cc_la_DEPENDENCIES) $(EXTRA_liboctetos_db_dbi_cc_la_DEPENDENCIES) 
+	$(AM_V_CXXLD)$(liboctetos_db_dbi_cc_la_LINK) -rpath $(libdir) $(liboctetos_db_dbi_cc_la_OBJECTS) $(liboctetos_db_dbi_cc_la_LIBADD) $(LIBS)
+
 liboctetos-db-mysql-cc.la: $(liboctetos_db_mysql_cc_la_OBJECTS) $(liboctetos_db_mysql_cc_la_DEPENDENCIES) $(EXTRA_liboctetos_db_mysql_cc_la_DEPENDENCIES) 
-	$(AM_V_CCLD)$(LINK) -rpath $(libdir) $(liboctetos_db_mysql_cc_la_OBJECTS) $(liboctetos_db_mysql_cc_la_LIBADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) -rpath $(libdir) $(liboctetos_db_mysql_cc_la_OBJECTS) $(liboctetos_db_mysql_cc_la_LIBADD) $(LIBS)
 
 liboctetos-db.la: $(liboctetos_db_la_OBJECTS) $(liboctetos_db_la_DEPENDENCIES) $(EXTRA_liboctetos_db_la_DEPENDENCIES) 
-	$(AM_V_CXXLD)$(CXXLINK) -rpath $(libdir) $(liboctetos_db_la_OBJECTS) $(liboctetos_db_la_LIBADD) $(LIBS)
+	$(AM_V_CXXLD)$(liboctetos_db_la_LINK) -rpath $(libdir) $(liboctetos_db_la_OBJECTS) $(liboctetos_db_la_LIBADD) $(LIBS)
 install-binPROGRAMS: $(bin_PROGRAMS)
 	@$(NORMAL_INSTALL)
 	@list='$(bin_PROGRAMS)'; test -n "$(bindir)" || list=; \
@@ -554,7 +558,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/clientdb-dbi.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/clientdb-dbi.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/clientdb-mysql.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/clientdb.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 
@@ -820,7 +825,6 @@ uninstall-am: uninstall-binPROGRAMS uninstall-libLTLIBRARIES \
 
 .PRECIOUS: Makefile
 
-	clientdb-mysql.cc 
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

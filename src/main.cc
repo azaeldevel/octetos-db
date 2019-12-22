@@ -22,7 +22,7 @@
 
 int main()
 {
-	octetos::db::dbi::Datconnect dat(octetos::db::Driver::OCTEOS_DBI_MYSQL,"192.168.0.101",3306,"sysappv2.alpha","develop","123456");
+	octetos::db::dbi::Datconnect dat(octetos::db::Driver::DBI_MYSQL,"192.168.0.101",3306,"sysappv2.alpha","develop","123456");
 	bool flag = false;
 	octetos::db::dbi::Connector connector;
     try

@@ -158,7 +158,7 @@ namespace dbi
 	}
 	std::string Datconnect::getStringDriver()const
 	{
-		if(getDriver() == Driver::MySQL or getDriver() == Driver::OCTEOS_DB_MySQL_C or getDriver() == db::Driver::OCTEOS_DBI_MYSQL)
+		if(getDriver() == Driver::MySQL or getDriver() == db::Driver::DBI_MYSQL)
 		{
 			return "mysql";
 		}

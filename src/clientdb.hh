@@ -40,10 +40,9 @@ namespace db
 	enum Driver
 	{
 		Unknow,
-		MySQL,/*deprecated*/
+		MySQL,
 		PostgreSQL,/*deprecated*/
-		OCTEOS_DB_MySQL_C,
-		OCTEOS_DBI_MYSQL,	
+		DBI_MYSQL,	
 	};
    	class Datconnect : public core::Object
 	{

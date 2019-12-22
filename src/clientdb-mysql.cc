@@ -179,7 +179,7 @@ namespace mysql
              return *this;
         }
         
-        Datconnect::Datconnect(const std::string& host, unsigned int port,const std::string& database,const std::string& user,const std::string& password) : db::Datconnect(ServerType::MySQL,host,port,database,user,password)
+        Datconnect::Datconnect(const std::string& host, unsigned int port,const std::string& database,const std::string& user,const std::string& password) : db::Datconnect(Driver::MySQL,host,port,database,user,password)
         {
         }
         
