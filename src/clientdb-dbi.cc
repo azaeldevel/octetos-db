@@ -1,7 +1,7 @@
 #include <dbi/dbi.h>
 #include <dbi/dbd.h>
 #include <iostream>
-#include "octetos/core/common.hh"
+#include "octetos/core/Artifact.hh"
 
 #include "clientdb-dbi.hh"
 #include "config.h"
@@ -14,34 +14,15 @@ namespace db
 namespace dbi
 {        
 	
-	/*std::string getPakageName()
+	std::string getPakageName()
 	{
-        #ifdef ENABLED_CMAKE
-        return PACKAGE_NAME;
-		#elif defined ENABLED_AUTOTOOLS
 		return PACKAGE;
-        #endif
 	}
 	
 	octetos::core::Artifact getPackageInfo()
 	{
 		octetos::core::Artifact packinfo;
 		
-		#ifdef ENABLED_CMAKE
-		packinfo.name = PACKAGE_NAME;
-		packinfo.brief = PACKAGE_BRIEF;
-		//packinfo.url = PACKAGE_URL;
-		
-		packinfo.version.setNumbers(VERSION_MAJOR,VERSION_MINOR,VERSION_PATCH);
-		packinfo.version.setStage(VERSION_STAGE);
-		packinfo.version.setBuild(std::stoul(VERSION_BUILD));
-		
-		packinfo.licence.type = Licence::Type::GPL;		
-		packinfo.licence.name_public = packinfo.name;
-		packinfo.licence.owner = "Azael Reyes";
-		packinfo.licence.year = 2019;
-        packinfo.licence.contact = "azael.devel@gmail.com";
-		#elif defined ENABLED_AUTOTOOLS
 		packinfo.name = PACKAGE;
 		packinfo.brief = "";
 		packinfo.url = "";
@@ -51,14 +32,14 @@ namespace dbi
 		//packinfo.version.setBuild(std::stoul(VERSION_BUILD));
 		packinfo.version.set(VERSION);
 		
-		packinfo.licence.type = Licence::Type::GPL;		
+		packinfo.licence.type = core::Licence::Type::GPL;		
 		packinfo.licence.name_public = packinfo.name;
 		packinfo.licence.owner = "Azael Reyes";
-		packinfo.licence.year = 2019
+		packinfo.licence.year = 2019;
         packinfo.licence.contact = "azael.devel@gmail.com";
-		#endif
+		
 		return packinfo;	
-	}*/
+	}
         
         
         /*Row::~Row()

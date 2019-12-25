@@ -22,41 +22,7 @@
 
 int main()
 {
-	octetos::db::dbi::Datconnect dat(octetos::db::Driver::DBI_MYSQL,"192.168.0.101",3306,"sysappv2.alpha","develop","123456");
-	bool flag = false;
-	octetos::db::dbi::Connector connector;
-    try
-    {
-		flag = connector.connect(&dat);
-	}
-	catch(octetos::db::SQLException& ex)
-	{
-		std::cerr<<ex.what()<< std::endl;
-		return EXIT_FAILURE;
-	}
-    if(flag)
-    {
-        printf("SQL Server version: %s\n", connector.getVerionString().c_str());
-    }
-    else
-    {
-        printf("Fallo '%s' .\n",dat.toString().c_str());
-
-		return EXIT_FAILURE;
-    }
-
-	std::string query = "select * from Persons";
-	//std::cout << "Step 1" << "\n";
-	octetos::db::Datresult* rs = connector.query(query.c_str());
-	//std::cout << "Step 2" << "\n";
-	while(((octetos::db::dbi::Datresult*)rs)->nextRow())
-	{
-		//std::cout << "Step 3" << "\n";
-		std::cout << ((octetos::db::dbi::Datresult*)rs)->getString("name1") << "\n";
-		//std::cout << "Step 4" << "\n";
-	}
-
-	delete rs;
+	std::cout << "Hello word!!!\n";
 	return 0;
 }
 
