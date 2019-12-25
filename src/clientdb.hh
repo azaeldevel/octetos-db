@@ -80,18 +80,22 @@ namespace db
 	};	
 	
         
-        class Row : public core::Object
-        {
-        protected:
-                void* row;
+	class Row : public core::Object
+	{
+	protected:
+		void* row;
                 
-        public:
-                virtual const char* operator[](unsigned long long index) = 0; 
-                Row();
-                virtual ~Row();
-                Row(void* row);
-                Row(Row& row);
-        };
+	public:
+		virtual const char* operator[](unsigned long long index) = 0; 
+		Row();
+		virtual ~Row();
+		Row(void* row);
+		Row(Row& row);
+		virtual int getint(short field)const = 0;
+		virtual long getl(short field)const = 0;
+		virtual long long getll(short field)const = 0;
+		virtual std::string getString(short field)const = 0;
+	};
         
 	class Datresult : public core::Object
 	{
@@ -104,7 +108,13 @@ namespace db
 		virtual ~Datresult();
 		virtual Row* operator[](unsigned long long index) = 0;             
 		virtual db::Row* next() __attribute__ ((deprecated)) = 0 ;
+		virtual bool nextRow() = 0;
+		virtual db::Row* getRow() = 0;
 		void* getResult() const;
+		virtual int getint(short field)const = 0;
+		virtual long getl(short field)const = 0;
+		virtual long long getll(short field)const = 0;
+		virtual std::string getString(short field)const = 0;
 	};
         
 	class Connector : public core::Object
@@ -133,7 +143,7 @@ namespace db
             void* getServerConnector();
             const Datconnect* getDatconection() const;  
             const Connector& operator=(const Connector& obj);
-			virtual std::string getVerionString();
+			virtual core::Semver getVerionServer() const = 0;
 	};
 
 }

@@ -213,10 +213,7 @@ namespace db
 
 
 	
-	std::string Connector::getVerionString()
-	{
-		return "";
-	}
+	
         Connector::Connector(const Connector& obj)
         {
             this->serverConnector = obj.serverConnector;

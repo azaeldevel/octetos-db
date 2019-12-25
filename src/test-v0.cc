@@ -36,7 +36,7 @@ int main()
 	}
     if(flag)
     {
-        printf("SQL Server version: %s\n", connector.getVerionString().c_str());
+        printf("Version del Servidor  %s\n", connector.getVerionServer().toString().c_str());
     }
     else
     {
@@ -46,14 +46,12 @@ int main()
     }
 
 	std::string query = "select * from Persons";
-	//std::cout << "Step 1" << "\n";
 	octetos::db::Datresult* rs = connector.query(query.c_str());
-	//std::cout << "Step 2" << "\n";
-	while(((octetos::db::mysql::Datresult*)rs)->next())
+	while(rs->nextRow())
 	{
-		//std::cout << "Step 3" << "\n";
-		//std::cout << ((octetos::db::mysq::Datresult*)rs)->getString("name1") << "\n";
-		//std::cout << "Step 4" << "\n";
+		octetos::db::Row* row = rs->getRow();
+		std::cout << row->getString(1) << "\n";
+		delete row;
 	}
 
 	delete rs;
