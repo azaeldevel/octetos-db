@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl Created by Anjuta application wizard.
 
-AC_INIT(octetos-db, 0.3.0-alpha)
+AC_INIT(octetos-db, 0.4.0-alpha)
 AC_CANONICAL_SYSTEM
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE
@@ -57,7 +57,7 @@ LT_INIT([win32-dll])
 
 PKG_CHECK_MODULES(MYSQLCLIENT,mysqlclient)
 PKG_CHECK_MODULES(DBI,dbi)
-PKG_CHECK_MODULES(CPPUNIT,cppunit)
+PKG_CHECK_MODULES(CUNIT,cunit)
 PKG_CHECK_MODULES(OCTETOS_CORE, octetos-core, OCTETOS_CORE_found=1, OCTETOS_CORE_found=0)
 if test $OCTETOS_CORE_found = 0; then
 	AC_MSG_ERROR(Error could not find library (Octetos Core) pkg-config file is it installed?)
@@ -68,4 +68,5 @@ AC_OUTPUT([
 Makefile
 src/octetos-db.pc
 src/Makefile
+tests/Makefile
 po/Makefile.in])

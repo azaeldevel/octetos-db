@@ -11,7 +11,8 @@ AM_CFLAGS =\
 	 -g
 
 lib_LTLIBRARIES = liboctetos-db.la \
-	liboctetos-db-mysql.la 
+	liboctetos-db-mysql.la \
+	liboctetos-db-dbi.la 
 
 bin_PROGRAMS = test-v0
 
@@ -31,15 +32,15 @@ liboctetos_db_mysql_la_CPPFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS)
 liboctetos_db_mysql_la_LIBDADD = $(MYSQLCLIENT_LIBS) $(OCTETOS_CORE_LIBS) 
 liboctetos_db_mysql_la_SOURCES = clientdb-mysql.cc 
 
-#liboctetos_db_dbi_la_LDFLAGS= 
-#liboctetos_db_dbi_la_CFLAGS = $(DBI_CFLAGS) $(OCTETOS_CORE_CC_CFLAGS)
-#liboctetos_db_dbi_la_CPPFLAGS = $(DBI_CFLAGS) $(OCTETOS_CORE_CC_CFLAGS)
-#liboctetos_db_dbi_la_LIBDADD = $(DBI_LIBS) $(OCTETOS_CORE_CC_LIBS) liboctetos-db.la 
-#liboctetos_db_dbi_la_SOURCES = clientdb-dbi.cc
+liboctetos_db_dbi_la_LDFLAGS= 
+liboctetos_db_dbi_la_CFLAGS = $(DBI_CFLAGS) $(OCTETOS_CORE_CC_CFLAGS)
+liboctetos_db_dbi_la_CPPFLAGS = $(DBI_CFLAGS) $(OCTETOS_CORE_CC_CFLAGS)
+liboctetos_db_dbi_la_LIBDADD = $(DBI_LIBS) $(OCTETOS_CORE_CC_LIBS) liboctetos-db.la 
+liboctetos_db_dbi_la_SOURCES = clientdb-dbi.cc
 
-test_v0_CPPFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS)
+test_v0_CPPFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS) $(MYSQLCLIENT_CFLAGS)
 test_v0_CFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS)
-test_v0_LDADD = $(MYSQLCLIENT_LIBS) $(OCTETOS_CORE_LIBS) liboctetos-db.la liboctetos-db-mysql.la $(MYSQLCLIENT_LIBS) 
+test_v0_LDADD = $(MYSQLCLIENT_LIBS) $(OCTETOS_CORE_LIBS) liboctetos-db.la liboctetos-db-mysql.la liboctetos-db-dbi.la $(DBI_LIBS) $(MYSQLCLIENT_LIBS)  $(MYSQLCLIENT_LIBS)
 test_v0_SOURCES = test-v0.cc
 
 octetos_db_includedir = $(includedir)/octetos/db

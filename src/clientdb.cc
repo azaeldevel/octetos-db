@@ -4,6 +4,8 @@
 #include <sstream>
 #include <arpa/inet.h>
 
+#include "config.h"
+
 #include "clientdb.hh"
 
 namespace octetos
@@ -343,7 +345,27 @@ namespace db
         {
             return datconection;
         }
+
+
         
+
+	core::Artifact getPackageInfo()
+	{
+		core::Artifact packinfo;
+		
+		packinfo.name = PACKAGE;
+		packinfo.brief = "";
+		packinfo.url = "";
+		
+		packinfo.version.set(VERSION);
+		
+		packinfo.licence.type = core::Licence::Type::GPL;		
+		packinfo.licence.name_public = packinfo.name;
+		packinfo.licence.owner = "Azael Reyes";
+		packinfo.licence.year = 2019;
+        packinfo.licence.contact = "azael.devel@gmail.com";
+		return packinfo;	
+	}
 
 }
 }

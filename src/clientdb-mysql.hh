@@ -10,10 +10,7 @@ namespace octetos
 namespace db
 {       
 namespace mysql
-{
-        
-	core::Semver getPakageVersion();
-	std::string getPakageName();	
+{	
         
         class Datconnect : public db::Datconnect
         {

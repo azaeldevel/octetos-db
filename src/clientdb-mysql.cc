@@ -12,33 +12,6 @@ namespace db
 namespace mysql
 {        
         
-	std::string getPakageName()
-	{
-		return PACKAGE;
-	}
-	
-	octetos::core::Artifact getPackageInfo()
-	{
-		octetos::core::Artifact packinfo;
-		
-		packinfo.name = PACKAGE;
-		packinfo.brief = "";
-		packinfo.url = "";
-		
-		//packinfo.version.setNumbers(0,0,0);
-		//packinfo.version.setStage(Version::Stage::alpha);
-		//packinfo.version.setBuild(std::stoul(VERSION_BUILD));
-		packinfo.version.set(VERSION);
-		
-		packinfo.licence.type = core::Licence::Type::GPL;		
-		packinfo.licence.name_public = packinfo.name;
-		packinfo.licence.owner = "Azael Reyes";
-		packinfo.licence.year = 2019;
-        packinfo.licence.contact = "azael.devel@gmail.com";
-		
-		return packinfo;	
-	}
-        
 
 
 

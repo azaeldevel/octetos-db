@@ -14,35 +14,10 @@ namespace db
 namespace dbi
 {        
 	
-	std::string getPakageName()
-	{
-		return PACKAGE;
-	}
-	
-	octetos::core::Artifact getPackageInfo()
-	{
-		octetos::core::Artifact packinfo;
-		
-		packinfo.name = PACKAGE;
-		packinfo.brief = "";
-		packinfo.url = "";
-		
-		//packinfo.version.setNumbers(0,0,0);
-		//packinfo.version.setStage(Version::Stage::alpha);
-		//packinfo.version.setBuild(std::stoul(VERSION_BUILD));
-		packinfo.version.set(VERSION);
-		
-		packinfo.licence.type = core::Licence::Type::GPL;		
-		packinfo.licence.name_public = packinfo.name;
-		packinfo.licence.owner = "Azael Reyes";
-		packinfo.licence.year = 2019;
-        packinfo.licence.contact = "azael.devel@gmail.com";
-		
-		return packinfo;	
-	}
-        
-        
-        /*Row::~Row()
+
+
+
+		/*Row::~Row()
         {
 #ifdef COLLETION_ASSISTANT
                 if(getCountChilds() > 0)
@@ -77,23 +52,37 @@ namespace dbi
         
         
         
-       
+
+	int Datresult::getuint(short field) const
+	{
+		return dbi_result_get_uint_idx(result,field);
+	}
+	int Datresult::getint(short field) const
+	{
+		return dbi_result_get_int_idx(result,field);
+	}
+	long Datresult::getl(short field)const
+	{
+		return dbi_result_get_long_idx(result,field);
+	}
+	long long Datresult::getll(short field)const
+	{
+		return dbi_result_get_longlong_idx(result,field);
+	}
+	std::string Datresult::getString(short field)const 
+	{
+		return dbi_result_get_string_idx(result,field);
+	}
+	db::Row* Datresult::getRow()
+	{
+		throw NotSupportedExcetion("No hay soporte para acceder mediente Row, use los metodos de lectura para el registro actual en Datresult.");
+	}
 	bool Datresult::nextRow()
 	{
-		if (result) 
-		{
-			return dbi_result_next_row(result);
-		}
-
+		unsigned long long row  = dbi_result_next_row(result);
+		
+		if(row) return true;
 		return false;
-	}
-	unsigned int Datresult::getuint(const std::string& field)const
-	{
-		return dbi_result_get_uint(result, field.c_str());
-	}
-	std::string Datresult::getString(const std::string& field)const
-	{
-		return dbi_result_get_string(result, field.c_str());
 	}
 	db::Row* Datresult::operator[](unsigned long long index)
 	{
@@ -176,7 +165,14 @@ namespace dbi
 	
         
 
-        
+
+	core::Semver Connector::getVerionServer() const
+	{
+		core::Semver ver;
+		ver.importFactors(dbi_conn_get_engine_version(serverConnector),core::Semver::Imports::MySQL);
+		
+		return ver;
+	}
 	Connector::Connector()
 	{
 	}

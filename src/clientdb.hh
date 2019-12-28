@@ -2,13 +2,19 @@
 #define TOOLKIT_CLIENTDB_HPP
 
 #include <octetos/core/common.hh>
+#include <octetos/core/Artifact.hh>
 #include <vector>
 
 namespace octetos
 {
 namespace db
 {
-      
+	/**
+	 * \brief retorna la informacion del paquete usese ne lugar getPakageVersion y getPakageName
+	 **/
+	core::Artifact getPackageInfo();
+
+
 	class SQLException : public std::exception
 	{
 	public:
