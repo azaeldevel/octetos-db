@@ -22,8 +22,10 @@ namespace mysql
             Datconnect();
         };      
 
-	class Row : public db::Row
+	class Row
 	{
+	private:
+		void* row;
 	public:
 #ifdef COLLETION_ASSISTANT
 		Row(Datresult* rs,void* row);

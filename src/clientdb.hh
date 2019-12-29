@@ -25,18 +25,18 @@ namespace db
 	private:
 		std::string description;
 	};
-        class SQLExceptionConnection : public SQLException
-        {
-        public:
-                virtual ~SQLExceptionConnection() throw();
-                SQLExceptionConnection(const std::string &description) throw();
-        };
-        class SQLExceptionQuery : public SQLException
-        {
-        public:
-                virtual ~SQLExceptionQuery() throw();
-                SQLExceptionQuery(const std::string &description) throw();
-        };
+	class SQLExceptionConnection : public SQLException
+	{
+	public:
+		virtual ~SQLExceptionConnection() throw();
+		SQLExceptionConnection(const std::string &description) throw();
+	};
+	class SQLExceptionQuery : public SQLException
+	{
+	public:
+		virtual ~SQLExceptionQuery() throw();
+		SQLExceptionQuery(const std::string &description) throw();
+	};
 	class NotSupportedExcetion  : public SQLException
 	{
 	public:
@@ -86,7 +86,7 @@ namespace db
 	};	
 	
         
-	class Row : public core::Object
+	/*class Row : public core::Object
 	{
 	protected:
 		void* row;
@@ -101,7 +101,7 @@ namespace db
 		virtual long getl(IndexField field)const = 0;
 		virtual long long getll(IndexField field)const = 0;
 		virtual std::string getString(IndexField field)const = 0;
-	};
+	};*/
         
 	class Datresult : public core::Object
 	{

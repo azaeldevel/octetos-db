@@ -45,7 +45,7 @@ namespace mysql
 		}                
 #endif
 	}
-	Row::Row(const Row& r):db::Row(r)
+	Row::Row(const Row& r)
 	{
 		
 	}        
@@ -53,7 +53,7 @@ namespace mysql
 	{
 		
 	}
-	Row::Row(void* row):db::Row(row)
+	Row::Row(void* row)
 	{
 		
 	}

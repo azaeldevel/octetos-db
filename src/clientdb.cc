@@ -25,7 +25,7 @@ namespace db
                 this->result = result;
         }
         
-
+/*
 	Row::Row(const Row& r)
 	{
 		this->row = r.row;
@@ -42,7 +42,7 @@ namespace db
         {
                 this->row = row;
         }
-        
+        */
         
 
 	NotSupportedExcetion::NotSupportedExcetion(const std::string &description) throw() : SQLException(description) 
