@@ -16,137 +16,192 @@ namespace mysql
 
 
 
-	int Row::getint(short field)const
+	int Row::getint(db::IndexField field)const
 	{
 		MYSQL_ROW r = (MYSQL_ROW)row;
 		return r[field] ? std::atol(r[field]) : 0;
 	}
-	long Row::getl(short field)const
+	long Row::getl(db::IndexField field)const
 	{
 		MYSQL_ROW r = (MYSQL_ROW)row;
 		return r[field] ? std::atol(r[field]) : 0;
 	}
-	long long Row::getll(short field)const
+	long long Row::getll(db::IndexField field)const
 	{
 		MYSQL_ROW r = (MYSQL_ROW)row;
 		return r[field] ? std::atoll(r[field]) : 0;
 	}
-	std::string Row::getString(short field)const 
+	std::string Row::getString(db::IndexField field)const 
 	{
 		MYSQL_ROW r = (MYSQL_ROW)row;
 		return r[field] ? std::string(r[field]) : "";
 	}
-        Row::~Row()
-        {
+	Row::~Row()
+	{
 #ifdef COLLETION_ASSISTANT
-                if(getCountChilds() > 0)
-                {
-                        std::cerr << "Una instacia de '" << typeid(*this).name() << "' termino sin que todos sus hijos terminaran primero" << std::endl;
-                }                
+		if(getCountChilds() > 0)
+		{
+			std::cerr << "Una instacia de '" << typeid(*this).name() << "' termino sin que todos sus hijos terminaran primero" << std::endl;
+		}                
 #endif
-        }
-        Row::Row(Row& row)
-        {
-                this->row = row.row;
-        }
-         const char* Row::operator[](unsigned long long index)
-         {
-                 if(row != NULL) return ((MYSQL_ROW)row)[index];
-                 return NULL;
-        }
-        Row::Row()
-        {
-#ifdef COLLETION_ASSISTANT
-                
-#endif
-        }
-        Row::Row(void* row):db::Row(row)
-        {
-#ifdef COLLETION_ASSISTANT
-                
-#endif
-        }
+	}
+	Row::Row(const Row& r):db::Row(r)
+	{
+		
+	}        
+	Row::Row()
+	{
+		
+	}
+	Row::Row(void* row):db::Row(row)
+	{
+		
+	}
         
         
-        
-        
-	char Datresult::getchar(short field)const
+
+	size_t Datresult::getFieldLength(db::IndexField field) const
 	{
 
 	}
-	unsigned char Datresult::getuchar(short field)const
+	size_t Datresult::getFieldLength(const std::string&) const
 	{
 
 	}
-	short Datresult::getshort(short field)const
+	IndexField Datresult::getFieldNumbers() const
 	{
 
 	}
-	unsigned short Datresult::getushort(short field)const
+  	char Datresult::getchar(const std::string&)const
 	{
 
 	}
-	unsigned int Datresult::getuint(short field)const
+	unsigned char Datresult::getuchar(const std::string&)const
 	{
 
 	}
-	unsigned long Datresult::getul(short field)const
+	short Datresult::getshort(const std::string&)const
 	{
 
 	}
-	unsigned long long Datresult::getull(short field)const
+	unsigned short Datresult::getushort(const std::string&)const
 	{
 
 	}
-	float Datresult::getfloat(short field)const
+	unsigned int Datresult::getuint(const std::string&)const
 	{
 
 	}
-	double Datresult::getdouble(short field)const
+	unsigned long Datresult::getul(const std::string&)const
 	{
 
 	}
-	int Datresult::getint(short field) const
+	unsigned long long Datresult::getull(const std::string&)const
+	{
+
+	}
+	float Datresult::getfloat(const std::string&)const
+	{
+
+	}
+	double Datresult::getdouble(const std::string&)const
+	{
+
+	}
+	int Datresult::getint(const std::string&) const
+	{
+		
+	}
+	long Datresult::getl(const std::string&)const
+	{
+		
+	}
+	long long Datresult::getll(const std::string&)const
+	{
+		
+	}
+	std::string Datresult::getString(const std::string&)const 
+	{ 
+		
+	}
+	
+	char Datresult::getchar(db::IndexField field)const
+	{
+
+	}
+	unsigned char Datresult::getuchar(db::IndexField field)const
+	{
+
+	}
+	short Datresult::getshort(db::IndexField field)const
+	{
+
+	}
+	unsigned short Datresult::getushort(db::IndexField field)const
+	{
+
+	}
+	unsigned int Datresult::getuint(db::IndexField field)const
+	{
+
+	}
+	unsigned long Datresult::getul(db::IndexField field)const
+	{
+
+	}
+	unsigned long long Datresult::getull(db::IndexField field)const
+	{
+
+	}
+	float Datresult::getfloat(db::IndexField field)const
+	{
+
+	}
+	double Datresult::getdouble(db::IndexField field)const
+	{
+
+	}
+	int Datresult::getint(db::IndexField field) const
 	{
 		if(!(Row*)actualRow) return actualRow->getint(field);
 		return 0;
 	}
-	long Datresult::getl(short field)const
+	long Datresult::getl(db::IndexField field)const
 	{
 		if(!(Row*)actualRow) return ((Row*)actualRow)->getl(field);
 		return 0;
 	}
-	long long Datresult::getll(short field)const
+	long long Datresult::getll(db::IndexField field)const
 	{
 		if(!(Row*)actualRow) return ((Row*)actualRow)->getll(field);
 		return 0;
 	}
-	std::string Datresult::getString(short field)const 
+	std::string Datresult::getString(db::IndexField field)const 
 	{
 		if(!(Row*)actualRow) return ((Row*)actualRow)->getString(field);
 		return "";
 	}
-	db::Row* Datresult::getRow()
+	/*db::Row* Datresult::getRow()
 	{
 		db::Row* ret = actualRow;
 		actualRow = NULL;
 
 		return ret;
-	}
+	}*/
 	bool Datresult::nextRow()
 	{
 		MYSQL_ROW row  = mysql_fetch_row((MYSQL_RES*)result);
 		if(actualRow != NULL)
 		{
 			delete actualRow;
-			actualRow = new Row(row);
+			actualRow = new Row((void*)row);
 #ifdef COLLETION_ASSISTANT
 			addChild(actualRow);
 #endif 
 		}
 		else
 		{
-			actualRow = new Row(row);
+			actualRow = new Row((void*)row);
 #ifdef COLLETION_ASSISTANT
 			addChild(actualRow);
 #endif 
@@ -155,7 +210,7 @@ namespace mysql
 		if(row) return true;
 		return false;
 	}
-        db::Row* Datresult::operator[](unsigned long long index)
+        /*db::Row* Datresult::operator[](unsigned long long index)
         {
                 Row* r = NULL;
                 if(mysql_num_rows((MYSQL_RES*)result)  < index)
@@ -178,14 +233,14 @@ namespace mysql
                         
                 }                
                 return r;
-        }
+        }*/
         
         Datresult::Datresult(void* result) : db::Datresult(result)
         {
 			actualRow = NULL;
         }
         
-        db::Row* Datresult::next()
+        /*db::Row* Datresult::next()
         {
                 MYSQL_ROW row  = mysql_fetch_row((MYSQL_RES*)result);
                 Row* r = new Row(row);
@@ -193,7 +248,7 @@ namespace mysql
                 addChild(r);
 #endif                                 
                 return r;
-        }
+        }*/
 	Datresult::~Datresult()
 	{
 		if(actualRow != NULL)

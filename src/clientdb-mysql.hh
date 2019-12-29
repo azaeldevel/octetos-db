@@ -28,15 +28,15 @@ namespace mysql
 #ifdef COLLETION_ASSISTANT
 		Row(Datresult* rs,void* row);
 #endif
-		virtual const char* operator[](unsigned long long index); 
-		Row();
+		//virtual const char* operator[](unsigned long long index); 
 		virtual ~Row();
+		Row();
 		Row(void* row);
-		Row(Row& row);
-		virtual int getint(short field)const;
-		virtual long getl(short field)const;
-		virtual long long getll(short field)const;
-		virtual std::string getString(short field)const;
+		Row(const Row& row);
+		virtual int getint(db::IndexField field)const;
+		virtual long getl(db::IndexField field)const;
+		virtual long long getll(db::IndexField field)const;
+		virtual std::string getString(db::IndexField field)const;
 	};
         
 	class Datresult : public db::Datresult
@@ -47,24 +47,42 @@ namespace mysql
 	public:
 		virtual ~Datresult();
 		Datresult(void* result);
-		virtual db::Row* operator[](unsigned long long index);                
-		virtual db::Row* next() __attribute__ ((deprecated));
+		//virtual db::Row* operator[](unsigned long long index);                
+		//virtual db::Row* next() __attribute__ ((deprecated));
 		virtual bool nextRow();
-		virtual db::Row* getRow();
-		//retrive data field
-		virtual char getchar(short field)const;
-		virtual unsigned char getuchar(short field)const;
-		virtual short getshort(short field)const;
-		virtual unsigned short getushort(short field)const;
-		virtual int getint(short field)const;
-		virtual unsigned int getuint(short field)const;
-		virtual long getl(short field)const;
-		virtual unsigned long getul(short field)const;
-		virtual long long getll(short field)const;
-		virtual unsigned long long getull(short field)const;
-		virtual float getfloat(short field)const;
-		virtual double getdouble(short field)const;
-		virtual std::string getString(short field)const;
+		//virtual db::Row* getRow();
+		//retrive data field by index
+		virtual char getchar(db::IndexField field)const;
+		virtual unsigned char getuchar(db::IndexField field)const;
+		virtual short getshort(db::IndexField field)const;
+		virtual unsigned short getushort(db::IndexField field)const;
+		virtual int getint(db::IndexField field)const;
+		virtual unsigned int getuint(db::IndexField field)const;
+		virtual long getl(db::IndexField field)const;
+		virtual unsigned long getul(db::IndexField field)const;
+		virtual long long getll(db::IndexField field)const;
+		virtual unsigned long long getull(db::IndexField field)const;
+		virtual float getfloat(db::IndexField field)const;
+		virtual double getdouble(db::IndexField field)const;
+		virtual std::string getString(db::IndexField field)const;
+		//retrive data field by name
+		virtual char getchar(const std::string&)const;
+		virtual unsigned char getuchar(const std::string&)const;
+		virtual short getshort(const std::string&)const;
+		virtual unsigned short getushort(const std::string&)const;
+		virtual int getint(const std::string&)const;
+		virtual unsigned int getuint(const std::string&)const;
+		virtual long getl(const std::string&)const;
+		virtual unsigned long getul(const std::string&)const;
+		virtual long long getll(const std::string&)const;
+		virtual unsigned long long getull(const std::string&)const;
+		virtual float getfloat(const std::string&)const;
+		virtual double getdouble(const std::string&)const;
+		virtual std::string getString(const std::string&)const;
+		//retrive field meta-data
+		virtual size_t getFieldLength(db::IndexField field) const;
+		virtual size_t getFieldLength(const std::string&) const;
+		virtual IndexField getFieldNumbers() const;
 	};
         
 	class Connector : public db::Connector

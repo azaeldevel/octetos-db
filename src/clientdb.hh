@@ -14,6 +14,7 @@ namespace db
 	 **/
 	core::Artifact getPackageInfo();
 
+	typedef unsigned int IndexField;
 
 	class SQLException : public std::exception
 	{
@@ -47,8 +48,7 @@ namespace db
 	{
 		Unknow,
 		MySQL,
-		PostgreSQL,/*deprecated*/
-		DBI_MYSQL,	
+		PostgreSQL
 	};
    	class Datconnect : public core::Object
 	{
@@ -92,15 +92,15 @@ namespace db
 		void* row;
                 
 	public:
-		virtual const char* operator[](unsigned long long index) = 0; 
-		Row();
+		//virtual const char* operator[](unsigned long long index) = 0; 
 		virtual ~Row();
+		Row();
 		Row(void* row);
-		Row(Row& row);
-		virtual int getint(short field)const = 0;
-		virtual long getl(short field)const = 0;
-		virtual long long getll(short field)const = 0;
-		virtual std::string getString(short field)const = 0;
+		Row(const Row& row);
+		virtual int getint(IndexField field)const = 0;
+		virtual long getl(IndexField field)const = 0;
+		virtual long long getll(IndexField field)const = 0;
+		virtual std::string getString(IndexField field)const = 0;
 	};
         
 	class Datresult : public core::Object
@@ -112,25 +112,43 @@ namespace db
 	public:
 		Datresult(void* result);
 		virtual ~Datresult();
-		virtual Row* operator[](unsigned long long index) = 0;             
-		virtual db::Row* next() __attribute__ ((deprecated)) = 0 ;
+		//virtual Row* operator[](unsigned long long index) = 0;             
+		//virtual db::Row* next() __attribute__ ((deprecated)) = 0 ;
 		virtual bool nextRow() = 0;
-		virtual db::Row* getRow() = 0;
+		//virtual db::Row* getRow() = 0;
 		void* getResult() const;
-		//retrive data field
-		virtual char getchar(short field)const = 0;
-		virtual unsigned char getuchar(short field)const = 0;
-		virtual short getshort(short field)const = 0;
-		virtual unsigned short getushort(short field)const = 0;
-		virtual int getint(short field)const = 0;
-		virtual unsigned int getuint(short field)const = 0;
-		virtual long getl(short field)const = 0;
-		virtual unsigned long getul(short field)const = 0;
-		virtual long long getll(short field)const = 0;
-		virtual unsigned long long getull(short field)const = 0;
-		virtual float getfloat(short field)const = 0;
-		virtual double getdouble(short field)const = 0;
-		virtual std::string getString(short field)const = 0;
+		//retrive data field by index
+		virtual char getchar(IndexField field)const = 0;
+		virtual unsigned char getuchar(IndexField field)const = 0;
+		virtual short getshort(IndexField field)const = 0;
+		virtual unsigned short getushort(IndexField field)const = 0;
+		virtual int getint(IndexField field)const = 0;
+		virtual unsigned int getuint(IndexField field)const = 0;
+		virtual long getl(IndexField field)const = 0;
+		virtual unsigned long getul(IndexField field)const = 0;
+		virtual long long getll(IndexField field)const = 0;
+		virtual unsigned long long getull(IndexField field)const = 0;
+		virtual float getfloat(IndexField field)const = 0;
+		virtual double getdouble(IndexField field)const = 0;
+		virtual std::string getString(IndexField field)const = 0;
+		//retrive data field by name
+		virtual char getchar(const std::string&)const = 0;
+		virtual unsigned char getuchar(const std::string&)const = 0;
+		virtual short getshort(const std::string&)const = 0;
+		virtual unsigned short getushort(const std::string&)const = 0;
+		virtual int getint(const std::string&)const = 0;
+		virtual unsigned int getuint(const std::string&)const = 0;
+		virtual long getl(const std::string&)const = 0;
+		virtual unsigned long getul(const std::string&)const = 0;
+		virtual long long getll(const std::string&)const = 0;
+		virtual unsigned long long getull(const std::string&)const = 0;
+		virtual float getfloat(const std::string&)const = 0;
+		virtual double getdouble(const std::string&)const = 0;
+		virtual std::string getString(const std::string&)const = 0;
+		//retrive field meta-data
+		virtual size_t getFieldLength(db::IndexField field) const = 0;
+		virtual size_t getFieldLength(const std::string&) const = 0;
+		virtual IndexField getFieldNumbers() const = 0;
 	};
         
 	class Connector : public core::Object

@@ -45,11 +45,11 @@ namespace dbi
 	public:
 		virtual ~Datresult();
 		Datresult(void* result);
-		virtual db::Row* operator[](unsigned long long index);                
-		virtual db::Row* next() __attribute__ ((deprecated));      
+		//virtual db::Row* operator[](unsigned long long index);                
+		//virtual db::Row* next() __attribute__ ((deprecated));      
 		virtual bool nextRow();
-		virtual db::Row* getRow();
-		//retrive data field
+		//virtual db::Row* getRow();
+		//retrive data field by index
 		virtual char getchar(short field)const;
 		virtual unsigned char getuchar(short field)const;
 		virtual short getshort(short field)const;
@@ -63,6 +63,20 @@ namespace dbi
 		virtual float getfloat(short field)const;
 		virtual double getdouble(short field)const;
 		virtual std::string getString(short field)const;
+		//retrive data field by name
+		virtual char getchar(const std::string&)const;
+		virtual unsigned char getuchar(const std::string&)const;
+		virtual short getshort(const std::string&)const;
+		virtual unsigned short getushort(const std::string&)const;
+		virtual int getint(const std::string&)const;
+		virtual unsigned int getuint(const std::string&)const;
+		virtual long getl(const std::string&)const;
+		virtual unsigned long getul(const std::string&)const;
+		virtual long long getll(const std::string&)const;
+		virtual unsigned long long getull(const std::string&)const;
+		virtual float getfloat(const std::string&)const;
+		virtual double getdouble(const std::string&)const;
+		virtual std::string getString(const std::string&)const;
 	};
         
 	class Connector : public db::Connector

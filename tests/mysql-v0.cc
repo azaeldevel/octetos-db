@@ -79,9 +79,7 @@ void testMySQL()
 	octetos::db::Datresult* rs = connector.query(query.c_str());
 	while(rs->nextRow())
 	{
-		octetos::db::Row* row = rs->getRow();
-		//std::cout << row->getString(1) << "\n";
-		delete row;
+		std::cout << rs->getll(0) << "\n";
 	}
 
 	delete rs;
@@ -119,14 +117,11 @@ void testMySQL()
 	}
 	delete rs;
 	*/
-
-
-	
 }
 
 
 int main(int argc, char *argv[])
-{;
+{
 	//octetos::core::Artifact packinfo = octetos::db::getPackageInfo();
     
 	CU_pSuite pSuite = NULL;

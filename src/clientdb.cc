@@ -25,7 +25,11 @@ namespace db
                 this->result = result;
         }
         
-        
+
+	Row::Row(const Row& r)
+	{
+		this->row = r.row;
+	}
         Row::~Row()
         {
                 
