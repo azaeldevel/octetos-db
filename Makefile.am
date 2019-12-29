@@ -1,6 +1,10 @@
 AUTOMAKE_OPTIONS=foreign 1.4
 
-SUBDIRS = src po tests
+
+SUBDIRS = src po
+if WITH_TESTS
+SUBDIRS += tests
+endif
 
 dist_doc_DATA = \
 	README \

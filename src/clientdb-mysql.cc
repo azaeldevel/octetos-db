@@ -70,7 +70,42 @@ namespace mysql
         
         
         
-        
+	char Datresult::getchar(short field)const
+	{
+
+	}
+	unsigned char Datresult::getuchar(short field)const
+	{
+
+	}
+	short Datresult::getshort(short field)const
+	{
+
+	}
+	unsigned short Datresult::getushort(short field)const
+	{
+
+	}
+	unsigned int Datresult::getuint(short field)const
+	{
+
+	}
+	unsigned long Datresult::getul(short field)const
+	{
+
+	}
+	unsigned long long Datresult::getull(short field)const
+	{
+
+	}
+	float Datresult::getfloat(short field)const
+	{
+
+	}
+	double Datresult::getdouble(short field)const
+	{
+
+	}
 	int Datresult::getint(short field) const
 	{
 		if(!(Row*)actualRow) return actualRow->getint(field);

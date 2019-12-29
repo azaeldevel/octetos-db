@@ -127,22 +127,22 @@ void testMySQL()
 
 int main(int argc, char *argv[])
 {;
-	octetos::core::Artifact packinfo = octetos::core::getPackageInfo();
+	//octetos::core::Artifact packinfo = octetos::db::getPackageInfo();
     
 	CU_pSuite pSuite = NULL;
-	majorNumber = packinfo.version.getMajor();
+	//majorNumber = packinfo.version.getMajor();
 	/* initialize the CUnit test registry */
 	if (CUE_SUCCESS != CU_initialize_registry()) return CU_get_error();
 
-	std::string classVersionString = std::string("Probando ") + packinfo.name + " " + packinfo.version.toString() + "\n" + packinfo.licence.getBrief() + "\n" + packinfo.brief + "\n";
-	pSuite = CU_add_suite(classVersionString.c_str(), init, clean);
+	//std::string classVersionString = packinfo.name + " " + packinfo.version.toString() + "\n" + packinfo.licence.getBrief() + "\n" + packinfo.brief + "\n";
+	pSuite = CU_add_suite("Test", init, clean);
 	if (NULL == pSuite) 
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
 		
-	if ((NULL == CU_add_test(pSuite, "Pruebas de MySQl", testMySQL)))
+	if ((NULL == CU_add_test(pSuite, "Pruebas de MySQL", testMySQL)))
 	{
 		CU_cleanup_registry();
 		return CU_get_error();

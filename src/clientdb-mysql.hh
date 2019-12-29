@@ -51,9 +51,19 @@ namespace mysql
 		virtual db::Row* next() __attribute__ ((deprecated));
 		virtual bool nextRow();
 		virtual db::Row* getRow();
+		//retrive data field
+		virtual char getchar(short field)const;
+		virtual unsigned char getuchar(short field)const;
+		virtual short getshort(short field)const;
+		virtual unsigned short getushort(short field)const;
 		virtual int getint(short field)const;
+		virtual unsigned int getuint(short field)const;
 		virtual long getl(short field)const;
+		virtual unsigned long getul(short field)const;
 		virtual long long getll(short field)const;
+		virtual unsigned long long getull(short field)const;
+		virtual float getfloat(short field)const;
+		virtual double getdouble(short field)const;
 		virtual std::string getString(short field)const;
 	};
         

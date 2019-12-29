@@ -117,9 +117,19 @@ namespace db
 		virtual bool nextRow() = 0;
 		virtual db::Row* getRow() = 0;
 		void* getResult() const;
+		//retrive data field
+		virtual char getchar(short field)const = 0;
+		virtual unsigned char getuchar(short field)const = 0;
+		virtual short getshort(short field)const = 0;
+		virtual unsigned short getushort(short field)const = 0;
 		virtual int getint(short field)const = 0;
+		virtual unsigned int getuint(short field)const = 0;
 		virtual long getl(short field)const = 0;
+		virtual unsigned long getul(short field)const = 0;
 		virtual long long getll(short field)const = 0;
+		virtual unsigned long long getull(short field)const = 0;
+		virtual float getfloat(short field)const = 0;
+		virtual double getdouble(short field)const = 0;
 		virtual std::string getString(short field)const = 0;
 	};
         

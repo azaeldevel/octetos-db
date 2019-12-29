@@ -11,13 +11,13 @@ AM_CFLAGS =\
 	 -g
 
 
-bin_PROGRAMS = mysql-v0
+bin_PROGRAMS = 
 
-
-
-mysql_v0_CPPFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS) $(MYSQLCLIENT_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src
+if WITH_MYSQL
+bin_PROGRAMS += mysql-v0
+mysql_v0_CPPFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS) $(MYSQLCLIENT_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src -L$(top_builddir)/src
 mysql_v0_CFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS) -I$(top_srcdir)/src
-mysql_v0_LDADD = $(MYSQLCLIENT_LIBS) $(OCTETOS_CORE_LIBS) $(CUNIT_LIBS) ../src/liboctetos-db.la ../src/liboctetos-db-mysql.la ../src/liboctetos-db-dbi.la $(DBI_LIBS) $(MYSQLCLIENT_LIBS)  $(MYSQLCLIENT_LIBS)
+mysql_v0_LDADD = $(MYSQLCLIENT_LIBS) $(OCTETOS_CORE_LIBS) $(CUNIT_LIBS) $(top_builddir)/src/liboctetos-db.la $(top_builddir)/src/liboctetos-db-mysql.la $(MYSQLCLIENT_LIBS)  $(MYSQLCLIENT_LIBS)
 mysql_v0_SOURCES = mysql-v0.cc
-
+endif
 

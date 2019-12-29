@@ -59,7 +59,7 @@ int main()
 	delete rs;*/
 
 	///DBI
-	octetos::db::dbi::Datconnect dat(octetos::db::Driver::MySQL,"192.168.0.101",3306,"sysappv2.alpha","develop","123456");
+	/*octetos::db::dbi::Datconnect dat(octetos::db::Driver::MySQL,"192.168.0.101",3306,"sysappv2.alpha","develop","123456");
 	bool flag = false;
 	octetos::db::dbi::Connector connector;
     try
@@ -88,7 +88,7 @@ int main()
 	{
 		std::cout << rs->getll(0) << "\n";
 	}
-	delete rs;
+	delete rs;*/
 	
 	return 0;
 }

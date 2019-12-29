@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl Created by Anjuta application wizard.
 
-AC_INIT(octetos-db, 0.4.0-alpha)
+AC_INIT(octetos-db, 0.5.0-alpha)
 AC_CANONICAL_SYSTEM
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE
@@ -54,15 +54,25 @@ AM_CONDITIONAL(NATIVE_WIN32, test x"$native_win32" = "xyes")
 
 LT_INIT([win32-dll])
 
+PKG_CHECK_MODULES(OCTETOS_CORE, octetos-core)
 
-PKG_CHECK_MODULES(MYSQLCLIENT,mysqlclient)
-PKG_CHECK_MODULES(DBI,dbi)
-PKG_CHECK_MODULES(CUNIT,cunit)
-PKG_CHECK_MODULES(OCTETOS_CORE, octetos-core, OCTETOS_CORE_found=1, OCTETOS_CORE_found=0)
-if test $OCTETOS_CORE_found = 0; then
-	AC_MSG_ERROR(Error could not find library (Octetos Core) pkg-config file is it installed?)
+AM_CONDITIONAL(WITH_MYSQL, test x"$with_mysql" = "xyes")
+AC_ARG_WITH([mysql], AS_HELP_STRING([--with-mysql], [Compilando con soporte para MySQL.]))
+if test "x$with_mysql" = "xyes"; then
+   	PKG_CHECK_MODULES(MYSQLCLIENT,mysqlclient)
 fi
 
+AM_CONDITIONAL(WITH_DBI, test x"$with_dbi" = "xyes")
+AC_ARG_WITH([dbi], AS_HELP_STRING([--with-dbi], [Compilando con soporte para DBI.]))
+if test "x$with_dbi" = "xyes"; then
+	PKG_CHECK_MODULES(DBI,dbi)
+fi
+
+AM_CONDITIONAL(WITH_TESTS, test x"$with_tests" = "xyes")
+AC_ARG_WITH([tests], AS_HELP_STRING([--with-tests], [Compilando con soporte para Pruebas.]))
+if test "x$with_tests" = "xyes"; then
+	PKG_CHECK_MODULES(CUNIT,cunit)
+fi
 
 AC_OUTPUT([
 Makefile
