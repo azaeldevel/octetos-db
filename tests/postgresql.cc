@@ -26,7 +26,7 @@
 #include <cstdlib>
 
 
-#include "clientdb-mysql.hh"
+#include "clientdb-postgresql.hh"
 #include "config.h"
 
 
@@ -49,12 +49,12 @@ int clean(void)
 }
 
 
-void testMySQL()
+void testConnection()
 {
 	///MySQL
-	octetos::db::mysql::Datconnect dat("192.168.0.101",3306,"sysappv2.alpha","develop","123456");
+	octetos::db::postgresql::Datconnect dat("192.168.0.101",5432,"sysapp_v0001","sysapp","123456");
 	bool flag = false;
-	octetos::db::mysql::Connector connector;
+	octetos::db::postgresql::Connector connector;
     try
     {
 		flag = connector.connect(&dat);
@@ -75,48 +75,16 @@ void testMySQL()
 		CU_ASSERT(false);
     }
 
-	std::string query = "select * from Persons";
-	octetos::db::Datresult* rs = connector.query(query.c_str());
+	/*std::string queryStr = "select * from Persons";
+	octetos::db::Datresult* rs = connector.query(queryStr.c_str());
 	while(rs->nextRow())
 	{
-		std::cout << rs->getll(0) << "\n";
+		std::cout << rs->getString(1) << "\n";
 	}
 
 	delete rs;
-
-	///DBI
-	/*
-	octetos::db::dbi::Datconnect dat(octetos::db::Driver::MySQL,"192.168.0.101",3306,"sysappv2.alpha","develop","123456");
-	bool flag = false;
-	octetos::db::dbi::Connector connector;
-    try
-    {
-		flag = connector.connect(&dat);
-	}
-	catch(octetos::db::SQLException& ex)
-	{
-		std::cerr<<ex.what()<< std::endl;
-		return EXIT_FAILURE;
-	}
-    if(flag)
-    {
-        printf("Version del Servidor  %s\n", connector.getVerionServer().toString().c_str());
-    }
-    else
-    {
-        printf("Fallo '%s' .\n",dat.toString().c_str());
-
-		return EXIT_FAILURE;
-    }
-
-	std::string query = "select * from Persons";
-	octetos::db::Datresult* rs = connector.query(query.c_str());
-	while(rs->nextRow())
-	{
-		std::cout << rs->getll(0) << "\n";
-	}
-	delete rs;
-	*/
+	connector.close();*/
+	
 }
 
 
@@ -137,7 +105,7 @@ int main(int argc, char *argv[])
 		return CU_get_error();
 	}
 		
-	if ((NULL == CU_add_test(pSuite, "Pruebas de MySQL", testMySQL)))
+	if ((NULL == CU_add_test(pSuite, "Pruebas de Conexcion PostgreSQL", testConnection)))
 	{
 		CU_cleanup_registry();
 		return CU_get_error();

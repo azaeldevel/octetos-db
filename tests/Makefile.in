@@ -89,8 +89,9 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
-bin_PROGRAMS = $(am__EXEEXT_1)
-@WITH_MYSQL_TRUE@am__append_1 = mysql-v0
+bin_PROGRAMS = $(am__EXEEXT_1) $(am__EXEEXT_2)
+@WITH_MYSQL_TRUE@am__append_1 = mysql
+@WITH_POSTGRESQL_TRUE@am__append_2 = postgresql
 subdir = tests
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -101,22 +102,38 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-@WITH_MYSQL_TRUE@am__EXEEXT_1 = mysql-v0$(EXEEXT)
+@WITH_MYSQL_TRUE@am__EXEEXT_1 = mysql$(EXEEXT)
+@WITH_POSTGRESQL_TRUE@am__EXEEXT_2 = postgresql$(EXEEXT)
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am__mysql_v0_SOURCES_DIST = mysql-v0.cc
-@WITH_MYSQL_TRUE@am_mysql_v0_OBJECTS = mysql_v0-mysql-v0.$(OBJEXT)
-mysql_v0_OBJECTS = $(am_mysql_v0_OBJECTS)
+am__mysql_SOURCES_DIST = mysql.cc
+@WITH_MYSQL_TRUE@am_mysql_OBJECTS = mysql-mysql.$(OBJEXT)
+mysql_OBJECTS = $(am_mysql_OBJECTS)
 am__DEPENDENCIES_1 =
-@WITH_MYSQL_TRUE@mysql_v0_DEPENDENCIES = $(am__DEPENDENCIES_1) \
-@WITH_MYSQL_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+@WITH_MYSQL_TRUE@mysql_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+@WITH_MYSQL_TRUE@	$(am__DEPENDENCIES_1) \
 @WITH_MYSQL_TRUE@	$(top_builddir)/src/liboctetos-db.la \
 @WITH_MYSQL_TRUE@	$(top_builddir)/src/liboctetos-db-mysql.la \
-@WITH_MYSQL_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+@WITH_MYSQL_TRUE@	$(am__DEPENDENCIES_1)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
+mysql_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
+	$(CXXFLAGS) $(mysql_LDFLAGS) $(LDFLAGS) -o $@
+am__postgresql_SOURCES_DIST = postgresql.cc
+@WITH_POSTGRESQL_TRUE@am_postgresql_OBJECTS =  \
+@WITH_POSTGRESQL_TRUE@	postgresql-postgresql.$(OBJEXT)
+postgresql_OBJECTS = $(am_postgresql_OBJECTS)
+@WITH_POSTGRESQL_TRUE@postgresql_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+@WITH_POSTGRESQL_TRUE@	$(am__DEPENDENCIES_1) \
+@WITH_POSTGRESQL_TRUE@	$(top_builddir)/src/liboctetos-db.la \
+@WITH_POSTGRESQL_TRUE@	$(top_builddir)/src/liboctetos-db-postgresql.la \
+@WITH_POSTGRESQL_TRUE@	$(am__DEPENDENCIES_1)
+postgresql_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
+	$(CXXFLAGS) $(postgresql_LDFLAGS) $(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -151,8 +168,9 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(mysql_v0_SOURCES)
-DIST_SOURCES = $(am__mysql_v0_SOURCES_DIST)
+SOURCES = $(mysql_SOURCES) $(postgresql_SOURCES)
+DIST_SOURCES = $(am__mysql_SOURCES_DIST) \
+	$(am__postgresql_SOURCES_DIST)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -242,6 +260,8 @@ INTL_MACOSX_LIBS = @INTL_MACOSX_LIBS@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
+LIBPQ_CFLAGS = @LIBPQ_CFLAGS@
+LIBPQ_LIBS = @LIBPQ_LIBS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
 LIPO = @LIPO@
@@ -359,10 +379,16 @@ AM_CFLAGS = \
 	 -Wall\
 	 -g
 
-@WITH_MYSQL_TRUE@mysql_v0_CPPFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS) $(MYSQLCLIENT_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src -L$(top_builddir)/src
-@WITH_MYSQL_TRUE@mysql_v0_CFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS) -I$(top_srcdir)/src
-@WITH_MYSQL_TRUE@mysql_v0_LDADD = $(MYSQLCLIENT_LIBS) $(OCTETOS_CORE_LIBS) $(CUNIT_LIBS) $(top_builddir)/src/liboctetos-db.la $(top_builddir)/src/liboctetos-db-mysql.la $(MYSQLCLIENT_LIBS)  $(MYSQLCLIENT_LIBS)
-@WITH_MYSQL_TRUE@mysql_v0_SOURCES = mysql-v0.cc
+@WITH_MYSQL_TRUE@mysql_CPPFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS) $(MYSQLCLIENT_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src -L$(top_builddir)/src
+@WITH_MYSQL_TRUE@mysql_CFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS) -I$(top_srcdir)/src
+@WITH_MYSQL_TRUE@mysql_LDFLAGS = 
+@WITH_MYSQL_TRUE@mysql_LDADD = $(OCTETOS_CORE_LIBS) $(CUNIT_LIBS) $(top_builddir)/src/liboctetos-db.la $(top_builddir)/src/liboctetos-db-mysql.la $(MYSQLCLIENT_LIBS)
+@WITH_MYSQL_TRUE@mysql_SOURCES = mysql.cc
+@WITH_POSTGRESQL_TRUE@postgresql_CPPFLAGS = $(LIBPQ_CFLAGS) $(OCTETOS_CORE_CFLAGS) $(MYSQLCLIENT_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src -L$(top_builddir)/src
+@WITH_POSTGRESQL_TRUE@postgresql_CFLAGS = $(LIBPQ_CFLAGS) $(OCTETOS_CORE_CFLAGS) -I$(top_srcdir)/src
+@WITH_POSTGRESQL_TRUE@postgresql_LDFLAGS = 
+@WITH_POSTGRESQL_TRUE@postgresql_LDADD = $(OCTETOS_CORE_LIBS) $(CUNIT_LIBS) $(top_builddir)/src/liboctetos-db.la $(top_builddir)/src/liboctetos-db-postgresql.la $(LIBPQ_LIBS)
+@WITH_POSTGRESQL_TRUE@postgresql_SOURCES = postgresql.cc
 all: all-am
 
 .SUFFIXES:
@@ -446,9 +472,13 @@ clean-binPROGRAMS:
 	echo " rm -f" $$list; \
 	rm -f $$list
 
-mysql-v0$(EXEEXT): $(mysql_v0_OBJECTS) $(mysql_v0_DEPENDENCIES) $(EXTRA_mysql_v0_DEPENDENCIES) 
-	@rm -f mysql-v0$(EXEEXT)
-	$(AM_V_CXXLD)$(CXXLINK) $(mysql_v0_OBJECTS) $(mysql_v0_LDADD) $(LIBS)
+mysql$(EXEEXT): $(mysql_OBJECTS) $(mysql_DEPENDENCIES) $(EXTRA_mysql_DEPENDENCIES) 
+	@rm -f mysql$(EXEEXT)
+	$(AM_V_CXXLD)$(mysql_LINK) $(mysql_OBJECTS) $(mysql_LDADD) $(LIBS)
+
+postgresql$(EXEEXT): $(postgresql_OBJECTS) $(postgresql_DEPENDENCIES) $(EXTRA_postgresql_DEPENDENCIES) 
+	@rm -f postgresql$(EXEEXT)
+	$(AM_V_CXXLD)$(postgresql_LINK) $(postgresql_OBJECTS) $(postgresql_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -456,7 +486,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mysql_v0-mysql-v0.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mysql-mysql.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/postgresql-postgresql.Po@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -479,19 +510,33 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
 
-mysql_v0-mysql-v0.o: mysql-v0.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(mysql_v0_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT mysql_v0-mysql-v0.o -MD -MP -MF $(DEPDIR)/mysql_v0-mysql-v0.Tpo -c -o mysql_v0-mysql-v0.o `test -f 'mysql-v0.cc' || echo '$(srcdir)/'`mysql-v0.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/mysql_v0-mysql-v0.Tpo $(DEPDIR)/mysql_v0-mysql-v0.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='mysql-v0.cc' object='mysql_v0-mysql-v0.o' libtool=no @AMDEPBACKSLASH@
+mysql-mysql.o: mysql.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(mysql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT mysql-mysql.o -MD -MP -MF $(DEPDIR)/mysql-mysql.Tpo -c -o mysql-mysql.o `test -f 'mysql.cc' || echo '$(srcdir)/'`mysql.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/mysql-mysql.Tpo $(DEPDIR)/mysql-mysql.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='mysql.cc' object='mysql-mysql.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(mysql_v0_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o mysql_v0-mysql-v0.o `test -f 'mysql-v0.cc' || echo '$(srcdir)/'`mysql-v0.cc
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(mysql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o mysql-mysql.o `test -f 'mysql.cc' || echo '$(srcdir)/'`mysql.cc
 
-mysql_v0-mysql-v0.obj: mysql-v0.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(mysql_v0_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT mysql_v0-mysql-v0.obj -MD -MP -MF $(DEPDIR)/mysql_v0-mysql-v0.Tpo -c -o mysql_v0-mysql-v0.obj `if test -f 'mysql-v0.cc'; then $(CYGPATH_W) 'mysql-v0.cc'; else $(CYGPATH_W) '$(srcdir)/mysql-v0.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/mysql_v0-mysql-v0.Tpo $(DEPDIR)/mysql_v0-mysql-v0.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='mysql-v0.cc' object='mysql_v0-mysql-v0.obj' libtool=no @AMDEPBACKSLASH@
+mysql-mysql.obj: mysql.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(mysql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT mysql-mysql.obj -MD -MP -MF $(DEPDIR)/mysql-mysql.Tpo -c -o mysql-mysql.obj `if test -f 'mysql.cc'; then $(CYGPATH_W) 'mysql.cc'; else $(CYGPATH_W) '$(srcdir)/mysql.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/mysql-mysql.Tpo $(DEPDIR)/mysql-mysql.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='mysql.cc' object='mysql-mysql.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(mysql_v0_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o mysql_v0-mysql-v0.obj `if test -f 'mysql-v0.cc'; then $(CYGPATH_W) 'mysql-v0.cc'; else $(CYGPATH_W) '$(srcdir)/mysql-v0.cc'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(mysql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o mysql-mysql.obj `if test -f 'mysql.cc'; then $(CYGPATH_W) 'mysql.cc'; else $(CYGPATH_W) '$(srcdir)/mysql.cc'; fi`
+
+postgresql-postgresql.o: postgresql.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(postgresql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT postgresql-postgresql.o -MD -MP -MF $(DEPDIR)/postgresql-postgresql.Tpo -c -o postgresql-postgresql.o `test -f 'postgresql.cc' || echo '$(srcdir)/'`postgresql.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/postgresql-postgresql.Tpo $(DEPDIR)/postgresql-postgresql.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='postgresql.cc' object='postgresql-postgresql.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(postgresql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o postgresql-postgresql.o `test -f 'postgresql.cc' || echo '$(srcdir)/'`postgresql.cc
+
+postgresql-postgresql.obj: postgresql.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(postgresql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT postgresql-postgresql.obj -MD -MP -MF $(DEPDIR)/postgresql-postgresql.Tpo -c -o postgresql-postgresql.obj `if test -f 'postgresql.cc'; then $(CYGPATH_W) 'postgresql.cc'; else $(CYGPATH_W) '$(srcdir)/postgresql.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/postgresql-postgresql.Tpo $(DEPDIR)/postgresql-postgresql.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='postgresql.cc' object='postgresql-postgresql.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(postgresql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o postgresql-postgresql.obj `if test -f 'postgresql.cc'; then $(CYGPATH_W) 'postgresql.cc'; else $(CYGPATH_W) '$(srcdir)/postgresql.cc'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

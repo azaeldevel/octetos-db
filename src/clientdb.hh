@@ -4,6 +4,7 @@
 #include <octetos/core/common.hh>
 #include <octetos/core/Artifact.hh>
 #include <vector>
+#include <string>
 
 namespace octetos
 {
@@ -50,6 +51,7 @@ namespace db
 		MySQL,
 		PostgreSQL
 	};
+
    	class Datconnect : public core::Object
 	{
 	public:
@@ -153,11 +155,11 @@ namespace db
         
 	class Connector : public core::Object
 	{
-        protected:
+	protected:
             void* serverConnector;
             const Datconnect* datconection;
             
-        public:
+	public:
             //
             static bool is_ipv4_address(const std::string& str);
             static bool is_ipv6_address(const std::string& str);
@@ -165,18 +167,17 @@ namespace db
             virtual ~Connector();
             Connector();
             Connector(const Connector&);
+            void* getServerConnector();
+            const Datconnect* getDatconection() const; 
+            const Connector& operator=(const Connector& obj);
+			//
             virtual bool connect(const Datconnect* connector)  = 0;            
-            //virtual bool query(const std::string&) = 0;
-            //virtual bool query(const std::string&, std::vector<std::vector<const char*>>&) = 0;
-            virtual Datresult* query(const char*) = 0;
+            virtual Datresult* query(const std::string& str) = 0;
             virtual unsigned long long insert(const std::string&) = 0;
             virtual bool commit() = 0;
             virtual bool begin() = 0;
             virtual bool rollback() = 0;
-            virtual void close() = 0;
-            void* getServerConnector();
-            const Datconnect* getDatconection() const;  
-            const Connector& operator=(const Connector& obj);
+            virtual void close() = 0; 
 			virtual core::Semver getVerionServer() const = 0;
 	};
 

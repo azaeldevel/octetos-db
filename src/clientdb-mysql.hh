@@ -2,6 +2,7 @@
 #define TOOLKIT_CLIENTDB_MYSQL_HPP
 
 #include <vector>
+#include <string>
 
 #include "clientdb.hh"
 
@@ -94,9 +95,7 @@ namespace mysql
 		Connector();
 		virtual bool connect(const db::Datconnect* connector);
 		const char* serverDescription();
-		//virtual bool query(const std::string&);
-		//virtual bool query(const std::string&, std::vector<std::vector<const char*>>&);
-		virtual db::Datresult* query(const char*);
+		virtual db::Datresult* query(const char* str);
 		virtual unsigned long long insert(const std::string&);
 		virtual bool commit();
 		virtual bool begin();

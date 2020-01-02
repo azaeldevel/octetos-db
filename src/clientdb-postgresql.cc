@@ -4,36 +4,22 @@
 #include <iostream>
 
 #include "clientdb-postgresql.hh"
-#include "versionInfo-pqc++.h"
+
 
 
 namespace octetos
 {
-namespace toolkit
-{
-namespace clientdb
+namespace db
 {
 namespace postgresql
 {
         
-	std::string getPakageName()
-	{
-		return std::string(PAKAGENAME);
-	}
-	toolkit::Version getPakageVersion()
-	{
-                toolkit::Version v;
-                v.setNumbers(VERSION_MAJOR,VERSION_MINOR,VERSION_PATCH);
-                v.setStage(VERSION_STAGE);
-                v.setBuild(std::stoul(VERSION_BUILD));
-		return v;		
-	}
 	
         /*std::string Datasource::toString() const
         {		
             return toolkit::clientdb::Datasource::toString();
         } */
-        Datconnect::Datconnect(const Datconnect& obj) : toolkit::clientdb::Datconnect(obj)
+        Datconnect::Datconnect(const Datconnect& obj) : db::Datconnect(obj)
         {
             
         }
@@ -42,15 +28,19 @@ namespace postgresql
             ((Datconnect&)*this)=obj;
             return *this;
         }
-        Datconnect::Datconnect(const std::string& host, unsigned int port,const std::string& database,const std::string& usuario,const std::string& password) : clientdb::Datconnect(ServerType::MySQL,host,port,database,usuario,password)
+        Datconnect::Datconnect(const std::string& host, unsigned int port,const std::string& database,const std::string& usuario,const std::string& password) : db::Datconnect(Driver::MySQL,host,port,database,usuario,password)
         {
         }
         
         
-        Datresult* Connector::query(const char*)
-        {
-                return NULL;
-        }
+        
+	core::Semver Connector::getVerionServer() const
+	{
+		core::Semver ver;
+		ver.set(PQserverVersion((PGconn*)serverConnector),core::semver::ImportCode::PostgreSQL);
+
+		return ver;
+	}
         Connector::Connector()
         {
         }
@@ -58,9 +48,9 @@ namespace postgresql
         {
             close();
         }
-        const toolkit::clientdb::Datconnect& Connector::getDatconection() const
+        const db::Datconnect& Connector::getDatconection() const
         {
-            return (const octetos::toolkit::clientdb::postgresql::Datconnect&)Connector::getDatconection();
+            return (const db::postgresql::Datconnect&)Connector::getDatconection();
         } 
         void Connector::close()
         {
@@ -107,7 +97,7 @@ namespace postgresql
 			
             return ID;		
         }   
-        bool Connector::connect(const toolkit::clientdb::Datconnect* conection)
+        bool Connector::connect(const db::Datconnect* conection)
         {
             std::string strsql = "";
             if(conection->getHost().length() > 1)
@@ -153,7 +143,7 @@ namespace postgresql
             datconection = conection;
             return true;
         }        
-        bool Connector::query(const std::string& str)
+        db::Datresult* Connector::query(const std::string& str)
         {
             PGresult *res = PQexec((PGconn*)serverConnector, str.c_str()); 
             if (PQresultStatus(res) != PGRES_TUPLES_OK)
@@ -161,9 +151,9 @@ namespace postgresql
                 throw SQLExceptionQuery("No se retorno datos.");        
                 PQclear(res);
             }
-            return true;
+            return NULL;
         }
-        bool Connector::query(const std::string& str, std::vector<std::vector<const char*>>& rows)
+        /*bool Connector::query(const std::string& str, std::vector<std::vector<const char*>>& rows)
         {
             PGresult *res = PQexec((PGconn*)serverConnector, str.c_str()); 
             if (PQresultStatus(res) != PGRES_TUPLES_OK)
@@ -184,8 +174,7 @@ namespace postgresql
             }
             PQclear(res);
             return true;
-        }
-}
+        }*/
 }
 }
 }

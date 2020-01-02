@@ -3,43 +3,40 @@
 
 #include <vector>
 
-#include "clientdb.hpp"
+#include "clientdb.hh"
 
 namespace octetos
 {
-namespace toolkit
-{
-namespace clientdb
+namespace db
 {
 namespace postgresql
 {                   
-	octetos::toolkit::Version getPakageVersion();
-	std::string getPakageName();	
+
         
-        class Datconnect : public toolkit::clientdb::Datconnect
+        class Datconnect : public db::Datconnect
         {
         public:         
             Datconnect(const std::string& host, unsigned int port,const std::string& database,const std::string& usuario,const std::string& password);
             Datconnect(const Datconnect& obj);
             const Datconnect& operator=(const Datconnect&);
         };
-        class Connector : public toolkit::clientdb::Connector
+
+        class Connector : public db::Connector
         {
         public:
             virtual ~Connector();
             Connector();
-            virtual bool connect(const toolkit::clientdb::Datconnect* connector);
-            virtual bool query(const std::string&);
-            virtual bool query(const std::string&, std::vector<std::vector<const char*>>&);
-            virtual Datresult* query(const char*);
+            const db::Datconnect& getDatconection() const; 
+			//
+            virtual bool connect(const db::Datconnect* connector);            
+            virtual db::Datresult* query(const std::string& str);
             virtual unsigned long long insert(const std::string&);
             virtual bool commit();
             virtual bool begin();
             virtual bool rollback();
-            const toolkit::clientdb::Datconnect& getDatconection() const;  
-            virtual void close();
+            virtual void close(); 
+			virtual core::Semver getVerionServer() const;
         };
-}
 }
 }
 }

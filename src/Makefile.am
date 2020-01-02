@@ -17,10 +17,13 @@ endif
 if WITH_DBI
 lib_LTLIBRARIES += liboctetos-db-dbi.la 
 endif
+if WITH_POSTGRESQL
+lib_LTLIBRARIES += liboctetos-db-postgresql.la 
+endif
 
 bin_PROGRAMS = 
 
-liboctetos_db_la_LDFLAGS =
+liboctetos_db_la_LDFLAGS = -z now
 if PLATFORM_WIN32
 liboctetos_db_la_LDFLAGS += -no-undefined
 endif
@@ -46,11 +49,18 @@ liboctetos_db_dbi_la_LIBDADD = $(DBI_LIBS) $(OCTETOS_CORE_CC_LIBS) liboctetos-db
 liboctetos_db_dbi_la_SOURCES = clientdb-dbi.cc
 endif
 
+if WITH_POSTGRESQL
+liboctetos_db_postgresql_la_LDFLAGS= 
+liboctetos_db_postgresql_la_CFLAGS = $(LIBPQ_CFLAGS) $(OCTETOS_CORE_CFLAGS)
+liboctetos_db_postgresql_la_CPPFLAGS = $(LIBPQ_CFLAGS) $(OCTETOS_CORE_CFLAGS)
+liboctetos_db_postgresql_la_LIBDADD = $(LIBPQ_LIBS) $(OCTETOS_CORE_LIBS) 
+liboctetos_db_postgresql_la_SOURCES = clientdb-postgresql.cc 
+endif
 
 octetos_db_includedir = $(includedir)/octetos/db
 octetos_db_include_HEADERS = clientdb.hh clientdb-mysql.hh clientdb-dbi.hh
 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = octetos-db.pc
+pkgconfig_DATA = octetos-db-mysql.pc
 
-EXTRA_DIST = octetos-db.pc.in
+EXTRA_DIST = octetos-db-mysql.pc.in

@@ -1,6 +1,7 @@
 #include <mysql/mysql.h>
 #include <iostream>
 #include <octetos/core/Artifact.hh>
+#include <string.h>
 
 #include "clientdb-mysql.hh"
 #include "config.h"
@@ -34,7 +35,7 @@ namespace mysql
 	std::string Row::getString(db::IndexField field)const 
 	{
 		MYSQL_ROW r = (MYSQL_ROW)row;
-		return r[field] ? std::string(r[field]) : "";
+		return r[field] ? r[field] : "";
 	}
 	Row::~Row()
 	{
@@ -47,7 +48,7 @@ namespace mysql
 	}
 	Row::Row(const Row& r)
 	{
-		
+		this->row = r.row;
 	}        
 	Row::Row()
 	{
@@ -55,7 +56,7 @@ namespace mysql
 	}
 	Row::Row(void* row)
 	{
-		
+		this->row = row;
 	}
         
         
@@ -163,7 +164,7 @@ namespace mysql
 	}
 	int Datresult::getint(db::IndexField field) const
 	{
-		if(!(Row*)actualRow) return actualRow->getint(field);
+		if(!actualRow) return actualRow->getint(field);
 		return 0;
 	}
 	long Datresult::getl(db::IndexField field)const
@@ -173,92 +174,42 @@ namespace mysql
 	}
 	long long Datresult::getll(db::IndexField field)const
 	{
-		if(!(Row*)actualRow) return ((Row*)actualRow)->getll(field);
-		return 0;
+		return ((Row*)actualRow)->getll(field);
 	}
 	std::string Datresult::getString(db::IndexField field)const 
 	{
-		if(!(Row*)actualRow) return ((Row*)actualRow)->getString(field);
-		return "";
+		if(actualRow) return "yes";
+		return "no";
 	}
-	/*db::Row* Datresult::getRow()
-	{
-		db::Row* ret = actualRow;
-		actualRow = NULL;
-
-		return ret;
-	}*/
 	bool Datresult::nextRow()
 	{
 		MYSQL_ROW row  = mysql_fetch_row((MYSQL_RES*)result);
-		if(actualRow != NULL)
+		if(actualRow)
 		{
 			delete actualRow;
-			actualRow = new Row((void*)row);
-#ifdef COLLETION_ASSISTANT
-			addChild(actualRow);
-#endif 
 		}
-		else
-		{
-			actualRow = new Row((void*)row);
+		actualRow = new Row(row);
 #ifdef COLLETION_ASSISTANT
-			addChild(actualRow);
-#endif 
-		}
-		
+		addChild(actualRow);
+#endif 		
 		if(row) return true;
 		return false;
 	}
-        /*db::Row* Datresult::operator[](unsigned long long index)
-        {
-                Row* r = NULL;
-                if(mysql_num_rows((MYSQL_RES*)result)  < index)
-                {
-                        mysql_data_seek((MYSQL_RES*)result,index); 
-                        if(index >= 0) 
-                        {
-                                MYSQL_ROW row  = mysql_fetch_row((MYSQL_RES*)result);
-                                 r = new Row(row);
-#ifdef COLLETION_ASSISTANT
-                                addChild(r);
-#endif                                 
-                                return r;
-                        }
-                        else
-                        {
-                                 r = new Row(NULL);
-                                  return r;
-                        }
-                        
-                }                
-                return r;
-        }*/
         
         Datresult::Datresult(void* result) : db::Datresult(result)
         {
 			actualRow = NULL;
         }
         
-        /*db::Row* Datresult::next()
-        {
-                MYSQL_ROW row  = mysql_fetch_row((MYSQL_RES*)result);
-                Row* r = new Row(row);
-#ifdef COLLETION_ASSISTANT
-                addChild(r);
-#endif                                 
-                return r;
-        }*/
 	Datresult::~Datresult()
 	{
-		if(actualRow != NULL)
+		if(actualRow)
 		{
 			delete actualRow;
 		}
-		if(result != NULL)
+		if(result)
 		{
 			mysql_free_result((MYSQL_RES*)result);
-			result = NULL;
 		}
 #ifdef COLLETION_ASSISTANT
 		if(getCountChilds() > 0)
@@ -312,9 +263,9 @@ namespace mysql
                 }
 #endif
         }
-        db::Datresult* Connector::query(const char* str)
+        db::Datresult* Connector::query(const char* strq)
         {
-                if (mysql_query((MYSQL*)serverConnector, str)  != 0) 
+                if (mysql_query((MYSQL*)serverConnector, strq)  != 0) 
                 {
                         std::string msg = "";
                         msg = msg + " MySQL Server Error No. : '";
@@ -347,7 +298,7 @@ namespace mysql
 	core::Semver Connector::getVerionServer() const
 	{
 		core::Semver ver;
-		ver.importFactors(mysql_get_server_version((MYSQL*)serverConnector),core::Semver::Imports::MySQL);
+		ver.set(mysql_get_server_version((MYSQL*)serverConnector),core::semver::ImportCode::MySQL);
 		
 		return ver;
 	}
