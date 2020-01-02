@@ -55,36 +55,33 @@ void testConnection()
 	octetos::db::postgresql::Datconnect dat("192.168.0.101",5432,"sysapp_v0001","sysapp","123456");
 	bool flag = false;
 	octetos::db::postgresql::Connector connector;
-    try
-    {
-		flag = connector.connect(&dat);
-	}
-	catch(octetos::db::SQLException& ex)
-	{
-		std::cerr<<ex.what()<< std::endl;
-		CU_ASSERT(false);
-	}
+	flag = connector.connect(&dat);
     if(flag)
     {
-        //printf("Version del Servidor  %s\n", connector.getVerionServer().toString().c_str());
+        printf("Version del Servidor  %s\n", connector.getVerionServer().toString().c_str());
 		CU_ASSERT(true);
     }
     else
     {
-        //printf("Fallo '%s' .\n",dat.toString().c_str());
+        printf("Fallo '%s' .\n",dat.toString().c_str());
 		CU_ASSERT(false);
     }
 
-	/*std::string queryStr = "select * from Persons";
-	octetos::db::Datresult* rs = connector.query(queryStr.c_str());
+	std::string queryStr = "select * from Versions";
+	octetos::db::Datresult* rs = connector.query(queryStr);
+	if(!rs)
+	{
+		std::cout << "'" << queryStr << "' no retorno resultado\n";
+		CU_ASSERT(false);
+		return;
+	}
 	while(rs->nextRow())
 	{
 		std::cout << rs->getString(1) << "\n";
 	}
 
 	delete rs;
-	connector.close();*/
-	
+	connector.close();
 }
 
 

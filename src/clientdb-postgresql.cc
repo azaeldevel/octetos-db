@@ -14,6 +14,153 @@ namespace db
 namespace postgresql
 {
         
+
+
+	size_t Datresult::getFieldLength(db::IndexField field) const
+	{
+
+	}
+	size_t Datresult::getFieldLength(const std::string&) const
+	{
+
+	}
+	IndexField Datresult::getFieldNumbers() const
+	{
+
+	}
+  	char Datresult::getchar(const std::string&)const
+	{
+
+	}
+	unsigned char Datresult::getuchar(const std::string&)const
+	{
+
+	}
+	short Datresult::getshort(const std::string&)const
+	{
+
+	}
+	unsigned short Datresult::getushort(const std::string&)const
+	{
+
+	}
+	unsigned int Datresult::getuint(const std::string&)const
+	{
+
+	}
+	unsigned long Datresult::getul(const std::string&)const
+	{
+
+	}
+	unsigned long long Datresult::getull(const std::string&)const
+	{
+
+	}
+	float Datresult::getfloat(const std::string&)const
+	{
+
+	}
+	double Datresult::getdouble(const std::string&)const
+	{
+
+	}
+	int Datresult::getint(const std::string&) const
+	{
+		
+	}
+	long Datresult::getl(const std::string&)const
+	{
+		
+	}
+	long long Datresult::getll(const std::string&)const
+	{
+		
+	}
+	std::string Datresult::getString(const std::string&)const 
+	{ 
+		
+	}
+	
+	char Datresult::getchar(db::IndexField field)const
+	{
+
+	}
+	unsigned char Datresult::getuchar(db::IndexField field)const
+	{
+
+	}
+	short Datresult::getshort(db::IndexField field)const
+	{
+
+	}
+	unsigned short Datresult::getushort(db::IndexField field)const
+	{
+
+	}
+	unsigned int Datresult::getuint(db::IndexField field)const
+	{
+
+	}
+	unsigned long Datresult::getul(db::IndexField field)const
+	{
+
+	}
+	unsigned long long Datresult::getull(db::IndexField field)const
+	{
+
+	}
+	float Datresult::getfloat(db::IndexField field)const
+	{
+
+	}
+	double Datresult::getdouble(db::IndexField field)const
+	{
+
+	}
+	int Datresult::getint(db::IndexField field) const
+	{
+	}
+	long Datresult::getl(db::IndexField field)const
+	{
+	}
+	long long Datresult::getll(db::IndexField field)const
+	{
+		
+	}
+	std::string Datresult::getString(db::IndexField field)const 
+	{
+		return PQgetvalue((PGresult*)result,currentRow,field);
+	}
+	bool Datresult::nextRow()
+	{
+		if(PQntuples((PGresult*)result) > currentRow + 1) 
+		{
+			currentRow++;
+			return true;
+		}
+
+		return false;
+	}
+        
+        Datresult::Datresult(void* result) : db::Datresult(result)
+        {
+			currentRow = -1;
+        }
+        
+	Datresult::~Datresult()
+	{
+		if(result)
+		{
+			PQclear((PGresult*)result);
+		}
+#ifdef COLLETION_ASSISTANT
+		if(getCountChilds() > 0)
+		{
+			std::cerr << "Una instacia de '" << typeid(*this).name() << "' termino sin que todos sus hijos terminaran primero" << std::endl;
+		}
+#endif
+	}
+
 	
         /*std::string Datasource::toString() const
         {		
@@ -54,8 +201,7 @@ namespace postgresql
         } 
         void Connector::close()
         {
-            if(serverConnector != NULL) PQfinish((PGconn*)serverConnector);
-            serverConnector  = NULL;
+            if(!serverConnector) PQfinish((PGconn*)serverConnector);
         }        
         bool Connector::begin()
         {
@@ -131,28 +277,31 @@ namespace postgresql
             {
                 strsql = strsql + " password=" + conection->getPassword();
             }
-            PGconn *serverConnector = PQconnectdb(strsql.c_str());
-            if (PQstatus(serverConnector) == CONNECTION_BAD) 
+            serverConnector = PQconnectdb(strsql.c_str());
+            if (PQstatus((PGconn*)serverConnector) == CONNECTION_BAD) 
             {
-                std::string msg = PQerrorMessage(serverConnector);                  
-                PQfinish(serverConnector);
-                throw SQLException(msg);  
+                //std::string msg = PQerrorMessage((PGconn*)serverConnector);  
+                //throw SQLException(msg);  
+				return false;
             }
             
-            this->serverConnector = serverConnector;
-            datconection = conection;
             return true;
         }        
-        db::Datresult* Connector::query(const std::string& str)
-        {
-            PGresult *res = PQexec((PGconn*)serverConnector, str.c_str()); 
-            if (PQresultStatus(res) != PGRES_TUPLES_OK)
-            {
-                throw SQLExceptionQuery("No se retorno datos.");        
-                PQclear(res);
-            }
-            return NULL;
-        }
+	db::Datresult* Connector::query(const std::string& str)
+	{
+		PGresult *res = PQexec((PGconn*)serverConnector, str.c_str());
+		if (PQresultStatus(res) != PGRES_TUPLES_OK)
+		{		
+			return NULL;
+		}
+		
+		Datresult* dtrs = new Datresult(res);
+#ifdef COLLETION_ASSISTANT
+		addChild(dtrs);
+#endif    
+		return dtrs;			
+		
+	}
         /*bool Connector::query(const std::string& str, std::vector<std::vector<const char*>>& rows)
         {
             PGresult *res = PQexec((PGconn*)serverConnector, str.c_str()); 

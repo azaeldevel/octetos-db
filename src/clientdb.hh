@@ -109,7 +109,6 @@ namespace db
 	{
 	protected:
 		void* result;
-		unsigned long long currentRow;
                 
 	public:
 		Datresult(void* result);
