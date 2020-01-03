@@ -185,7 +185,7 @@ namespace postgresql
 	core::Semver Connector::getVerionServer() const
 	{
 		core::Semver ver;
-		ver.set(PQserverVersion((PGconn*)getConnection()),core::semver::ImportCode::PostgreSQL);
+		ver.set(PQserverVersion((PGconn*)conn),core::semver::ImportCode::PostgreSQL);
 
 		return ver;
 	}
@@ -202,11 +202,11 @@ namespace postgresql
         } 
         void Connector::close()
         {
-			PGconn* conn = (PGconn*)getConnection();
-            if(conn) 
+            if((PGconn*)conn) 
 			{
-				PQfinish(conn);
-				setConnecion (NULL,NULL);
+				PQfinish((PGconn*)conn);
+				conn=NULL;
+				datconn=NULL;
 			}
         }        
         bool Connector::begin()
@@ -223,14 +223,14 @@ namespace postgresql
         }
         RowNumber Connector::insert(const std::string& str)
         { 		
-            PGresult *res = PQexec((PGconn*)getConnection(), str.c_str()); 
+            PGresult *res = PQexec((PGconn*)conn, str.c_str()); 
             if (res == NULL)
             {
                 throw SQLExceptionQuery("La consuta de insert fallo.");        
                 PQclear(res);
             }        
 			
-			res = PQexec((PGconn*)getConnection(), "SELECT lastval()"); 
+			res = PQexec((PGconn*)conn, "SELECT lastval()"); 
             if (res == NULL)
             {
                 throw SQLExceptionQuery("No se retorno datos.");        
@@ -283,19 +283,19 @@ namespace postgresql
             {
                 strsql = strsql + " password=" + conection->getPassword();
             }
-			PGconn* conn = PQconnectdb(strsql.c_str());
-            if (PQstatus(conn) == CONNECTION_BAD) 
+			conn = PQconnectdb(strsql.c_str());
+            if (PQstatus((PGconn*)conn) == CONNECTION_BAD) 
             {
                 //std::string msg = PQerrorMessage((PGconn*)serverConnector);  
                 //throw SQLException(msg);  
 				return false;
-            }            
-            setConnecion(conn,conection);
+            }           
+			datconn = conection;
             return true;
         }        
 	db::Datresult* Connector::execute(const std::string& str)
 	{
-		PGresult *res = PQexec((PGconn*)getConnection(), str.c_str());
+		PGresult *res = PQexec((PGconn*)conn, str.c_str());
 		if (PQresultStatus(res) != PGRES_TUPLES_OK)
 		{		
 			return NULL;

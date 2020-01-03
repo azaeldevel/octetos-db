@@ -24,14 +24,14 @@ namespace db
 	core::Artifact getPackageInfo();
 
 
-	class SQLException : public std::exception
+	class SQLException : public core::Error
 	{
 	public:
 		virtual ~SQLException() throw();
-		virtual const char* what() const throw();
+		//virtual const char* what() const throw();
 		SQLException(const std::string &description) throw();
 	private:
-		std::string description;
+		//std::string description;
 	};
 	class SQLExceptionConnection : public SQLException
 	{
@@ -94,7 +94,7 @@ namespace db
         
 	class Datresult : public core::Object
 	{
-	private:
+	protected:
 		Result result;
     	
 	public:
@@ -134,12 +134,12 @@ namespace db
         
 	class Connector : public core::Object
 	{
-	private:
+	protected:
 		Connection conn;
-		const Datconnect* datconection;
+		const Datconnect* datconn;
 
 	protected:
-		void setConnecion(Connection,const Datconnect*);
+		//void setConnecion(Connection,const Datconnect*);
             
 	public:
             //

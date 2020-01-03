@@ -69,19 +69,19 @@ namespace db
 	}	
     
     
-	SQLException::SQLException(const std::string &description) throw()
+	SQLException::SQLException(const std::string &d)throw():core::Error(d) 
 	{
-		this->description = description;
+		//this->description = description;
 	}
 	
 	SQLException::~SQLException() throw()
 	{
 		
 	}	
-        const char* SQLException::what() const throw()
+        /*const char* SQLException::what() const throw()
         {
                 return this->description.c_str();
-        }
+        }*/
 
         
         
@@ -228,11 +228,11 @@ namespace db
 
 
 	
-	void Connector::setConnecion(Connection c,const Datconnect* datc)
+	/*void Connector::setConnecion(Connection c,const Datconnect* datc)
 	{
 		conn = c;
 		datconection = datc;
-	}
+	}*/
 	/*Connector::Connector(const Connector& obj)
 	{
 		conn = obj.conn;
@@ -241,7 +241,7 @@ namespace db
 	const Connector&Connector:: operator=(const Connector& obj)       
 	{
 		conn = obj.conn;
-		datconection = obj.datconection;            
+		datconn = obj.datconn;            
 		return *this;
 	}
         
@@ -359,7 +359,7 @@ namespace db
         }
         const Datconnect* Connector::getDatconection() const
         {
-            return datconection;
+            return datconn;
         }
 
 

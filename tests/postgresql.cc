@@ -87,7 +87,7 @@ void testConnection()
 
 int main(int argc, char *argv[])
 {
-	octetos::core::Artifact packinfo = octetos::core::getPackageInfo();
+	octetos::core::Artifact packinfo = octetos::db::getPackageInfo();
 	octetos::core::Semver& ver = packinfo.version;
 	int majorDevelop = 0;
 	if(majorDevelop != ver.getMajor())

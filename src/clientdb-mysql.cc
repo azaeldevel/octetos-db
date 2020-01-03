@@ -258,37 +258,39 @@ namespace mysql
                 }
 #endif
         }
-        db::Datresult* Connector::execute(const std::string& strq)
-        {
-                if (mysql_query((MYSQL*)getConnection(), strq.c_str())  != 0) 
-                {
+	db::Datresult* Connector::execute(const std::string& strq)
+	{
+		if (mysql_query((MYSQL*)conn, strq.c_str())  != 0) 
+		{
                         std::string msg = "";
                         msg = msg + " MySQL Server Error No. : '";
-                        msg = msg + std::to_string(mysql_errno((MYSQL*)getConnection()));
+                        msg = msg + std::to_string(mysql_errno((MYSQL*)conn));
                         msg = msg + "' ";
-                        msg = msg + mysql_error((MYSQL*)getConnection());
-                        throw SQLException(msg);   
-                }
-                MYSQL_RES *result = mysql_store_result((MYSQL*)getConnection());
-                if (result == NULL && mysql_errno((MYSQL*)getConnection()) != 0) 
-                {
+                        msg = msg + mysql_error((MYSQL*)conn);  
+			core::Error::write(SQLException(msg)); 
+			return NULL;
+		}
+		MYSQL_RES *result = mysql_store_result((MYSQL*)conn);
+		if (result == NULL && mysql_errno((MYSQL*)conn) != 0) 
+		{
                         std::string msg = "";
                         msg = msg + " MySQL Server Error No. : '";
-                        msg = msg + std::to_string(mysql_errno((MYSQL*)getConnection()));
+                        msg = msg + std::to_string(mysql_errno((MYSQL*)conn));
                         msg = msg + "' ";
-                        msg = msg + mysql_error((MYSQL*)getConnection());
-                        throw SQLException(msg);   
-                }
+                        msg = msg + mysql_error((MYSQL*)conn);  
+			core::Error::write(SQLException(msg));
+			return NULL;
+		}
                 Datresult* dtrs = new Datresult(result);
 #ifdef COLLETION_ASSISTANT
                 addChild(dtrs);
 #endif    
                 return dtrs;
-        }
+	}
 	core::Semver Connector::getVerionServer() const
 	{
 		core::Semver ver;
-		ver.set(mysql_get_server_version((MYSQL*)getConnection()),core::semver::ImportCode::MySQL);
+		ver.set(mysql_get_server_version((MYSQL*)conn),core::semver::ImportCode::MySQL);
 		
 		return ver;
 	}
@@ -298,18 +300,18 @@ namespace mysql
         }
 	void Connector::close()
 	{
-		MYSQL* conn = (MYSQL*)getConnection();
 		if (conn) 
 		{
-			mysql_close(conn);
-			setConnecion (NULL,NULL);
+			mysql_close((MYSQL*)conn);
+			conn = NULL;
+			datconn = NULL;
 		}
 	}       
         bool Connector::rollback()
         {
-                if (getConnection() != NULL)
+                if (conn != NULL)
                 {
-                        if(mysql_rollback((MYSQL*)getConnection()) == 0)
+                        if(mysql_rollback((MYSQL*)conn) == 0)
                         {
                         return true;
                         }
@@ -319,9 +321,9 @@ namespace mysql
         }        
         bool Connector::commit()
         {
-            if (getConnection() != NULL)
+            if (conn != NULL)
             {
-                if(mysql_commit((MYSQL*)getConnection()) == 0)
+                if(mysql_commit((MYSQL*)conn) == 0)
                 {
                     return true;
                 }
@@ -331,9 +333,9 @@ namespace mysql
         }
 	RowNumber Connector::insert(const std::string& str)
         {
-            if (mysql_query((MYSQL*)getConnection(), str.c_str()) == 0) 
+            if (mysql_query((MYSQL*)conn, str.c_str()) == 0) 
             {
-                return mysql_insert_id((MYSQL*)getConnection());
+                return mysql_insert_id((MYSQL*)conn);
             }
             else
             {   
@@ -346,38 +348,38 @@ namespace mysql
         }*/
         bool Connector::connect(const db::Datconnect* dtcon)
         {
-            MYSQL* conn = mysql_init(NULL);
-            if (getConnection() == NULL)
+           	conn = mysql_init(NULL);
+            if (conn == NULL)
             {
-                /*std::string msg = "";
+                std::string msg = "";
                 msg = msg + " MySQL Server Error No. : '";
-                msg = msg + std::to_string(mysql_errno(conn));
+                msg = msg + std::to_string(mysql_errno((MYSQL*)conn));
                 msg = msg + "' ";
-                msg = msg + mysql_error(conn);
-                throw SQLException(msg);*/
+                msg = msg + mysql_error((MYSQL*)conn);  
+				core::Error::write(SQLException(msg));
 				return false;
             }
-            if (mysql_real_connect(conn, dtcon->getHost().c_str(), dtcon->getUser().c_str(), dtcon->getPassword().c_str(),dtcon->getDatabase().c_str(),dtcon->getPort(), NULL, 0) == NULL)
+            if (mysql_real_connect((MYSQL*)conn, dtcon->getHost().c_str(), dtcon->getUser().c_str(), dtcon->getPassword().c_str(),dtcon->getDatabase().c_str(),dtcon->getPort(), NULL, 0) == NULL)
             {
-                /*std::string msg = "";
+                std::string msg = "";
                 msg = msg + " MySQL Server Error No. : '";
-                msg = msg + std::to_string(mysql_errno(conn));
+                msg = msg + std::to_string(mysql_errno((MYSQL*)conn));
                 msg = msg + "' ";
-                msg = msg + mysql_error(conn);
-                throw SQLException(msg);*/
+                msg = msg + mysql_error((MYSQL*)conn);
+				core::Error::write(SQLException(msg));
 				return false;
             }        
-            if(mysql_autocommit(conn,0) != 0)
+            if(mysql_autocommit((MYSQL*)conn,0) != 0)
             {
-                /*std::string msg = "";
+                std::string msg = "";
                 msg = msg + " MySQL Server Error No. : '";
-                msg = msg + std::to_string(mysql_errno(conn));
+                msg = msg + std::to_string(mysql_errno((MYSQL*)conn));
                 msg = msg + "' ";
-                msg = msg + mysql_error(conn);
-                throw SQLException(msg);*/
+                msg = msg + mysql_error((MYSQL*)conn);                
+				core::Error::write(SQLException(msg));
 				return false;
             }        
-			setConnecion(conn,dtcon);
+			datconn = dtcon;
             return true;
         }
 }
