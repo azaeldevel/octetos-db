@@ -176,7 +176,7 @@ namespace db
 			//
             virtual bool connect(const Datconnect* connector)  = 0;            
             virtual Datresult* execute(const std::string& str) = 0;
-            //virtual unsigned long long insert(const std::string&) = 0;
+            virtual unsigned long long insert(const std::string&) = 0;
             virtual bool commit() = 0;
             virtual bool begin() = 0;
             virtual bool rollback() = 0;

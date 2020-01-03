@@ -74,6 +74,7 @@ namespace postgresql
 			//
             virtual bool connect(const db::Datconnect* connector);            
             virtual db::Datresult* execute(const std::string& str);
+		virtual unsigned long long insert(const std::string&);
             virtual bool commit();
             virtual bool begin();
             virtual bool rollback();

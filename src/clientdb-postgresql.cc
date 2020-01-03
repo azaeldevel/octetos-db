@@ -221,7 +221,7 @@ namespace postgresql
         {
             return execute("COMMIT"); 
         }
-        /*unsigned long long Connector::insert(const std::string& str)
+        unsigned long long Connector::insert(const std::string& str)
         { 		
             PGresult *res = PQexec((PGconn*)getConnection(), str.c_str()); 
             if (res == NULL)
@@ -248,7 +248,7 @@ namespace postgresql
 			}
 			
             return ID;		
-        }*/   
+        } 
         bool Connector::connect(const db::Datconnect* conection)
         {
             std::string strsql = "";

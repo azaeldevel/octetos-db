@@ -51,7 +51,7 @@ int clean(void)
 
 void testConnection()
 {
-	///MySQL
+	///PostgreSQL
 	octetos::db::postgresql::Datconnect dat("192.168.0.101",5432,"sysapp_v0001","sysapp","123456");
 	bool flag = false;
 	octetos::db::postgresql::Connector connector;

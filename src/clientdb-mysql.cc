@@ -333,17 +333,17 @@ namespace mysql
             
             return false; 
         }
-        /*unsigned long long Connector::insert(const std::string& str)
+        unsigned long long Connector::insert(const std::string& str)
         {
-            if (mysql_query((MYSQL*)serverConnector, str.c_str()) == 0) 
+            if (mysql_query((MYSQL*)getConnection(), str.c_str()) == 0) 
             {
-                return mysql_insert_id((MYSQL*)serverConnector);
+                return mysql_insert_id((MYSQL*)getConnection());
             }
             else
             {   
                 return 0; 
             }		
-        }     */   
+        }     
         /*const char* Connector::serverDescription()
         {
             return mysql_get_client_info();
