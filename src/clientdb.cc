@@ -348,10 +348,10 @@ namespace db
         {
             return conn;
         }
-        /*const Datconnect* Connector::getDatconection() const
+        const Datconnect* Connector::getDatconection() const
         {
             return datconection;
-        }*/
+        }
 
 
         

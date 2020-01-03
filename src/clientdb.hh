@@ -171,7 +171,7 @@ namespace db
             Connector();
             //Connector(const Connector&);
             Connection getConnection()const;
-            //const Datconnect* getDatconection() const; 
+            const Datconnect* getDatconection() const; 
             const Connector& operator=(const Connector& obj);
 			//
             virtual bool connect(const Datconnect* connector)  = 0;            
