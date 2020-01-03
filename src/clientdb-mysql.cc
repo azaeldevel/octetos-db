@@ -17,22 +17,22 @@ namespace mysql
 
 
 
-	int Row::getint(db::IndexField field)const
+	int Row::getint(FieldNumber field)const
 	{
 		MYSQL_ROW r = (MYSQL_ROW)row;
 		return r[field] ? std::atol(r[field]) : 0;
 	}
-	long Row::getl(db::IndexField field)const
+	long Row::getl(FieldNumber field)const
 	{
 		MYSQL_ROW r = (MYSQL_ROW)row;
 		return r[field] ? std::atol(r[field]) : 0;
 	}
-	long long Row::getll(db::IndexField field)const
+	long long Row::getll(FieldNumber field)const
 	{
 		MYSQL_ROW r = (MYSQL_ROW)row;
 		return r[field] ? std::atoll(r[field]) : 0;
 	}
-	std::string Row::getString(db::IndexField field)const 
+	std::string Row::getString(FieldNumber field)const 
 	{
 		MYSQL_ROW r = (MYSQL_ROW)row;
 		return r[field] ? r[field] : "";
@@ -61,18 +61,6 @@ namespace mysql
         
         
 
-	size_t Datresult::getFieldLength(db::IndexField field) const
-	{
-
-	}
-	size_t Datresult::getFieldLength(const std::string&) const
-	{
-
-	}
-	IndexField Datresult::getFieldNumbers() const
-	{
-
-	}
   	char Datresult::getchar(const std::string&)const
 	{
 
@@ -126,57 +114,57 @@ namespace mysql
 		
 	}
 	
-	char Datresult::getchar(db::IndexField field)const
+	char Datresult::getchar(FieldNumber field)const
 	{
 
 	}
-	unsigned char Datresult::getuchar(db::IndexField field)const
+	unsigned char Datresult::getuchar(FieldNumber field)const
 	{
 
 	}
-	short Datresult::getshort(db::IndexField field)const
+	short Datresult::getshort(FieldNumber field)const
 	{
 
 	}
-	unsigned short Datresult::getushort(db::IndexField field)const
+	unsigned short Datresult::getushort(FieldNumber field)const
 	{
 
 	}
-	unsigned int Datresult::getuint(db::IndexField field)const
+	unsigned int Datresult::getuint(FieldNumber field)const
 	{
 
 	}
-	unsigned long Datresult::getul(db::IndexField field)const
+	unsigned long Datresult::getul(FieldNumber field)const
 	{
 
 	}
-	unsigned long long Datresult::getull(db::IndexField field)const
+	unsigned long long Datresult::getull(FieldNumber field)const
 	{
 
 	}
-	float Datresult::getfloat(db::IndexField field)const
+	float Datresult::getfloat(FieldNumber field)const
 	{
 
 	}
-	double Datresult::getdouble(db::IndexField field)const
+	double Datresult::getdouble(FieldNumber field)const
 	{
 
 	}
-	int Datresult::getint(db::IndexField field) const
+	int Datresult::getint(FieldNumber field) const
 	{
 		if(!actualRow) return actualRow->getint(field);
 		return 0;
 	}
-	long Datresult::getl(db::IndexField field)const
+	long Datresult::getl(FieldNumber field)const
 	{
 		if(!(Row*)actualRow) return ((Row*)actualRow)->getl(field);
 		return 0;
 	}
-	long long Datresult::getll(db::IndexField field)const
+	long long Datresult::getll(FieldNumber field)const
 	{
 		return ((Row*)actualRow)->getll(field);
 	}
-	std::string Datresult::getString(db::IndexField field)const 
+	std::string Datresult::getString(FieldNumber field)const 
 	{
 		return actualRow ? ((Row*)actualRow)->getString(field) : "";
 	}
@@ -248,7 +236,15 @@ namespace mysql
         
         
 
-        
+	Datresult* Connector::select(const std::string& str)
+	{
+	}		
+	RowNumber Connector::update(const std::string&)
+	{
+	}		
+	RowNumber Connector::remove(const std::string&)
+	{
+	}
         Connector::Connector()
         {
         }
@@ -333,7 +329,7 @@ namespace mysql
             
             return false; 
         }
-        unsigned long long Connector::insert(const std::string& str)
+	RowNumber Connector::insert(const std::string& str)
         {
             if (mysql_query((MYSQL*)getConnection(), str.c_str()) == 0) 
             {

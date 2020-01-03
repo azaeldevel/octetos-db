@@ -14,13 +14,15 @@ namespace db
 	typedef Handler Connection;
 	typedef Handler Result;
 
+	typedef unsigned long long RowNumber;
+	typedef unsigned int FieldNumber;
+
 	
 	/**
 	 * \brief retorna la informacion del paquete usese ne lugar getPakageVersion y getPakageName
 	 **/
 	core::Artifact getPackageInfo();
 
-	typedef unsigned int IndexField;
 
 	class SQLException : public std::exception
 	{
@@ -120,19 +122,19 @@ namespace db
 		virtual bool nextRow() = 0;
 		Result getResult() const;
 		//retrive data field by index
-		virtual char getchar(IndexField field)const = 0;
-		virtual unsigned char getuchar(IndexField field)const = 0;
-		virtual short getshort(IndexField field)const = 0;
-		virtual unsigned short getushort(IndexField field)const = 0;
-		virtual int getint(IndexField field)const = 0;
-		virtual unsigned int getuint(IndexField field)const = 0;
-		virtual long getl(IndexField field)const = 0;
-		virtual unsigned long getul(IndexField field)const = 0;
-		virtual long long getll(IndexField field)const = 0;
-		virtual unsigned long long getull(IndexField field)const = 0;
-		virtual float getfloat(IndexField field)const = 0;
-		virtual double getdouble(IndexField field)const = 0;
-		virtual std::string getString(IndexField field)const = 0;
+		virtual char getchar(FieldNumber field)const = 0;
+		virtual unsigned char getuchar(FieldNumber field)const = 0;
+		virtual short getshort(FieldNumber field)const = 0;
+		virtual unsigned short getushort(FieldNumber field)const = 0;
+		virtual int getint(FieldNumber field)const = 0;
+		virtual unsigned int getuint(FieldNumber field)const = 0;
+		virtual long getl(FieldNumber field)const = 0;
+		virtual unsigned long getul(FieldNumber field)const = 0;
+		virtual long long getll(FieldNumber field)const = 0;
+		virtual unsigned long long getull(FieldNumber field)const = 0;
+		virtual float getfloat(FieldNumber field)const = 0;
+		virtual double getdouble(FieldNumber field)const = 0;
+		virtual std::string getString(FieldNumber field)const = 0;
 		//retrive data field by name
 		virtual char getchar(const std::string&)const = 0;
 		virtual unsigned char getuchar(const std::string&)const = 0;
@@ -148,9 +150,6 @@ namespace db
 		virtual double getdouble(const std::string&)const = 0;
 		virtual std::string getString(const std::string&)const = 0;
 		//retrive field meta-data
-		virtual size_t getFieldLength(db::IndexField field) const = 0;
-		virtual size_t getFieldLength(const std::string&) const = 0;
-		virtual IndexField getFieldNumbers() const = 0;
 	};
         
 	class Connector : public core::Object
@@ -175,8 +174,11 @@ namespace db
             const Connector& operator=(const Connector& obj);
 			//
             virtual bool connect(const Datconnect* connector)  = 0;            
-            virtual Datresult* execute(const std::string& str) = 0;
-            virtual unsigned long long insert(const std::string&) = 0;
+            virtual Datresult* execute(const std::string& str) = 0;  
+            virtual RowNumber insert(const std::string&) = 0;         
+            virtual Datresult* select(const std::string& str) = 0;
+            virtual RowNumber update(const std::string&) = 0;
+            virtual RowNumber remove(const std::string&) = 0;
             virtual bool commit() = 0;
             virtual bool begin() = 0;
             virtual bool rollback() = 0;

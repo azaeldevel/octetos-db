@@ -18,15 +18,6 @@ namespace postgresql
         
 
 
-	size_t Datresult::getFieldLength(db::IndexField field) const
-	{
-	}
-	size_t Datresult::getFieldLength(const std::string&) const
-	{
-	}
-	IndexField Datresult::getFieldNumbers() const
-	{
-	}
   	char Datresult::getchar(const std::string&)const
 	{
 	}
@@ -68,67 +59,67 @@ namespace postgresql
 	{		
 	}
 	
-	char Datresult::getchar(db::IndexField field)const
+	char Datresult::getchar(FieldNumber field)const
 	{
 		const char* str = PQgetvalue((PGresult*)getResult(),currentRow,field);
 		return str ? str[0] : '\0';
 	}
-	unsigned char Datresult::getuchar(db::IndexField field)const
+	unsigned char Datresult::getuchar(FieldNumber field)const
 	{
 		const char* str = PQgetvalue((PGresult*)getResult(),currentRow,field);
 		return str ? str[0] : '\0';
 	}
-	short Datresult::getshort(db::IndexField field)const
+	short Datresult::getshort(FieldNumber field)const
 	{
 		const char* str = PQgetvalue((PGresult*)getResult(),currentRow,field);
 		return str ? (short)std::stoi(str) : 0;
 	}
-	unsigned short Datresult::getushort(db::IndexField field)const
+	unsigned short Datresult::getushort(FieldNumber field)const
 	{
 		const char* str = PQgetvalue((PGresult*)getResult(),currentRow,field);
 		return str ? (unsigned short)std::stoul(str) : 0;
 	}
-	unsigned int Datresult::getuint(db::IndexField field)const
+	unsigned int Datresult::getuint(FieldNumber field)const
 	{
 		const char* str = PQgetvalue((PGresult*)getResult(),currentRow,field);
 		return str ? (unsigned int)std::stoul(str) : 0;
 	}
-	unsigned long Datresult::getul(db::IndexField field)const
+	unsigned long Datresult::getul(FieldNumber field)const
 	{
 		const char* str = PQgetvalue((PGresult*)getResult(),currentRow,field);
 		return str ? std::stoul(str) : 0;
 	}
-	unsigned long long Datresult::getull(db::IndexField field)const
+	unsigned long long Datresult::getull(FieldNumber field)const
 	{
 		const char* str = PQgetvalue((PGresult*)getResult(),currentRow,field);
 		return str ? std::stoull(str) : 0;
 	}
-	float Datresult::getfloat(db::IndexField field)const
+	float Datresult::getfloat(FieldNumber field)const
 	{
 		const char* str = PQgetvalue((PGresult*)getResult(),currentRow,field);
 		return str ? std::stod(str) : 0;
 	}
-	double Datresult::getdouble(db::IndexField field)const
+	double Datresult::getdouble(FieldNumber field)const
 	{
 		const char* str = PQgetvalue((PGresult*)getResult(),currentRow,field);
 		return str ? std::atoi(str) : 0;
 	}
-	int Datresult::getint(db::IndexField field) const
+	int Datresult::getint(FieldNumber field) const
 	{
 		const char* str = PQgetvalue((PGresult*)getResult(),currentRow,field);
 		return str ? std::atoi(str) : 0;
 	}
-	long Datresult::getl(db::IndexField field)const
+	long Datresult::getl(FieldNumber field)const
 	{
 		const char* str = PQgetvalue((PGresult*)getResult(),currentRow,field);
 		return str ? std::atol(str) : 0;
 	}
-	long long Datresult::getll(db::IndexField field)const
+	long long Datresult::getll(FieldNumber field)const
 	{
 		const char* str = PQgetvalue((PGresult*)getResult(),currentRow,field);
 		return str ? std::atoll(str) : 0;
 	}
-	std::string Datresult::getString(db::IndexField field)const 
+	std::string Datresult::getString(FieldNumber field)const 
 	{
 		return PQgetvalue((PGresult*)getResult(),currentRow,field);
 	}
@@ -181,7 +172,16 @@ namespace postgresql
         }
         
         
-        
+       
+	Datresult* Connector::select(const std::string& str)
+	{
+	}		
+	RowNumber Connector::update(const std::string&)
+	{
+	}		
+	RowNumber Connector::remove(const std::string&)
+	{
+	}		
 	core::Semver Connector::getVerionServer() const
 	{
 		core::Semver ver;
@@ -221,7 +221,7 @@ namespace postgresql
         {
             return execute("COMMIT"); 
         }
-        unsigned long long Connector::insert(const std::string& str)
+        RowNumber Connector::insert(const std::string& str)
         { 		
             PGresult *res = PQexec((PGconn*)getConnection(), str.c_str()); 
             if (res == NULL)

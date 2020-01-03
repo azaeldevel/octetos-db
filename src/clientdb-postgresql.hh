@@ -32,19 +32,19 @@ namespace postgresql
 		virtual ~Datresult();
 		virtual bool nextRow();
 		//retrive data field by index
-		virtual char getchar(IndexField field)const;
-		virtual unsigned char getuchar(IndexField field)const;
-		virtual short getshort(IndexField field)const;
-		virtual unsigned short getushort(IndexField field)const;
-		virtual int getint(IndexField field)const;
-		virtual unsigned int getuint(IndexField field)const;
-		virtual long getl(IndexField field)const;
-		virtual unsigned long getul(IndexField field)const;
-		virtual long long getll(IndexField field)const;
-		virtual unsigned long long getull(IndexField field)const;
-		virtual float getfloat(IndexField field)const;
-		virtual double getdouble(IndexField field)const;
-		virtual std::string getString(IndexField field)const;
+		virtual char getchar(FieldNumber field)const;
+		virtual unsigned char getuchar(FieldNumber field)const;
+		virtual short getshort(FieldNumber field)const;
+		virtual unsigned short getushort(FieldNumber field)const;
+		virtual int getint(FieldNumber field)const;
+		virtual unsigned int getuint(FieldNumber field)const;
+		virtual long getl(FieldNumber field)const;
+		virtual unsigned long getul(FieldNumber field)const;
+		virtual long long getll(FieldNumber field)const;
+		virtual unsigned long long getull(FieldNumber field)const;
+		virtual float getfloat(FieldNumber field)const;
+		virtual double getdouble(FieldNumber field)const;
+		virtual std::string getString(FieldNumber field)const;
 		//retrive data field by name
 		virtual char getchar(const std::string&)const;
 		virtual unsigned char getuchar(const std::string&)const;
@@ -59,28 +59,27 @@ namespace postgresql
 		virtual float getfloat(const std::string&)const;
 		virtual double getdouble(const std::string&)const;
 		virtual std::string getString(const std::string&)const;
-		//retrive field meta-data
-		virtual size_t getFieldLength(db::IndexField field) const;
-		virtual size_t getFieldLength(const std::string&) const;
-		virtual IndexField getFieldNumbers() const;
 	};
 
-        class Connector : public db::Connector
-        {
-        public:
-            virtual ~Connector();
-            Connector();
-            const db::Datconnect& getDatconection() const; 
-			//
-            virtual bool connect(const db::Datconnect* connector);            
-            virtual db::Datresult* execute(const std::string& str);
-		virtual unsigned long long insert(const std::string&);
-            virtual bool commit();
-            virtual bool begin();
-            virtual bool rollback();
-            virtual void close(); 
-			virtual core::Semver getVerionServer() const;
-        };
+	class Connector : public db::Connector
+	{
+	public:
+		virtual ~Connector();
+		Connector();
+		const db::Datconnect& getDatconection() const; 
+		//
+		virtual bool connect(const db::Datconnect* connector);            
+		virtual db::Datresult* execute(const std::string& str);
+		virtual RowNumber insert(const std::string&);         
+		virtual Datresult* select(const std::string& str);
+		virtual RowNumber update(const std::string&);
+		virtual RowNumber remove(const std::string&);
+		virtual bool commit();
+		virtual bool begin();
+		virtual bool rollback();
+		virtual void close(); 
+		virtual core::Semver getVerionServer() const;
+	};
 }
 }
 }

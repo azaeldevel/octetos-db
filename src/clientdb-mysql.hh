@@ -36,10 +36,10 @@ namespace mysql
 		Row();
 		Row(void* row);
 		Row(const Row& row);
-		virtual int getint(db::IndexField field)const;
-		virtual long getl(db::IndexField field)const;
-		virtual long long getll(db::IndexField field)const;
-		virtual std::string getString(db::IndexField field)const;
+		virtual int getint(FieldNumber field)const;
+		virtual long getl(FieldNumber field)const;
+		virtual long long getll(FieldNumber field)const;
+		virtual std::string getString(FieldNumber field)const;
 	};
         
 	class Datresult : public db::Datresult
@@ -55,19 +55,19 @@ namespace mysql
 		virtual bool nextRow();
 		//virtual db::Row* getRow();
 		//retrive data field by index
-		virtual char getchar(db::IndexField field)const;
-		virtual unsigned char getuchar(db::IndexField field)const;
-		virtual short getshort(db::IndexField field)const;
-		virtual unsigned short getushort(db::IndexField field)const;
-		virtual int getint(db::IndexField field)const;
-		virtual unsigned int getuint(db::IndexField field)const;
-		virtual long getl(db::IndexField field)const;
-		virtual unsigned long getul(db::IndexField field)const;
-		virtual long long getll(db::IndexField field)const;
-		virtual unsigned long long getull(db::IndexField field)const;
-		virtual float getfloat(db::IndexField field)const;
-		virtual double getdouble(db::IndexField field)const;
-		virtual std::string getString(db::IndexField field)const;
+		virtual char getchar(FieldNumber field)const;
+		virtual unsigned char getuchar(FieldNumber field)const;
+		virtual short getshort(FieldNumber field)const;
+		virtual unsigned short getushort(FieldNumber field)const;
+		virtual int getint(FieldNumber field)const;
+		virtual unsigned int getuint(FieldNumber field)const;
+		virtual long getl(FieldNumber field)const;
+		virtual unsigned long getul(FieldNumber field)const;
+		virtual long long getll(FieldNumber field)const;
+		virtual unsigned long long getull(FieldNumber field)const;
+		virtual float getfloat(FieldNumber field)const;
+		virtual double getdouble(FieldNumber field)const;
+		virtual std::string getString(FieldNumber field)const;
 		//retrive data field by name
 		virtual char getchar(const std::string&)const;
 		virtual unsigned char getuchar(const std::string&)const;
@@ -83,9 +83,6 @@ namespace mysql
 		virtual double getdouble(const std::string&)const;
 		virtual std::string getString(const std::string&)const;
 		//retrive field meta-data
-		virtual size_t getFieldLength(db::IndexField field) const;
-		virtual size_t getFieldLength(const std::string&) const;
-		virtual IndexField getFieldNumbers() const;
 	};
         
 	class Connector : public db::Connector
@@ -98,7 +95,10 @@ namespace mysql
 		//
 		virtual bool connect(const db::Datconnect* connector);
 		virtual db::Datresult* execute(const std::string& str);
-		virtual unsigned long long insert(const std::string&);
+		virtual RowNumber insert(const std::string&);       
+		virtual Datresult* select(const std::string& str);
+		virtual RowNumber update(const std::string&);
+		virtual RowNumber remove(const std::string&);
 		virtual bool commit();
 		virtual bool begin();
 		virtual bool rollback();
