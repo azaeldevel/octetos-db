@@ -21,7 +21,7 @@ if WITH_POSTGRESQL
 lib_LTLIBRARIES += liboctetos-db-postgresql.la 
 endif
 
-bin_PROGRAMS = 
+
 
 liboctetos_db_la_LDFLAGS = -z now
 if PLATFORM_WIN32

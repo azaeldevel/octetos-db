@@ -58,31 +58,29 @@ namespace db
 		MySQL,
 		PostgreSQL
 	};
+	const char* getDriverString(Driver);
 
    	class Datconnect : public core::Object
 	{
 	public:
-   		//typedef Driver ServerType;/*deprecated*/
+   		Datconnect(Driver serverType,const std::string& host, unsigned int port,const std::string& database,const std::string& user,const std::string& password);
    		Datconnect(const Datconnect&);
 		Datconnect();
-		//const Datconnect& operator=(const Datconnect& obj);
-		void set(Driver serverType,const std::string& host, unsigned int port,const std::string& database,const std::string& usuario,const std::string& password);
-            
-            virtual std::string toString()const;
-            const std::string& getHost()const;
-            const std::string& getUser()const;
-            const std::string& getPassword()const;
-            const std::string& getDatabase()const;
-			Driver getDriver()const;
-            const char* getServerTypeString()const;/*deprecated*/
-            unsigned int getPort()const;
-            void setHost(const std::string&);
-            void setUser(const std::string&);
-            void setPassword(const std::string&);
-            void setDatabase(const std::string&);
-            void setPort(unsigned int);
-            
-            Datconnect(Driver serverType,const std::string& host, unsigned int port,const std::string& database,const std::string& user,const std::string& password);
+		            
+		virtual std::string toString()const;
+		const std::string& getHost()const;
+		const std::string& getUser()const;
+		const std::string& getPassword()const;
+		const std::string& getDatabase()const;
+		Driver getDriver()const;
+		unsigned int getPort()const;
+		void setHost(const std::string&);
+		void setUser(const std::string&);
+		void setPassword(const std::string&);
+		void setDatabase(const std::string&);
+		void setPort(unsigned int);
+        void set(Driver serverType,const std::string& host, unsigned int port,const std::string& database,const std::string& usuario,const std::string& password);
+		
             
 	private:
             Driver driver;
@@ -91,25 +89,8 @@ namespace db
             std::string password;
             std::string database;
             unsigned int port;        
-	};	
-	
+	};		
         
-	/*class Row : public core::Object
-	{
-	protected:
-		void* row;
-                
-	public:
-		//virtual const char* operator[](unsigned long long index) = 0; 
-		virtual ~Row();
-		Row();
-		Row(void* row);
-		Row(const Row& row);
-		virtual int getint(IndexField field)const = 0;
-		virtual long getl(IndexField field)const = 0;
-		virtual long long getll(IndexField field)const = 0;
-		virtual std::string getString(IndexField field)const = 0;
-	};*/
         
 	class Datresult : public core::Object
 	{
@@ -149,7 +130,6 @@ namespace db
 		virtual float getfloat(const std::string&)const = 0;
 		virtual double getdouble(const std::string&)const = 0;
 		virtual std::string getString(const std::string&)const = 0;
-		//retrive field meta-data
 	};
         
 	class Connector : public core::Object
@@ -168,7 +148,6 @@ namespace db
             static bool is_valid_domain_name(const std::string& str);
             virtual ~Connector();
             Connector();
-            //Connector(const Connector&);
             Connection getConnection()const;
             const Datconnect* getDatconection() const; 
             const Connector& operator=(const Connector& obj);

@@ -51,6 +51,8 @@ int clean(void)
 
 void testMySQL()
 {
+	
+	
 	///MySQL
 	octetos::db::mysql::Datconnect dat("192.168.0.101",3306,"sysappv2.alpha","develop","123456");
 	bool flag = false;
@@ -82,10 +84,16 @@ void testMySQL()
 
 int main(int argc, char *argv[])
 {
-	//octetos::core::Artifact packinfo = octetos::db::getPackageInfo();
+	octetos::core::Artifact packinfo = octetos::core::getPackageInfo();
+	octetos::core::Semver& ver = packinfo.version;
+	int majorDevelop = 0;
+	if(majorDevelop != ver.getMajor())
+	{
+		std::cerr << "Este conjunto de pruebas estan Deseñado para la version mayor '" << majorDevelop << "'\n";
+		return EXIT_FAILURE;
+	}
     
 	CU_pSuite pSuite = NULL;
-	//majorNumber = packinfo.version.getMajor();
 	/* initialize the CUnit test registry */
 	if (CUE_SUCCESS != CU_initialize_registry()) return CU_get_error();
 

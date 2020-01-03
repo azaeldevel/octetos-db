@@ -107,7 +107,10 @@ namespace db
                 this->port = port;
         }
 	
-        const char* Datconnect::getServerTypeString() const
+
+
+
+        const char* getDriverString(Driver driver)
         {
             switch(driver)
             {                
@@ -119,6 +122,12 @@ namespace db
             return "Unknow";
         }
         
+
+
+
+
+
+
         Driver Datconnect::getDriver() const
         {
             return driver;
