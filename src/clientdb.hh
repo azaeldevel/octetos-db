@@ -10,6 +10,11 @@ namespace octetos
 {
 namespace db
 {
+	typedef void*  Handler;
+	typedef Handler Connection;
+	typedef Handler Result;
+
+	
 	/**
 	 * \brief retorna la informacion del paquete usese ne lugar getPakageVersion y getPakageName
 	 **/
@@ -75,7 +80,6 @@ namespace db
             void setDatabase(const std::string&);
             void setPort(unsigned int);
             
-	protected:
             Datconnect(Driver serverType,const std::string& host, unsigned int port,const std::string& database,const std::string& user,const std::string& password);
             
 	private:
@@ -107,17 +111,14 @@ namespace db
         
 	class Datresult : public core::Object
 	{
-	protected:
-		void* result;
-                
+	private:
+		Result result;
+    	
 	public:
 		Datresult(void* result);
 		virtual ~Datresult();
-		//virtual Row* operator[](unsigned long long index) = 0;             
-		//virtual db::Row* next() __attribute__ ((deprecated)) = 0 ;
 		virtual bool nextRow() = 0;
-		//virtual db::Row* getRow() = 0;
-		void* getResult() const;
+		Result getResult() const;
 		//retrive data field by index
 		virtual char getchar(IndexField field)const = 0;
 		virtual unsigned char getuchar(IndexField field)const = 0;
@@ -154,9 +155,12 @@ namespace db
         
 	class Connector : public core::Object
 	{
+	private:
+		Connection conn;
+		const Datconnect* datconection;
+
 	protected:
-            void* serverConnector;
-            const Datconnect* datconection;
+		void setConnecion(Connection,const Datconnect*);
             
 	public:
             //
@@ -165,14 +169,14 @@ namespace db
             static bool is_valid_domain_name(const std::string& str);
             virtual ~Connector();
             Connector();
-            Connector(const Connector&);
-            void* getServerConnector();
-            const Datconnect* getDatconection() const; 
+            //Connector(const Connector&);
+            Connection getConnection()const;
+            //const Datconnect* getDatconection() const; 
             const Connector& operator=(const Connector& obj);
 			//
             virtual bool connect(const Datconnect* connector)  = 0;            
-            virtual Datresult* query(const std::string& str) = 0;
-            virtual unsigned long long insert(const std::string&) = 0;
+            virtual Datresult* execute(const std::string& str) = 0;
+            //virtual unsigned long long insert(const std::string&) = 0;
             virtual bool commit() = 0;
             virtual bool begin() = 0;
             virtual bool rollback() = 0;

@@ -18,7 +18,7 @@ bin_PROGRAMS += mysql
 mysql_CPPFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS) $(MYSQLCLIENT_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src -L$(top_builddir)/src
 mysql_CFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS) -I$(top_srcdir)/src
 mysql_LDFLAGS = 
-mysql_LDADD = $(OCTETOS_CORE_LIBS) $(CUNIT_LIBS) $(top_builddir)/src/liboctetos-db.la $(top_builddir)/src/liboctetos-db-mysql.la $(MYSQLCLIENT_LIBS)
+mysql_LDADD = $(OCTETOS_CORE_LIBS) $(CUNIT_LIBS) $(top_builddir)/src/liboctetos-db.la $(top_builddir)/src/liboctetos-db-mysql.la $(MYSQLCLIENT_LIBS) $(top_builddir)/src/liboctetos-db.la
 mysql_SOURCES = mysql.cc
 endif
 

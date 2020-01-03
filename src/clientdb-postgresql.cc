@@ -70,71 +70,71 @@ namespace postgresql
 	
 	char Datresult::getchar(db::IndexField field)const
 	{
-		const char* str = PQgetvalue((PGresult*)result,currentRow,field);
+		const char* str = PQgetvalue((PGresult*)getResult(),currentRow,field);
 		return str ? str[0] : '\0';
 	}
 	unsigned char Datresult::getuchar(db::IndexField field)const
 	{
-		const char* str = PQgetvalue((PGresult*)result,currentRow,field);
+		const char* str = PQgetvalue((PGresult*)getResult(),currentRow,field);
 		return str ? str[0] : '\0';
 	}
 	short Datresult::getshort(db::IndexField field)const
 	{
-		const char* str = PQgetvalue((PGresult*)result,currentRow,field);
+		const char* str = PQgetvalue((PGresult*)getResult(),currentRow,field);
 		return str ? (short)std::stoi(str) : 0;
 	}
 	unsigned short Datresult::getushort(db::IndexField field)const
 	{
-		const char* str = PQgetvalue((PGresult*)result,currentRow,field);
+		const char* str = PQgetvalue((PGresult*)getResult(),currentRow,field);
 		return str ? (unsigned short)std::stoul(str) : 0;
 	}
 	unsigned int Datresult::getuint(db::IndexField field)const
 	{
-		const char* str = PQgetvalue((PGresult*)result,currentRow,field);
+		const char* str = PQgetvalue((PGresult*)getResult(),currentRow,field);
 		return str ? (unsigned int)std::stoul(str) : 0;
 	}
 	unsigned long Datresult::getul(db::IndexField field)const
 	{
-		const char* str = PQgetvalue((PGresult*)result,currentRow,field);
+		const char* str = PQgetvalue((PGresult*)getResult(),currentRow,field);
 		return str ? std::stoul(str) : 0;
 	}
 	unsigned long long Datresult::getull(db::IndexField field)const
 	{
-		const char* str = PQgetvalue((PGresult*)result,currentRow,field);
+		const char* str = PQgetvalue((PGresult*)getResult(),currentRow,field);
 		return str ? std::stoull(str) : 0;
 	}
 	float Datresult::getfloat(db::IndexField field)const
 	{
-		const char* str = PQgetvalue((PGresult*)result,currentRow,field);
+		const char* str = PQgetvalue((PGresult*)getResult(),currentRow,field);
 		return str ? std::stod(str) : 0;
 	}
 	double Datresult::getdouble(db::IndexField field)const
 	{
-		const char* str = PQgetvalue((PGresult*)result,currentRow,field);
+		const char* str = PQgetvalue((PGresult*)getResult(),currentRow,field);
 		return str ? std::atoi(str) : 0;
 	}
 	int Datresult::getint(db::IndexField field) const
 	{
-		const char* str = PQgetvalue((PGresult*)result,currentRow,field);
+		const char* str = PQgetvalue((PGresult*)getResult(),currentRow,field);
 		return str ? std::atoi(str) : 0;
 	}
 	long Datresult::getl(db::IndexField field)const
 	{
-		const char* str = PQgetvalue((PGresult*)result,currentRow,field);
+		const char* str = PQgetvalue((PGresult*)getResult(),currentRow,field);
 		return str ? std::atol(str) : 0;
 	}
 	long long Datresult::getll(db::IndexField field)const
 	{
-		const char* str = PQgetvalue((PGresult*)result,currentRow,field);
+		const char* str = PQgetvalue((PGresult*)getResult(),currentRow,field);
 		return str ? std::atoll(str) : 0;
 	}
 	std::string Datresult::getString(db::IndexField field)const 
 	{
-		return PQgetvalue((PGresult*)result,currentRow,field);
+		return PQgetvalue((PGresult*)getResult(),currentRow,field);
 	}
 	bool Datresult::nextRow()
 	{
-		if(PQntuples((PGresult*)result) > currentRow + 1) 
+		if(PQntuples((PGresult*)getResult()) > currentRow + 1) 
 		{
 			currentRow++;
 			return true;
@@ -150,9 +150,9 @@ namespace postgresql
         
 	Datresult::~Datresult()
 	{
-		if(result)
+		if(getResult())
 		{
-			PQclear((PGresult*)result);
+			PQclear((PGresult*)getResult());
 		}
 #ifdef COLLETION_ASSISTANT
 		if(getCountChilds() > 0)
@@ -185,7 +185,7 @@ namespace postgresql
 	core::Semver Connector::getVerionServer() const
 	{
 		core::Semver ver;
-		ver.set(PQserverVersion((PGconn*)serverConnector),core::semver::ImportCode::PostgreSQL);
+		ver.set(PQserverVersion((PGconn*)getConnection()),core::semver::ImportCode::PostgreSQL);
 
 		return ver;
 	}
@@ -202,30 +202,30 @@ namespace postgresql
         } 
         void Connector::close()
         {
-            if(!serverConnector) PQfinish((PGconn*)serverConnector);
+            if(!getConnection()) PQfinish((PGconn*)getConnection());
         }        
         bool Connector::begin()
         {
-            return query("BEGIN"); 
+            return execute("BEGIN"); 
         }
         bool Connector::rollback()
         {
-            return query("ROLLBACK"); 
+            return execute("ROLLBACK"); 
         }        
         bool Connector::commit()
         {
-            return query("COMMIT"); 
+            return execute("COMMIT"); 
         }
-        unsigned long long Connector::insert(const std::string& str)
+        /*unsigned long long Connector::insert(const std::string& str)
         { 		
-            PGresult *res = PQexec((PGconn*)serverConnector, str.c_str()); 
+            PGresult *res = PQexec((PGconn*)getConnection(), str.c_str()); 
             if (res == NULL)
             {
                 throw SQLExceptionQuery("La consuta de insert fallo.");        
                 PQclear(res);
             }        
 			
-			res = PQexec((PGconn*)serverConnector, "SELECT lastval()"); 
+			res = PQexec((PGconn*)getConnection(), "SELECT lastval()"); 
             if (res == NULL)
             {
                 throw SQLExceptionQuery("No se retorno datos.");        
@@ -243,7 +243,7 @@ namespace postgresql
 			}
 			
             return ID;		
-        }   
+        }*/   
         bool Connector::connect(const db::Datconnect* conection)
         {
             std::string strsql = "";
@@ -278,19 +278,19 @@ namespace postgresql
             {
                 strsql = strsql + " password=" + conection->getPassword();
             }
-            serverConnector = PQconnectdb(strsql.c_str());
-            if (PQstatus((PGconn*)serverConnector) == CONNECTION_BAD) 
+			PGconn* conn = PQconnectdb(strsql.c_str());
+            if (PQstatus(conn) == CONNECTION_BAD) 
             {
                 //std::string msg = PQerrorMessage((PGconn*)serverConnector);  
                 //throw SQLException(msg);  
 				return false;
-            }
-            
+            }            
+            setConnecion(conn,conection);
             return true;
         }        
-	db::Datresult* Connector::query(const std::string& str)
+	db::Datresult* Connector::execute(const std::string& str)
 	{
-		PGresult *res = PQexec((PGconn*)serverConnector, str.c_str());
+		PGresult *res = PQexec((PGconn*)getConnection(), str.c_str());
 		if (PQresultStatus(res) != PGRES_TUPLES_OK)
 		{		
 			return NULL;

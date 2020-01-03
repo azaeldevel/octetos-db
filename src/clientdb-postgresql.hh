@@ -31,7 +31,6 @@ namespace postgresql
 		Datresult(void* result);
 		virtual ~Datresult();
 		virtual bool nextRow();
-		void* getResult() const;
 		//retrive data field by index
 		virtual char getchar(IndexField field)const;
 		virtual unsigned char getuchar(IndexField field)const;
@@ -74,8 +73,7 @@ namespace postgresql
             const db::Datconnect& getDatconection() const; 
 			//
             virtual bool connect(const db::Datconnect* connector);            
-            virtual db::Datresult* query(const std::string& str);
-            virtual unsigned long long insert(const std::string&);
+            virtual db::Datresult* execute(const std::string& str);
             virtual bool commit();
             virtual bool begin();
             virtual bool rollback();

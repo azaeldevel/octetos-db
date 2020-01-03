@@ -68,7 +68,7 @@ void testConnection()
     }
 
 	std::string queryStr = "select * from Versions";
-	octetos::db::Datresult* rs = connector.query(queryStr);
+	octetos::db::Datresult* rs = connector.execute(queryStr);
 	if(!rs)
 	{
 		std::cout << "'" << queryStr << "' no retorno resultado\n";

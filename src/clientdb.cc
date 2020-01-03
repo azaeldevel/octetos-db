@@ -16,10 +16,10 @@ namespace db
         {
                 
         }        
-        void* Datresult::getResult() const
-        {
-                return result;
-        }
+	Result Datresult::getResult() const
+	{
+		return result;
+	}
         Datresult::Datresult(void* result)
         {
                 this->result = result;
@@ -219,19 +219,22 @@ namespace db
 
 
 	
-	
-        Connector::Connector(const Connector& obj)
-        {
-            this->serverConnector = obj.serverConnector;
-            this->datconection = obj.datconection;                
-        }
-        const Connector&Connector:: operator=(const Connector& obj)       
-        {
-            this->serverConnector = obj.serverConnector;
-            this->datconection = obj.datconection;
-            
-             return *this;
-        }
+	void Connector::setConnecion(Connection c,const Datconnect* datc)
+	{
+		conn = c;
+		datconection = datc;
+	}
+	/*Connector::Connector(const Connector& obj)
+	{
+		conn = obj.conn;
+		this->datconection = obj.datconection;                
+	}*/
+	const Connector&Connector:: operator=(const Connector& obj)       
+	{
+		conn = obj.conn;
+		datconection = obj.datconection;            
+		return *this;
+	}
         
         /*bool Connector::connect(const Datconnect* connector) 
         {
@@ -341,14 +344,14 @@ namespace db
         Connector::~Connector()
         {
         }
-        void* Connector::getServerConnector()
+        Connection Connector::getConnection()const
         {
-            return this->serverConnector;
+            return conn;
         }
-        const Datconnect* Connector::getDatconection() const
+        /*const Datconnect* Connector::getDatconection() const
         {
             return datconection;
-        }
+        }*/
 
 
         

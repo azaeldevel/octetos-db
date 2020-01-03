@@ -93,15 +93,16 @@ namespace mysql
 	public:
 		virtual ~Connector();
 		Connector();
-		virtual bool connect(const db::Datconnect* connector);
 		const char* serverDescription();
-		virtual db::Datresult* query(const char* str);
-		virtual unsigned long long insert(const std::string&);
+		virtual core::Semver getVerionServer() const;
+		//
+		virtual bool connect(const db::Datconnect* connector);
+		virtual db::Datresult* execute(const std::string& str);
+		//virtual unsigned long long insert(const std::string&);
 		virtual bool commit();
 		virtual bool begin();
 		virtual bool rollback();
-		virtual void close();
-		virtual core::Semver getVerionServer() const; 
+		virtual void close(); 
 	};      
 }
 }

@@ -114,7 +114,8 @@ am__DEPENDENCIES_1 =
 @WITH_MYSQL_TRUE@	$(am__DEPENDENCIES_1) \
 @WITH_MYSQL_TRUE@	$(top_builddir)/src/liboctetos-db.la \
 @WITH_MYSQL_TRUE@	$(top_builddir)/src/liboctetos-db-mysql.la \
-@WITH_MYSQL_TRUE@	$(am__DEPENDENCIES_1)
+@WITH_MYSQL_TRUE@	$(am__DEPENDENCIES_1) \
+@WITH_MYSQL_TRUE@	$(top_builddir)/src/liboctetos-db.la
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
@@ -382,7 +383,7 @@ AM_CFLAGS = \
 @WITH_MYSQL_TRUE@mysql_CPPFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS) $(MYSQLCLIENT_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src -L$(top_builddir)/src
 @WITH_MYSQL_TRUE@mysql_CFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS) -I$(top_srcdir)/src
 @WITH_MYSQL_TRUE@mysql_LDFLAGS = 
-@WITH_MYSQL_TRUE@mysql_LDADD = $(OCTETOS_CORE_LIBS) $(CUNIT_LIBS) $(top_builddir)/src/liboctetos-db.la $(top_builddir)/src/liboctetos-db-mysql.la $(MYSQLCLIENT_LIBS)
+@WITH_MYSQL_TRUE@mysql_LDADD = $(OCTETOS_CORE_LIBS) $(CUNIT_LIBS) $(top_builddir)/src/liboctetos-db.la $(top_builddir)/src/liboctetos-db-mysql.la $(MYSQLCLIENT_LIBS) $(top_builddir)/src/liboctetos-db.la
 @WITH_MYSQL_TRUE@mysql_SOURCES = mysql.cc
 @WITH_POSTGRESQL_TRUE@postgresql_CPPFLAGS = $(LIBPQ_CFLAGS) $(OCTETOS_CORE_CFLAGS) $(MYSQLCLIENT_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src -L$(top_builddir)/src
 @WITH_POSTGRESQL_TRUE@postgresql_CFLAGS = $(LIBPQ_CFLAGS) $(OCTETOS_CORE_CFLAGS) -I$(top_srcdir)/src
