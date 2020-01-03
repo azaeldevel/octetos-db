@@ -178,8 +178,7 @@ namespace mysql
 	}
 	std::string Datresult::getString(db::IndexField field)const 
 	{
-		if(actualRow) return "yes";
-		return "no";
+		return actualRow ? ((Row*)actualRow)->getString(field) : "";
 	}
 	bool Datresult::nextRow()
 	{
@@ -301,10 +300,15 @@ namespace mysql
         {
             return false; 
         }
-        void Connector::close()
-        {
-                if (getConnection() != NULL) mysql_close((MYSQL*)getConnection());
-        }       
+	void Connector::close()
+	{
+		MYSQL* conn = (MYSQL*)getConnection();
+		if (conn) 
+		{
+			mysql_close(conn);
+			setConnecion (NULL,NULL);
+		}
+	}       
         bool Connector::rollback()
         {
                 if (getConnection() != NULL)

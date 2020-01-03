@@ -202,7 +202,12 @@ namespace postgresql
         } 
         void Connector::close()
         {
-            if(!getConnection()) PQfinish((PGconn*)getConnection());
+			PGconn* conn = (PGconn*)getConnection();
+            if(conn) 
+			{
+				PQfinish(conn);
+				setConnecion (NULL,NULL);
+			}
         }        
         bool Connector::begin()
         {

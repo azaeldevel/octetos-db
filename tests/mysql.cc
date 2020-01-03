@@ -63,53 +63,20 @@ void testMySQL()
     }
     else
     {
-        //printf("Fallo '%s' .\n",dat.toString().c_str());
+        printf("Fallo '%s' .\n",dat.toString().c_str());
 		CU_ASSERT(false);
+		return;
     }
 
 	std::string queryStr = "select * from Persons";
 	octetos::db::Datresult* rs = connector.execute(queryStr);
 	while(rs->nextRow())
 	{
-		std::cout << rs->getString(1) << "\n";
+		//std::cout << rs->getString(1) << "\n";
 	}
 
 	delete rs;
 	connector.close();
-	
-	///DBI
-	/*
-	octetos::db::dbi::Datconnect dat(octetos::db::Driver::MySQL,"192.168.0.101",3306,"sysappv2.alpha","develop","123456");
-	bool flag = false;
-	octetos::db::dbi::Connector connector;
-    try
-    {
-		flag = connector.connect(&dat);
-	}
-	catch(octetos::db::SQLException& ex)
-	{
-		std::cerr<<ex.what()<< std::endl;
-		return EXIT_FAILURE;
-	}
-    if(flag)
-    {
-        printf("Version del Servidor  %s\n", connector.getVerionServer().toString().c_str());
-    }
-    else
-    {
-        printf("Fallo '%s' .\n",dat.toString().c_str());
-
-		return EXIT_FAILURE;
-    }
-
-	std::string query = "select * from Persons";
-	octetos::db::Datresult* rs = connector.query(query.c_str());
-	while(rs->nextRow())
-	{
-		std::cout << rs->getll(0) << "\n";
-	}
-	delete rs;
-	*/
 }
 
 

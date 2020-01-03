@@ -106,16 +106,15 @@ CONFIG_CLEAN_VPATH_FILES =
 @WITH_POSTGRESQL_TRUE@am__EXEEXT_2 = postgresql$(EXEEXT)
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am__mysql_SOURCES_DIST = mysql.cc
-@WITH_MYSQL_TRUE@am_mysql_OBJECTS = mysql-mysql.$(OBJEXT)
+am__mysql_SOURCES_DIST = mysql.cc $(top_srcdir)/src/clientdb-mysql.cc \
+	$(top_srcdir)/src/clientdb.cc
+@WITH_MYSQL_TRUE@am_mysql_OBJECTS = mysql-mysql.$(OBJEXT) \
+@WITH_MYSQL_TRUE@	mysql-clientdb-mysql.$(OBJEXT) \
+@WITH_MYSQL_TRUE@	mysql-clientdb.$(OBJEXT)
 mysql_OBJECTS = $(am_mysql_OBJECTS)
 am__DEPENDENCIES_1 =
 @WITH_MYSQL_TRUE@mysql_DEPENDENCIES = $(am__DEPENDENCIES_1) \
-@WITH_MYSQL_TRUE@	$(am__DEPENDENCIES_1) \
-@WITH_MYSQL_TRUE@	$(top_builddir)/src/liboctetos-db.la \
-@WITH_MYSQL_TRUE@	$(top_builddir)/src/liboctetos-db-mysql.la \
-@WITH_MYSQL_TRUE@	$(am__DEPENDENCIES_1) \
-@WITH_MYSQL_TRUE@	$(top_builddir)/src/liboctetos-db.la
+@WITH_MYSQL_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
@@ -123,14 +122,16 @@ am__v_lt_1 =
 mysql_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(mysql_LDFLAGS) $(LDFLAGS) -o $@
-am__postgresql_SOURCES_DIST = postgresql.cc
+am__postgresql_SOURCES_DIST = postgresql.cc \
+	$(top_srcdir)/src/clientdb-postgresql.cc \
+	$(top_srcdir)/src/clientdb.cc
 @WITH_POSTGRESQL_TRUE@am_postgresql_OBJECTS =  \
-@WITH_POSTGRESQL_TRUE@	postgresql-postgresql.$(OBJEXT)
+@WITH_POSTGRESQL_TRUE@	postgresql-postgresql.$(OBJEXT) \
+@WITH_POSTGRESQL_TRUE@	postgresql-clientdb-postgresql.$(OBJEXT) \
+@WITH_POSTGRESQL_TRUE@	postgresql-clientdb.$(OBJEXT)
 postgresql_OBJECTS = $(am_postgresql_OBJECTS)
 @WITH_POSTGRESQL_TRUE@postgresql_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 @WITH_POSTGRESQL_TRUE@	$(am__DEPENDENCIES_1) \
-@WITH_POSTGRESQL_TRUE@	$(top_builddir)/src/liboctetos-db.la \
-@WITH_POSTGRESQL_TRUE@	$(top_builddir)/src/liboctetos-db-postgresql.la \
 @WITH_POSTGRESQL_TRUE@	$(am__DEPENDENCIES_1)
 postgresql_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -380,16 +381,16 @@ AM_CFLAGS = \
 	 -Wall\
 	 -g
 
-@WITH_MYSQL_TRUE@mysql_CPPFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS) $(MYSQLCLIENT_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src -L$(top_builddir)/src
-@WITH_MYSQL_TRUE@mysql_CFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS) -I$(top_srcdir)/src
+@WITH_MYSQL_TRUE@mysql_CPPFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS) $(MYSQLCLIENT_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src
+@WITH_MYSQL_TRUE@mysql_CFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS) $(MYSQLCLIENT_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src
 @WITH_MYSQL_TRUE@mysql_LDFLAGS = 
-@WITH_MYSQL_TRUE@mysql_LDADD = $(OCTETOS_CORE_LIBS) $(CUNIT_LIBS) $(top_builddir)/src/liboctetos-db.la $(top_builddir)/src/liboctetos-db-mysql.la $(MYSQLCLIENT_LIBS) $(top_builddir)/src/liboctetos-db.la
-@WITH_MYSQL_TRUE@mysql_SOURCES = mysql.cc
-@WITH_POSTGRESQL_TRUE@postgresql_CPPFLAGS = $(LIBPQ_CFLAGS) $(OCTETOS_CORE_CFLAGS) $(MYSQLCLIENT_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src -L$(top_builddir)/src
-@WITH_POSTGRESQL_TRUE@postgresql_CFLAGS = $(LIBPQ_CFLAGS) $(OCTETOS_CORE_CFLAGS) -I$(top_srcdir)/src
+@WITH_MYSQL_TRUE@mysql_LDADD = $(OCTETOS_CORE_LIBS) $(CUNIT_LIBS) $(MYSQLCLIENT_LIBS) 
+@WITH_MYSQL_TRUE@mysql_SOURCES = mysql.cc $(top_srcdir)/src/clientdb-mysql.cc $(top_srcdir)/src/clientdb.cc
+@WITH_POSTGRESQL_TRUE@postgresql_CPPFLAGS = $(LIBPQ_CFLAGS) $(OCTETOS_CORE_CFLAGS) $(MYSQLCLIENT_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src 
+@WITH_POSTGRESQL_TRUE@postgresql_CFLAGS = $(LIBPQ_CFLAGS) $(OCTETOS_CORE_CFLAGS) $(MYSQLCLIENT_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src
 @WITH_POSTGRESQL_TRUE@postgresql_LDFLAGS = 
-@WITH_POSTGRESQL_TRUE@postgresql_LDADD = $(OCTETOS_CORE_LIBS) $(CUNIT_LIBS) $(top_builddir)/src/liboctetos-db.la $(top_builddir)/src/liboctetos-db-postgresql.la $(LIBPQ_LIBS)
-@WITH_POSTGRESQL_TRUE@postgresql_SOURCES = postgresql.cc
+@WITH_POSTGRESQL_TRUE@postgresql_LDADD = $(OCTETOS_CORE_LIBS) $(CUNIT_LIBS) $(LIBPQ_LIBS)
+@WITH_POSTGRESQL_TRUE@postgresql_SOURCES = postgresql.cc $(top_srcdir)/src/clientdb-postgresql.cc $(top_srcdir)/src/clientdb.cc
 all: all-am
 
 .SUFFIXES:
@@ -487,7 +488,11 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mysql-clientdb-mysql.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mysql-clientdb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mysql-mysql.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/postgresql-clientdb-postgresql.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/postgresql-clientdb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/postgresql-postgresql.Po@am__quote@
 
 .cc.o:
@@ -525,6 +530,34 @@ mysql-mysql.obj: mysql.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(mysql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o mysql-mysql.obj `if test -f 'mysql.cc'; then $(CYGPATH_W) 'mysql.cc'; else $(CYGPATH_W) '$(srcdir)/mysql.cc'; fi`
 
+mysql-clientdb-mysql.o: $(top_srcdir)/src/clientdb-mysql.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(mysql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT mysql-clientdb-mysql.o -MD -MP -MF $(DEPDIR)/mysql-clientdb-mysql.Tpo -c -o mysql-clientdb-mysql.o `test -f '$(top_srcdir)/src/clientdb-mysql.cc' || echo '$(srcdir)/'`$(top_srcdir)/src/clientdb-mysql.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/mysql-clientdb-mysql.Tpo $(DEPDIR)/mysql-clientdb-mysql.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$(top_srcdir)/src/clientdb-mysql.cc' object='mysql-clientdb-mysql.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(mysql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o mysql-clientdb-mysql.o `test -f '$(top_srcdir)/src/clientdb-mysql.cc' || echo '$(srcdir)/'`$(top_srcdir)/src/clientdb-mysql.cc
+
+mysql-clientdb-mysql.obj: $(top_srcdir)/src/clientdb-mysql.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(mysql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT mysql-clientdb-mysql.obj -MD -MP -MF $(DEPDIR)/mysql-clientdb-mysql.Tpo -c -o mysql-clientdb-mysql.obj `if test -f '$(top_srcdir)/src/clientdb-mysql.cc'; then $(CYGPATH_W) '$(top_srcdir)/src/clientdb-mysql.cc'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/src/clientdb-mysql.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/mysql-clientdb-mysql.Tpo $(DEPDIR)/mysql-clientdb-mysql.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$(top_srcdir)/src/clientdb-mysql.cc' object='mysql-clientdb-mysql.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(mysql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o mysql-clientdb-mysql.obj `if test -f '$(top_srcdir)/src/clientdb-mysql.cc'; then $(CYGPATH_W) '$(top_srcdir)/src/clientdb-mysql.cc'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/src/clientdb-mysql.cc'; fi`
+
+mysql-clientdb.o: $(top_srcdir)/src/clientdb.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(mysql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT mysql-clientdb.o -MD -MP -MF $(DEPDIR)/mysql-clientdb.Tpo -c -o mysql-clientdb.o `test -f '$(top_srcdir)/src/clientdb.cc' || echo '$(srcdir)/'`$(top_srcdir)/src/clientdb.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/mysql-clientdb.Tpo $(DEPDIR)/mysql-clientdb.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$(top_srcdir)/src/clientdb.cc' object='mysql-clientdb.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(mysql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o mysql-clientdb.o `test -f '$(top_srcdir)/src/clientdb.cc' || echo '$(srcdir)/'`$(top_srcdir)/src/clientdb.cc
+
+mysql-clientdb.obj: $(top_srcdir)/src/clientdb.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(mysql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT mysql-clientdb.obj -MD -MP -MF $(DEPDIR)/mysql-clientdb.Tpo -c -o mysql-clientdb.obj `if test -f '$(top_srcdir)/src/clientdb.cc'; then $(CYGPATH_W) '$(top_srcdir)/src/clientdb.cc'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/src/clientdb.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/mysql-clientdb.Tpo $(DEPDIR)/mysql-clientdb.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$(top_srcdir)/src/clientdb.cc' object='mysql-clientdb.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(mysql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o mysql-clientdb.obj `if test -f '$(top_srcdir)/src/clientdb.cc'; then $(CYGPATH_W) '$(top_srcdir)/src/clientdb.cc'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/src/clientdb.cc'; fi`
+
 postgresql-postgresql.o: postgresql.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(postgresql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT postgresql-postgresql.o -MD -MP -MF $(DEPDIR)/postgresql-postgresql.Tpo -c -o postgresql-postgresql.o `test -f 'postgresql.cc' || echo '$(srcdir)/'`postgresql.cc
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/postgresql-postgresql.Tpo $(DEPDIR)/postgresql-postgresql.Po
@@ -538,6 +571,34 @@ postgresql-postgresql.obj: postgresql.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='postgresql.cc' object='postgresql-postgresql.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(postgresql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o postgresql-postgresql.obj `if test -f 'postgresql.cc'; then $(CYGPATH_W) 'postgresql.cc'; else $(CYGPATH_W) '$(srcdir)/postgresql.cc'; fi`
+
+postgresql-clientdb-postgresql.o: $(top_srcdir)/src/clientdb-postgresql.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(postgresql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT postgresql-clientdb-postgresql.o -MD -MP -MF $(DEPDIR)/postgresql-clientdb-postgresql.Tpo -c -o postgresql-clientdb-postgresql.o `test -f '$(top_srcdir)/src/clientdb-postgresql.cc' || echo '$(srcdir)/'`$(top_srcdir)/src/clientdb-postgresql.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/postgresql-clientdb-postgresql.Tpo $(DEPDIR)/postgresql-clientdb-postgresql.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$(top_srcdir)/src/clientdb-postgresql.cc' object='postgresql-clientdb-postgresql.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(postgresql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o postgresql-clientdb-postgresql.o `test -f '$(top_srcdir)/src/clientdb-postgresql.cc' || echo '$(srcdir)/'`$(top_srcdir)/src/clientdb-postgresql.cc
+
+postgresql-clientdb-postgresql.obj: $(top_srcdir)/src/clientdb-postgresql.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(postgresql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT postgresql-clientdb-postgresql.obj -MD -MP -MF $(DEPDIR)/postgresql-clientdb-postgresql.Tpo -c -o postgresql-clientdb-postgresql.obj `if test -f '$(top_srcdir)/src/clientdb-postgresql.cc'; then $(CYGPATH_W) '$(top_srcdir)/src/clientdb-postgresql.cc'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/src/clientdb-postgresql.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/postgresql-clientdb-postgresql.Tpo $(DEPDIR)/postgresql-clientdb-postgresql.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$(top_srcdir)/src/clientdb-postgresql.cc' object='postgresql-clientdb-postgresql.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(postgresql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o postgresql-clientdb-postgresql.obj `if test -f '$(top_srcdir)/src/clientdb-postgresql.cc'; then $(CYGPATH_W) '$(top_srcdir)/src/clientdb-postgresql.cc'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/src/clientdb-postgresql.cc'; fi`
+
+postgresql-clientdb.o: $(top_srcdir)/src/clientdb.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(postgresql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT postgresql-clientdb.o -MD -MP -MF $(DEPDIR)/postgresql-clientdb.Tpo -c -o postgresql-clientdb.o `test -f '$(top_srcdir)/src/clientdb.cc' || echo '$(srcdir)/'`$(top_srcdir)/src/clientdb.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/postgresql-clientdb.Tpo $(DEPDIR)/postgresql-clientdb.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$(top_srcdir)/src/clientdb.cc' object='postgresql-clientdb.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(postgresql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o postgresql-clientdb.o `test -f '$(top_srcdir)/src/clientdb.cc' || echo '$(srcdir)/'`$(top_srcdir)/src/clientdb.cc
+
+postgresql-clientdb.obj: $(top_srcdir)/src/clientdb.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(postgresql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT postgresql-clientdb.obj -MD -MP -MF $(DEPDIR)/postgresql-clientdb.Tpo -c -o postgresql-clientdb.obj `if test -f '$(top_srcdir)/src/clientdb.cc'; then $(CYGPATH_W) '$(top_srcdir)/src/clientdb.cc'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/src/clientdb.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/postgresql-clientdb.Tpo $(DEPDIR)/postgresql-clientdb.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$(top_srcdir)/src/clientdb.cc' object='postgresql-clientdb.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(postgresql_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o postgresql-clientdb.obj `if test -f '$(top_srcdir)/src/clientdb.cc'; then $(CYGPATH_W) '$(top_srcdir)/src/clientdb.cc'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/src/clientdb.cc'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo
