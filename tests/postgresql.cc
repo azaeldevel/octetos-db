@@ -58,12 +58,12 @@ void testConnection()
 	flag = connector.connect(&dat);
     if(flag)
     {
-        printf("Version del Servidor  %s\n", connector.getVerionServer().toString().c_str());
+        //printf("Version del Servidor  %s\n", connector.getVerionServer().toString().c_str());
 		CU_ASSERT(true);
     }
     else
     {
-        printf("Fallo '%s' .\n",dat.toString().c_str());
+        //printf("Fallo '%s' .\n",dat.toString().c_str());
 		CU_ASSERT(false);
     }
 
@@ -77,7 +77,7 @@ void testConnection()
 	}
 	while(rs->nextRow())
 	{
-		std::cout << rs->getString(1) << "\n";
+		//std::cout << rs->getString(0) << "," << rs->getString(1) << "\n";
 	}
 
 	delete rs;

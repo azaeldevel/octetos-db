@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <libpq-fe.h>
 #include <iostream>
+#include <string>
+
 
 #include "clientdb-postgresql.hh"
 
@@ -18,27 +20,21 @@ namespace postgresql
 
 	size_t Datresult::getFieldLength(db::IndexField field) const
 	{
-
 	}
 	size_t Datresult::getFieldLength(const std::string&) const
 	{
-
 	}
 	IndexField Datresult::getFieldNumbers() const
 	{
-
 	}
   	char Datresult::getchar(const std::string&)const
 	{
-
 	}
 	unsigned char Datresult::getuchar(const std::string&)const
 	{
-
 	}
 	short Datresult::getshort(const std::string&)const
 	{
-
 	}
 	unsigned short Datresult::getushort(const std::string&)const
 	{
@@ -46,86 +42,91 @@ namespace postgresql
 	}
 	unsigned int Datresult::getuint(const std::string&)const
 	{
-
 	}
 	unsigned long Datresult::getul(const std::string&)const
 	{
-
 	}
 	unsigned long long Datresult::getull(const std::string&)const
 	{
-
 	}
 	float Datresult::getfloat(const std::string&)const
 	{
-
 	}
 	double Datresult::getdouble(const std::string&)const
 	{
-
 	}
 	int Datresult::getint(const std::string&) const
-	{
-		
+	{		
 	}
 	long Datresult::getl(const std::string&)const
-	{
-		
+	{		
 	}
 	long long Datresult::getll(const std::string&)const
-	{
-		
+	{		
 	}
 	std::string Datresult::getString(const std::string&)const 
-	{ 
-		
+	{		
 	}
 	
 	char Datresult::getchar(db::IndexField field)const
 	{
-
+		const char* str = PQgetvalue((PGresult*)result,currentRow,field);
+		return str ? str[0] : '\0';
 	}
 	unsigned char Datresult::getuchar(db::IndexField field)const
 	{
-
+		const char* str = PQgetvalue((PGresult*)result,currentRow,field);
+		return str ? str[0] : '\0';
 	}
 	short Datresult::getshort(db::IndexField field)const
 	{
-
+		const char* str = PQgetvalue((PGresult*)result,currentRow,field);
+		return str ? (short)std::stoi(str) : 0;
 	}
 	unsigned short Datresult::getushort(db::IndexField field)const
 	{
-
+		const char* str = PQgetvalue((PGresult*)result,currentRow,field);
+		return str ? (unsigned short)std::stoul(str) : 0;
 	}
 	unsigned int Datresult::getuint(db::IndexField field)const
 	{
-
+		const char* str = PQgetvalue((PGresult*)result,currentRow,field);
+		return str ? (unsigned int)std::stoul(str) : 0;
 	}
 	unsigned long Datresult::getul(db::IndexField field)const
 	{
-
+		const char* str = PQgetvalue((PGresult*)result,currentRow,field);
+		return str ? std::stoul(str) : 0;
 	}
 	unsigned long long Datresult::getull(db::IndexField field)const
 	{
-
+		const char* str = PQgetvalue((PGresult*)result,currentRow,field);
+		return str ? std::stoull(str) : 0;
 	}
 	float Datresult::getfloat(db::IndexField field)const
 	{
-
+		const char* str = PQgetvalue((PGresult*)result,currentRow,field);
+		return str ? std::stod(str) : 0;
 	}
 	double Datresult::getdouble(db::IndexField field)const
 	{
-
+		const char* str = PQgetvalue((PGresult*)result,currentRow,field);
+		return str ? std::atoi(str) : 0;
 	}
 	int Datresult::getint(db::IndexField field) const
 	{
+		const char* str = PQgetvalue((PGresult*)result,currentRow,field);
+		return str ? std::atoi(str) : 0;
 	}
 	long Datresult::getl(db::IndexField field)const
 	{
+		const char* str = PQgetvalue((PGresult*)result,currentRow,field);
+		return str ? std::atol(str) : 0;
 	}
 	long long Datresult::getll(db::IndexField field)const
 	{
-		
+		const char* str = PQgetvalue((PGresult*)result,currentRow,field);
+		return str ? std::atoll(str) : 0;
 	}
 	std::string Datresult::getString(db::IndexField field)const 
 	{
