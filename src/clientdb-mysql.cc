@@ -16,7 +16,104 @@ namespace mysql
 
 
 
+	char Row::getchar(const std::string&)const
+	{
 
+	}
+	unsigned char Row::getuchar(const std::string&)const
+	{
+
+	}
+	short Row::getshort(const std::string&)const
+	{
+
+	}
+	unsigned short Row::getushort(const std::string&)const
+	{
+
+	}
+	unsigned int Row::getuint(const std::string&)const
+	{
+
+	}
+	unsigned long Row::getul(const std::string&)const
+	{
+
+	}
+	unsigned long long Row::getull(const std::string&)const
+	{
+
+	}
+	float Row::getfloat(const std::string&)const
+	{
+
+	}
+	double Row::getdouble(const std::string&)const
+	{
+
+	}
+	int Row::getint(const std::string&) const
+	{
+		
+	}
+	long Row::getl(const std::string&)const
+	{
+		
+	}
+	long long Row::getll(const std::string&)const
+	{
+		
+	}
+	std::string Row::getString(const std::string&)const 
+	{ 
+		
+	}
+	
+	char Row::getchar(FieldNumber field)const
+	{
+		MYSQL_ROW r = (MYSQL_ROW)row;
+		return r[field] ? r[field][0] : 0;
+	}
+	unsigned char Row::getuchar(FieldNumber field)const
+	{
+		MYSQL_ROW r = (MYSQL_ROW)row;
+		return r[field] ? (unsigned char)r[field][0] : '\0';
+	}
+	short Row::getshort(FieldNumber field)const
+	{
+		MYSQL_ROW r = (MYSQL_ROW)row;
+		return r[field] ? (short)std::stoi(r[field]) : '\0';
+	}
+	unsigned short Row::getushort(FieldNumber field)const
+	{
+		MYSQL_ROW r = (MYSQL_ROW)row;
+		return r[field] ? (unsigned short)std::stoul(r[field]) : 0;
+	}
+	unsigned int Row::getuint(FieldNumber field)const
+	{
+		MYSQL_ROW r = (MYSQL_ROW)row;
+		return r[field] ? (unsigned int)std::stoul(r[field]) : 0;
+	}
+	unsigned long Row::getul(FieldNumber field)const
+	{
+		MYSQL_ROW r = (MYSQL_ROW)row;
+		return r[field] ? std::stoul(r[field]) : 0;
+	}
+	unsigned long long Row::getull(FieldNumber field)const
+	{
+		MYSQL_ROW r = (MYSQL_ROW)row;
+		return r[field] ? std::stoull(r[field]) : 0;
+	}
+	float Row::getfloat(FieldNumber field)const
+	{
+		MYSQL_ROW r = (MYSQL_ROW)row;
+		return r[field] ? std::stof(r[field]) : 0;
+	}
+	double Row::getdouble(FieldNumber field)const
+	{
+		MYSQL_ROW r = (MYSQL_ROW)row;
+		return r[field] ? std::stod(r[field]) : 0;
+	}
 	int Row::getint(FieldNumber field)const
 	{
 		MYSQL_ROW r = (MYSQL_ROW)row;
@@ -116,53 +213,51 @@ namespace mysql
 	
 	char Datresult::getchar(FieldNumber field)const
 	{
-
+		return actualRow ? actualRow->getchar(field) : 0;
 	}
 	unsigned char Datresult::getuchar(FieldNumber field)const
 	{
-
+		return actualRow ? actualRow->getuchar(field) : 0;
 	}
 	short Datresult::getshort(FieldNumber field)const
 	{
-
+		return actualRow ? actualRow->getshort(field) : 0;
 	}
 	unsigned short Datresult::getushort(FieldNumber field)const
 	{
-
+		return actualRow ? actualRow->getushort(field) : 0;
 	}
 	unsigned int Datresult::getuint(FieldNumber field)const
 	{
-
+		return actualRow ? actualRow->getuint(field) : 0;
 	}
 	unsigned long Datresult::getul(FieldNumber field)const
 	{
-
+		return actualRow ? actualRow->getul(field) : 0;
 	}
 	unsigned long long Datresult::getull(FieldNumber field)const
 	{
-
+		return actualRow ? actualRow->getull(field) : 0;
 	}
 	float Datresult::getfloat(FieldNumber field)const
 	{
-
+		return actualRow ? actualRow->getfloat(field) : 0;
 	}
 	double Datresult::getdouble(FieldNumber field)const
 	{
-
+		return actualRow ? actualRow->getdouble(field) : 0;
 	}
 	int Datresult::getint(FieldNumber field) const
 	{
-		if(!actualRow) return actualRow->getint(field);
-		return 0;
+		return actualRow ? actualRow->getint(field) : 0;
 	}
 	long Datresult::getl(FieldNumber field)const
 	{
-		if(!(Row*)actualRow) return ((Row*)actualRow)->getl(field);
-		return 0;
+		return actualRow ? ((Row*)actualRow)->getl(field) : 0;
 	}
 	long long Datresult::getll(FieldNumber field)const
 	{
-		return ((Row*)actualRow)->getll(field);
+		return actualRow ? ((Row*)actualRow)->getll(field) : 0;
 	}
 	std::string Datresult::getString(FieldNumber field)const 
 	{

@@ -36,10 +36,34 @@ namespace mysql
 		Row();
 		Row(void* row);
 		Row(const Row& row);
+		//retrive data field by index
+		virtual char getchar(FieldNumber field)const;
+		virtual unsigned char getuchar(FieldNumber field)const;
+		virtual short getshort(FieldNumber field)const;
+		virtual unsigned short getushort(FieldNumber field)const;
 		virtual int getint(FieldNumber field)const;
+		virtual unsigned int getuint(FieldNumber field)const;
 		virtual long getl(FieldNumber field)const;
+		virtual unsigned long getul(FieldNumber field)const;
 		virtual long long getll(FieldNumber field)const;
+		virtual unsigned long long getull(FieldNumber field)const;
+		virtual float getfloat(FieldNumber field)const;
+		virtual double getdouble(FieldNumber field)const;
 		virtual std::string getString(FieldNumber field)const;
+		//retrive data field by name
+		virtual char getchar(const std::string&)const;
+		virtual unsigned char getuchar(const std::string&)const;
+		virtual short getshort(const std::string&)const;
+		virtual unsigned short getushort(const std::string&)const;
+		virtual int getint(const std::string&)const;
+		virtual unsigned int getuint(const std::string&)const;
+		virtual long getl(const std::string&)const;
+		virtual unsigned long getul(const std::string&)const;
+		virtual long long getll(const std::string&)const;
+		virtual unsigned long long getull(const std::string&)const;
+		virtual float getfloat(const std::string&)const;
+		virtual double getdouble(const std::string&)const;
+		virtual std::string getString(const std::string&)const;
 	};
         
 	class Datresult : public db::Datresult
