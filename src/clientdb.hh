@@ -16,7 +16,11 @@ namespace db
 
 	typedef unsigned long long RowNumber;
 	typedef unsigned int FieldNumber;
-
+	enum ErrorCodes
+	{
+		UnknowError = core::Error::ROOFCODE,
+		ErrorConection
+	};
 	
 	/**
 	 * \brief retorna la informacion del paquete usese ne lugar getPakageVersion y getPakageName

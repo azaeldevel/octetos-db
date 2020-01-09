@@ -105,7 +105,7 @@ DIST_COMMON = $(srcdir)/Makefile.am $(octetos_db_include_HEADERS) \
 	$(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
-CONFIG_CLEAN_FILES = octetos-db-mysql.pc
+CONFIG_CLEAN_FILES = octetos-db-mysql.pc octetos-db-postgresql.pc
 CONFIG_CLEAN_VPATH_FILES =
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
@@ -249,7 +249,8 @@ am__define_uniq_tagged_files = \
 ETAGS = etags
 CTAGS = ctags
 am__DIST_COMMON = $(srcdir)/Makefile.in \
-	$(srcdir)/octetos-db-mysql.pc.in $(top_srcdir)/depcomp
+	$(srcdir)/octetos-db-mysql.pc.in \
+	$(srcdir)/octetos-db-postgresql.pc.in $(top_srcdir)/depcomp
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 ALL_LINGUAS = @ALL_LINGUAS@
@@ -454,10 +455,10 @@ liboctetos_db_la_SOURCES = clientdb.cc
 @WITH_POSTGRESQL_TRUE@liboctetos_db_postgresql_la_LIBDADD = $(LIBPQ_LIBS) $(OCTETOS_CORE_LIBS) 
 @WITH_POSTGRESQL_TRUE@liboctetos_db_postgresql_la_SOURCES = clientdb-postgresql.cc 
 octetos_db_includedir = $(includedir)/octetos/db
-octetos_db_include_HEADERS = clientdb.hh clientdb-mysql.hh clientdb-dbi.hh
+octetos_db_include_HEADERS = clientdb.hh clientdb-mysql.hh clientdb-dbi.hh clientdb-postgresql.hh
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = octetos-db-mysql.pc
-EXTRA_DIST = octetos-db-mysql.pc.in
+pkgconfig_DATA = octetos-db-mysql.pc octetos-db-postgresql.pc
+EXTRA_DIST = octetos-db-mysql.pc.in octetos-db-postgresql.pc.in
 all: all-am
 
 .SUFFIXES:
@@ -492,6 +493,8 @@ $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
 octetos-db-mysql.pc: $(top_builddir)/config.status $(srcdir)/octetos-db-mysql.pc.in
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+octetos-db-postgresql.pc: $(top_builddir)/config.status $(srcdir)/octetos-db-postgresql.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 install-libLTLIBRARIES: $(lib_LTLIBRARIES)

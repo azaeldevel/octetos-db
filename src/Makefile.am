@@ -58,9 +58,9 @@ liboctetos_db_postgresql_la_SOURCES = clientdb-postgresql.cc
 endif
 
 octetos_db_includedir = $(includedir)/octetos/db
-octetos_db_include_HEADERS = clientdb.hh clientdb-mysql.hh clientdb-dbi.hh
+octetos_db_include_HEADERS = clientdb.hh clientdb-mysql.hh clientdb-dbi.hh clientdb-postgresql.hh
 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = octetos-db-mysql.pc
+pkgconfig_DATA = octetos-db-mysql.pc octetos-db-postgresql.pc
 
-EXTRA_DIST = octetos-db-mysql.pc.in
+EXTRA_DIST = octetos-db-mysql.pc.in octetos-db-postgresql.pc.in

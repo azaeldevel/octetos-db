@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl Created by Anjuta application wizard.
 
-AC_INIT(octetos-db, 0.11.0-alpha)
+AC_INIT(octetos-db, 0.13.0-alpha)
 AC_CANONICAL_SYSTEM
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE
@@ -83,6 +83,7 @@ fi
 AC_OUTPUT([
 Makefile
 src/octetos-db-mysql.pc
+src/octetos-db-postgresql.pc
 src/Makefile
 tests/Makefile
 po/Makefile.in])

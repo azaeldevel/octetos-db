@@ -286,8 +286,9 @@ namespace postgresql
 			conn = PQconnectdb(strsql.c_str());
             if (PQstatus((PGconn*)conn) == CONNECTION_BAD) 
             {
-                //std::string msg = PQerrorMessage((PGconn*)serverConnector);  
-                //throw SQLException(msg);  
+                std::string msg = PQerrorMessage((PGconn*)conn);  
+                SQLException sqlfail(msg); 
+				core::Error::write(sqlfail);
 				return false;
             }           
 			datconn = conection;

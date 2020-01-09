@@ -5,7 +5,6 @@
 #include <arpa/inet.h>
 
 #include "config.h"
-
 #include "clientdb.hh"
 
 namespace octetos
