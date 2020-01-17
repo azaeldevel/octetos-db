@@ -1,7 +1,7 @@
 #ifndef TOOLKIT_CLIENTDB_HPP
 #define TOOLKIT_CLIENTDB_HPP
 
-#include <octetos/core/common.hh>
+
 #include <octetos/core/Artifact.hh>
 #include <vector>
 #include <string>

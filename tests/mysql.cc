@@ -30,10 +30,6 @@
 #include "config.h"
 
 
-
-static int majorNumber;
-
-
 int init(void)
 {
 	return 0;
@@ -51,8 +47,6 @@ int clean(void)
 
 void testMySQL()
 {
-	
-	
 	///MySQL
 	octetos::db::mysql::Datconnect dat("192.168.0.101",3306,"sysappv2.alpha","develop","123456");
 	bool flag = false;
@@ -94,7 +88,6 @@ int main(int argc, char *argv[])
 	}
     
 	CU_pSuite pSuite = NULL;
-	/* initialize the CUnit test registry */
 	if (CUE_SUCCESS != CU_initialize_registry()) return CU_get_error();
 
 	//std::string classVersionString = packinfo.name + " " + packinfo.version.toString() + "\n" + packinfo.licence.getBrief() + "\n" + packinfo.brief + "\n";
@@ -110,11 +103,11 @@ int main(int argc, char *argv[])
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
-	
-	/* Run all tests using the CUnit Basic interface */
+
+
 	CU_basic_set_mode(CU_BRM_VERBOSE);
 	CU_basic_run_tests();
 	CU_cleanup_registry();
-	return CU_get_error();	
+	return CU_get_error();
 }
 
