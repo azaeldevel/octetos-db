@@ -16,7 +16,10 @@ namespace db
 namespace postgresql
 {
         
-
+	Datconnect::Datconnect()
+	{
+		
+	}
 
   	char Datresult::getchar(const std::string&)const
 	{

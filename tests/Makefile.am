@@ -11,22 +11,23 @@ AM_CFLAGS =\
 	 -g
 
 
-noinst_PROGRAMS = 
+noinst_PROGRAMS = v0
 
-if WITH_MYSQL
-noinst_PROGRAMS += mysql
-mysql_CPPFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS) $(MYSQLCLIENT_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src
-mysql_CFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS) $(MYSQLCLIENT_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src
-mysql_LDFLAGS = 
-mysql_LDADD = $(OCTETOS_CORE_LIBS) $(CUNIT_LIBS) $(MYSQLCLIENT_LIBS) 
-mysql_SOURCES = mysql.cc $(top_srcdir)/src/clientdb-mysql.cc $(top_srcdir)/src/clientdb.cc
-endif
-
+v0_CPPFLAGS = $(OCTETOS_CORE_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src 
+v0_CXXFLAGS = $(OCTETOS_CORE_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src 
+v0_CFLAGS = $(OCTETOS_CORE_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src
+v0_LDFLAGS = 
+v0_LDADD = $(OCTETOS_CORE_LIBS) $(CUNIT_LIBS) $(top_builddir)/src/liboctetos-db.la
 if WITH_POSTGRESQL
-noinst_PROGRAMS += postgresql
-postgresql_CPPFLAGS = $(LIBPQ_CFLAGS) $(OCTETOS_CORE_CFLAGS) $(MYSQLCLIENT_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src 
-postgresql_CFLAGS = $(LIBPQ_CFLAGS) $(OCTETOS_CORE_CFLAGS) $(MYSQLCLIENT_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src
-postgresql_LDFLAGS = 
-postgresql_LDADD = $(OCTETOS_CORE_LIBS) $(CUNIT_LIBS) $(LIBPQ_LIBS)
-postgresql_SOURCES = postgresql.cc $(top_srcdir)/src/clientdb-postgresql.cc $(top_srcdir)/src/clientdb.cc
+v0_CPPFLAGS += $(LIBPQ_CFLAGS) -DOCTETOS_POSTGRESQL
+v0_CXXFLAGS += $(LIBPQ_CFLAGS) -DOCTETOS_POSTGRESQL
+v0_CFLAGS += $(LIBPQ_CFLAGS) -DOCTETOS_POSTGRESQL
+v0_LDADD += $(top_builddir)/src/liboctetos-db-postgresql.la $(LIBPQ_LIBS) 
 endif
+if WITH_MYSQL
+v0_CPPFLAGS += $(MYSQLCLIENT_CFLAGS) -DOCTETOS_MYSQL
+v0_CXXFLAGS += $(MYSQLCLIENT_CFLAGS) -DOCTETOS_MYSQL
+v0_CFLAGS += $(MYSQLCLIENT_CFLAGS) -DOCTETOS_MYSQL
+v0_LDADD += $(top_builddir)/src/liboctetos-db-mysql.la $(MYSQLCLIENT_LIBS) 
+endif
+v0_SOURCES = v0.cc

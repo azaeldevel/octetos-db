@@ -85,6 +85,8 @@ namespace db
 		void setPort(unsigned int);
         void set(Driver serverType,const std::string& host, unsigned int port,const std::string& database,const std::string& usuario,const std::string& password);
 		
+		bool write(const std::string&);
+		bool read(const std::string&);
             
 	private:
             Driver driver;
