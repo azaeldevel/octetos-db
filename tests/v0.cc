@@ -51,7 +51,7 @@ void testPostgreSQL()
 	octetos::db::postgresql::Datconnect dat("192.168.0.101",5432,"sysapp_v0001","sysapp","123456");
 	bool flag = false;
 	octetos::db::postgresql::Connector connector;
-	flag = connector.connect(&dat);
+	flag = connector.connect(dat);
     if(flag)
     {
         //printf("Version del Servidor  %s\n", connector.getVerionServer().toString().c_str());
@@ -64,19 +64,18 @@ void testPostgreSQL()
     }
 
 	std::string queryStr = "select * from Versions";
-	octetos::db::Datresult* rs = connector.execute(queryStr);
-	if(!rs)
+	octetos::db::postgresql::Datresult rs;
+	if(!connector.execute(queryStr,rs))
 	{
 		std::cout << "'" << queryStr << "' no retorno resultado\n";
 		CU_ASSERT(false);
 		return;
 	}
-	while(rs->nextRow())
+	while(rs.nextRow())
 	{
 		//std::cout << rs->getString(0) << "," << rs->getString(1) << "\n";
 	}
 
-	delete rs;
 	connector.close();
 }
 #endif
@@ -116,10 +115,11 @@ void testMySQL()
 
 void testOperations()
 {
-	octetos::db::mysql::Datconnect dat("192.168.0.101",3306,"sysappv2.alpha","develop","123456");
+	octetos::db::Datconnect dat(octetos::db::Driver::PostgreSQL,"192.168.0.101",3306,"sysappv2.alpha","develop","123456");
 	
 	octetos::core::Artifact packinfo;
-	octetos::core::getPackageInfo(packinfo);
+	
+	octetos::db::getPackageInfo(packinfo);
 	time_t seconds = time (NULL);
 	std::string str = std::to_string(seconds);
 	std::string filename = packinfo.name;
@@ -138,7 +138,8 @@ int main(int argc, char *argv[])
 {
 	bool run_mysql = false, run_postgresql = false;
 	
-	octetos::core::Artifact packinfo = octetos::db::getPackageInfo();
+	octetos::core::Artifact packinfo;
+	octetos::db::getPackageInfo(packinfo);
 	octetos::core::Semver& ver = packinfo.version;
 	int majorDevelop = 0;
 	if(majorDevelop != ver.getMajor())

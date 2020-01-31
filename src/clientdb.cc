@@ -11,18 +11,27 @@ namespace octetos
 {
 namespace db
 {
-        Datresult::~Datresult()
-        {
-                
-        }        
+	const Datresult& Datresult::operator = (Result rs)
+	{
+		result = rs;
+
+		return *this;
+	}
+	Datresult::~Datresult()
+	{
+	}        
 	Result Datresult::getResult() const
 	{
 		return result;
+	}	
+	Datresult::Datresult(void* rs)
+	{
+		result = rs;
 	}
-        Datresult::Datresult(void* result)
-        {
-                this->result = result;
-        }
+	Datresult::Datresult()
+	{
+		result = NULL;
+	}
         
 	/*
 	Row::Row(const Row& r)
@@ -432,10 +441,8 @@ namespace db
 
         
 
-	core::Artifact getPackageInfo()
-	{
-		core::Artifact packinfo;
-		
+	bool getPackageInfo(core::Artifact& packinfo)
+	{		
 		packinfo.name = PACKAGE;
 		packinfo.brief = "";
 		packinfo.url = "";
@@ -447,7 +454,8 @@ namespace db
 		packinfo.licence.owner = "Azael Reyes";
 		packinfo.licence.year = 2019;
         packinfo.licence.contact = "azael.devel@gmail.com";
-		return packinfo;	
+		
+		return true;	
 	}
 
 }

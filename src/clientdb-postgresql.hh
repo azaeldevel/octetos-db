@@ -30,6 +30,7 @@ namespace postgresql
                 
 	public:
 		Datresult(void* result);
+		Datresult();
 		virtual ~Datresult();
 		virtual bool nextRow();
 		//retrive data field by index
@@ -69,10 +70,10 @@ namespace postgresql
 		Connector();
 		const db::Datconnect& getDatconection() const; 
 		//
-		virtual bool connect(const db::Datconnect* connector);            
-		virtual db::Datresult* execute(const std::string& str);
+		virtual bool connect(const db::Datconnect& connector);            
+		virtual bool execute(const std::string& str,db::Datresult&);
 		virtual RowNumber insert(const std::string&);         
-		virtual Datresult* select(const std::string& str);
+		virtual bool select(const std::string& str,db::Datresult&);
 		virtual RowNumber update(const std::string&);
 		virtual RowNumber remove(const std::string&);
 		virtual bool commit();

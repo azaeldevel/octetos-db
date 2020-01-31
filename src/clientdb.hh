@@ -25,7 +25,7 @@ namespace db
 	/**
 	 * \brief retorna la informacion del paquete usese ne lugar getPakageVersion y getPakageName
 	 **/
-	core::Artifact getPackageInfo();
+	bool getPackageInfo(core::Artifact&);
 
 
 	class SQLException : public core::Error
@@ -105,9 +105,11 @@ namespace db
     	
 	public:
 		Datresult(void* result);
+		Datresult();
 		virtual ~Datresult();
 		virtual bool nextRow() = 0;
 		Result getResult() const;
+		const Datresult& operator = (Result);
 		//retrive data field by index
 		virtual char getchar(FieldNumber field)const = 0;
 		virtual unsigned char getuchar(FieldNumber field)const = 0;
@@ -158,10 +160,10 @@ namespace db
             const Datconnect* getDatconection() const; 
             const Connector& operator=(const Connector& obj);
 			//
-            virtual bool connect(const Datconnect* connector)  = 0;            
-            virtual Datresult* execute(const std::string& str) = 0;  
+            virtual bool connect(const Datconnect& connector)  = 0;            
+            virtual bool execute(const std::string& str,Datresult&) = 0;  
             virtual RowNumber insert(const std::string&) = 0;         
-            virtual Datresult* select(const std::string& str) = 0;
+            virtual bool select(const std::string& str,Datresult&) = 0;
             virtual RowNumber update(const std::string&) = 0;
             virtual RowNumber remove(const std::string&) = 0;
             virtual bool commit() = 0;

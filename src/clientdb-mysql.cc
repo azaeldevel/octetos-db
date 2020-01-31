@@ -18,55 +18,55 @@ namespace mysql
 
 	char Row::getchar(const std::string&)const
 	{
-
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	unsigned char Row::getuchar(const std::string&)const
 	{
-
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	short Row::getshort(const std::string&)const
 	{
-
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	unsigned short Row::getushort(const std::string&)const
 	{
-
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	unsigned int Row::getuint(const std::string&)const
 	{
-
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	unsigned long Row::getul(const std::string&)const
 	{
-
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	unsigned long long Row::getull(const std::string&)const
 	{
-
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	float Row::getfloat(const std::string&)const
 	{
-
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	double Row::getdouble(const std::string&)const
 	{
-
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	int Row::getint(const std::string&) const
 	{
-		
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	long Row::getl(const std::string&)const
 	{
-		
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	long long Row::getll(const std::string&)const
 	{
-		
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	std::string Row::getString(const std::string&)const 
 	{ 
-		
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	
 	char Row::getchar(FieldNumber field)const
@@ -160,55 +160,55 @@ namespace mysql
 
   	char Datresult::getchar(const std::string&)const
 	{
-
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	unsigned char Datresult::getuchar(const std::string&)const
 	{
-
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	short Datresult::getshort(const std::string&)const
 	{
-
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	unsigned short Datresult::getushort(const std::string&)const
 	{
-
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	unsigned int Datresult::getuint(const std::string&)const
 	{
-
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	unsigned long Datresult::getul(const std::string&)const
 	{
-
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	unsigned long long Datresult::getull(const std::string&)const
 	{
-
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	float Datresult::getfloat(const std::string&)const
 	{
-
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	double Datresult::getdouble(const std::string&)const
 	{
-
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	int Datresult::getint(const std::string&) const
 	{
-		
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	long Datresult::getl(const std::string&)const
 	{
-		
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	long long Datresult::getll(const std::string&)const
 	{
-		
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	std::string Datresult::getString(const std::string&)const 
 	{ 
-		
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	
 	char Datresult::getchar(FieldNumber field)const
@@ -333,26 +333,29 @@ namespace mysql
 
 	Datresult* Connector::select(const std::string& str)
 	{
+		return execute(str);
 	}		
 	RowNumber Connector::update(const std::string&)
 	{
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}		
 	RowNumber Connector::remove(const std::string&)
 	{
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
-        Connector::Connector()
-        {
-        }
-        Connector::~Connector()
-        {
-                close();
+    Connector::Connector()
+   	{
+	}
+	Connector::~Connector()
+	{
+		close();
 #ifdef COLLETION_ASSISTANT
-                if(getCountChilds() > 0)
-                {
-                        std::cerr << "Una instacia de '" << typeid(*this).name() << "' termino sin que todos sus hijos terminaran primero" << std::endl;
-                }
+		if(getCountChilds() > 0)
+		{
+			std::cerr << "Una instacia de '" << typeid(*this).name() << "' termino sin que todos sus hijos terminaran primero" << std::endl;
+		}
 #endif
-        }
+	}
 	db::Datresult* Connector::execute(const std::string& strq)
 	{
 		if (mysql_query((MYSQL*)conn, strq.c_str())  != 0) 
@@ -427,7 +430,7 @@ namespace mysql
             return false; 
         }
 	RowNumber Connector::insert(const std::string& str)
-        {
+	{
             if (mysql_query((MYSQL*)conn, str.c_str()) == 0) 
             {
                 return mysql_insert_id((MYSQL*)conn);
@@ -436,13 +439,13 @@ namespace mysql
             {   
                 return 0; 
             }		
-        }     
+	}     
         /*const char* Connector::serverDescription()
         {
             return mysql_get_client_info();
         }*/
-        bool Connector::connect(const db::Datconnect* dtcon)
-        {
+	bool Connector::connect(const db::Datconnect* dtcon)
+	{
            	conn = mysql_init(NULL);
             if (conn == NULL)
             {
@@ -476,7 +479,7 @@ namespace mysql
             }        
 			datconn = dtcon;
             return true;
-        }
+	}
 }
 }
 }

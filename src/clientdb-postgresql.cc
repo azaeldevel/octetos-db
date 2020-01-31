@@ -23,43 +23,55 @@ namespace postgresql
 
   	char Datresult::getchar(const std::string&)const
 	{
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	unsigned char Datresult::getuchar(const std::string&)const
 	{
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	short Datresult::getshort(const std::string&)const
 	{
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	unsigned short Datresult::getushort(const std::string&)const
 	{
-
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	unsigned int Datresult::getuint(const std::string&)const
 	{
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	unsigned long Datresult::getul(const std::string&)const
 	{
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	unsigned long long Datresult::getull(const std::string&)const
 	{
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	float Datresult::getfloat(const std::string&)const
 	{
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	double Datresult::getdouble(const std::string&)const
 	{
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	int Datresult::getint(const std::string&) const
 	{		
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	long Datresult::getl(const std::string&)const
-	{		
+	{	
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");	
 	}
 	long long Datresult::getll(const std::string&)const
 	{		
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	std::string Datresult::getString(const std::string&)const 
-	{		
+	{	
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
 	
 	char Datresult::getchar(FieldNumber field)const
@@ -136,11 +148,15 @@ namespace postgresql
 
 		return false;
 	}
-        
-        Datresult::Datresult(void* result) : db::Datresult(result)
-        {
-			currentRow = -1;
-        }
+
+	Datresult::Datresult()
+	{
+		currentRow = -1;
+	}
+	Datresult::Datresult(void* result) : db::Datresult(result)
+	{
+		currentRow = -1;
+	}
         
 	Datresult::~Datresult()
 	{
@@ -176,14 +192,17 @@ namespace postgresql
         
         
        
-	Datresult* Connector::select(const std::string& str)
+	bool Connector::select(const std::string& str,db::Datresult& rs)
 	{
+		return execute (str,rs);
 	}		
 	RowNumber Connector::update(const std::string&)
 	{
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}		
 	RowNumber Connector::remove(const std::string&)
 	{
+		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}		
 	core::Semver Connector::getVerionServer() const
 	{
@@ -214,15 +233,18 @@ namespace postgresql
         }        
         bool Connector::begin()
         {
-            return execute("BEGIN"); 
+			Datresult rs;
+            return execute("BEGIN",rs); 
         }
         bool Connector::rollback()
         {
-            return execute("ROLLBACK"); 
+			Datresult rs;
+            return execute("ROLLBACK",rs); 
         }        
         bool Connector::commit()
         {
-            return execute("COMMIT"); 
+			Datresult rs;
+            return execute("COMMIT",rs); 
         }
         RowNumber Connector::insert(const std::string& str)
         { 		
@@ -252,39 +274,39 @@ namespace postgresql
 			
             return ID;		
         } 
-        bool Connector::connect(const db::Datconnect* conection)
+        bool Connector::connect(const db::Datconnect& conection)
         {
             std::string strsql = "";
-            if(conection->getHost().length() > 1)
+            if(conection.getHost().length() > 1)
             {
-                if(is_ipv4_address(conection->getHost()))
+                if(is_ipv4_address(conection.getHost()))
                 {
-                    strsql = strsql + "hostaddr=" + conection->getHost();
+                    strsql = strsql + "hostaddr=" + conection.getHost();
                 }
-                else if(is_ipv6_address(conection->getHost()))
+                else if(is_ipv6_address(conection.getHost()))
                 {
-                    strsql = strsql + "hostaddr=" + conection->getHost();
+                    strsql = strsql + "hostaddr=" + conection.getHost();
                 }
-                else if(is_valid_domain_name(conection->getHost()))
+                else if(is_valid_domain_name(conection.getHost()))
                 {
-                    strsql = strsql + "host=" + conection->getHost();
+                    strsql = strsql + "host=" + conection.getHost();
                 }
             }
-            if(conection->getUser().length() > 1)
+            if(conection.getUser().length() > 1)
             {
-                strsql = strsql + " user=" + conection->getUser();
+                strsql = strsql + " user=" + conection.getUser();
             }
-            if(conection->getPort() > 0)
+            if(conection.getPort() > 0)
             {
-                strsql = strsql + " port=" + std::to_string(conection->getPort());
+                strsql = strsql + " port=" + std::to_string(conection.getPort());
             }
-            if(conection->getDatabase().length() > 1)
+            if(conection.getDatabase().length() > 1)
             {
-                strsql = strsql + " dbname=" + conection->getDatabase();
+                strsql = strsql + " dbname=" + conection.getDatabase();
             }
-            if(conection->getPassword().length() > 1)
+            if(conection.getPassword().length() > 1)
             {
-                strsql = strsql + " password=" + conection->getPassword();
+                strsql = strsql + " password=" + conection.getPassword();
             }
 			conn = PQconnectdb(strsql.c_str());
             if (PQstatus((PGconn*)conn) == CONNECTION_BAD) 
@@ -294,22 +316,22 @@ namespace postgresql
 				core::Error::write(sqlfail);
 				return false;
             }           
-			datconn = conection;
+			datconn = &conection;
             return true;
         }        
-	db::Datresult* Connector::execute(const std::string& str)
+	bool Connector::execute(const std::string& str,db::Datresult& rs)
 	{
 		PGresult *res = PQexec((PGconn*)conn, str.c_str());
 		if (PQresultStatus(res) != PGRES_TUPLES_OK)
 		{		
-			return NULL;
+			return false;
 		}
 		
-		Datresult* dtrs = new Datresult(res);
+		rs = (Result)res;
 #ifdef COLLETION_ASSISTANT
-		addChild(dtrs);
+		addChild(&rs);
 #endif    
-		return dtrs;			
+		return true;			
 		
 	}
         /*bool Connector::query(const std::string& str, std::vector<std::vector<const char*>>& rows)
