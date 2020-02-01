@@ -9,5 +9,5 @@ Name: octetos-db-postgreql
 Description: Libreria para Base de Dato de Octetos.
 Version: @VERSION@
 Requires: 
-Libs: -L${libdir} -loctetos-db -loctetos-db-postgresql -lconfig++
+Libs: -L${libdir} -loctetos-db-postgresql -loctetos-db -lconfig++
 Cflags: -I${includedir}
