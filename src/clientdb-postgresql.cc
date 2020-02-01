@@ -164,12 +164,6 @@ namespace postgresql
 		{
 			PQclear((PGresult*)getResult());
 		}
-#ifdef COLLETION_ASSISTANT
-		if(getCountChilds() > 0)
-		{
-			std::cerr << "Una instacia de '" << typeid(*this).name() << "' termino sin que todos sus hijos terminaran primero" << std::endl;
-		}
-#endif
 	}
 
 	
@@ -196,13 +190,17 @@ namespace postgresql
 	{
 		return execute (str,rs);
 	}		
-	RowNumber Connector::update(const std::string&)
-	{
-		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
+	RowNumber Connector::update(const std::string& str,db::Datresult& rs)
+	{		
+		if(!execute (str,rs)) return -1;
+		RowNumber count = PQntuples((PGresult*)rs.getResult());
+		return count;
 	}		
-	RowNumber Connector::remove(const std::string&)
+	RowNumber Connector::remove(const std::string& str,db::Datresult& rs)
 	{
-		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
+		if(!execute (str,rs)) return -1;
+		RowNumber count = PQntuples((PGresult*)rs.getResult());
+		return count;
 	}		
 	core::Semver Connector::getVerionServer() const
 	{
@@ -246,7 +244,7 @@ namespace postgresql
 			Datresult rs;
             return execute("COMMIT",rs); 
         }
-        RowNumber Connector::insert(const std::string& str)
+        RowNumber Connector::insert(const std::string& str,db::Datresult& rs)
         { 		
             PGresult *res = PQexec((PGconn*)conn, str.c_str()); 
             if (res == NULL)
@@ -271,7 +269,7 @@ namespace postgresql
 			{
 				throw SQLException("la funcion 'lastval()' no retorno resultdo.");
 			}
-			
+			rs = (Result)res;
             return ID;		
         } 
         bool Connector::connect(const db::Datconnect& conection)
@@ -328,9 +326,6 @@ namespace postgresql
 		}
 		
 		rs = (Result)res;
-#ifdef COLLETION_ASSISTANT
-		addChild(&rs);
-#endif    
 		return true;			
 		
 	}

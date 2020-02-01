@@ -162,10 +162,10 @@ namespace db
 			//
             virtual bool connect(const Datconnect& connector)  = 0;            
             virtual bool execute(const std::string& str,Datresult&) = 0;  
-            virtual RowNumber insert(const std::string&) = 0;         
+            virtual RowNumber insert(const std::string&,Datresult&) = 0;         
             virtual bool select(const std::string& str,Datresult&) = 0;
-            virtual RowNumber update(const std::string&) = 0;
-            virtual RowNumber remove(const std::string&) = 0;
+            virtual RowNumber update(const std::string&,Datresult&) = 0;
+            virtual RowNumber remove(const std::string&,Datresult&) = 0;
             virtual bool commit() = 0;
             virtual bool begin() = 0;
             virtual bool rollback() = 0;
