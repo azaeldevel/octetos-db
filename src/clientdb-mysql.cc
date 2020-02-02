@@ -282,7 +282,10 @@ namespace mysql
         {
 			actualRow = NULL;
         }
-        
+	Datresult::Datresult()
+	{
+		actualRow = NULL;
+	}
 	Datresult::~Datresult()
 	{
 		if(actualRow)
@@ -331,15 +334,15 @@ namespace mysql
         
         
 
-	Datresult* Connector::select(const std::string& str)
+	bool Connector::select(const std::string& str,db::Datresult& rs)
 	{
-		return execute(str);
+		return execute (str,rs);
 	}		
-	RowNumber Connector::update(const std::string&)
+	RowNumber Connector::update(const std::string&,db::Datresult&)
 	{
 		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}		
-	RowNumber Connector::remove(const std::string&)
+	RowNumber Connector::remove(const std::string&,db::Datresult&)
 	{
 		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
@@ -356,34 +359,31 @@ namespace mysql
 		}
 #endif
 	}
-	db::Datresult* Connector::execute(const std::string& strq)
+	bool Connector::execute(const std::string& str,db::Datresult& rs)
 	{
-		if (mysql_query((MYSQL*)conn, strq.c_str())  != 0) 
+		if (mysql_query((MYSQL*)conn, str.c_str())  != 0) 
 		{
-                        std::string msg = "";
-                        msg = msg + " MySQL Server Error No. : '";
-                        msg = msg + std::to_string(mysql_errno((MYSQL*)conn));
-                        msg = msg + "' ";
-                        msg = msg + mysql_error((MYSQL*)conn);  
+			std::string msg = "";
+			msg = msg + " MySQL Server Error No. : '";
+			msg = msg + std::to_string(mysql_errno((MYSQL*)conn));
+			msg = msg + "' ";
+			msg = msg + mysql_error((MYSQL*)conn);  
 			core::Error::write(SQLException(msg)); 
-			return NULL;
+			return false;
 		}
 		MYSQL_RES *result = mysql_store_result((MYSQL*)conn);
 		if (result == NULL && mysql_errno((MYSQL*)conn) != 0) 
 		{
-                        std::string msg = "";
-                        msg = msg + " MySQL Server Error No. : '";
-                        msg = msg + std::to_string(mysql_errno((MYSQL*)conn));
-                        msg = msg + "' ";
-                        msg = msg + mysql_error((MYSQL*)conn);  
+			std::string msg = "";
+			msg = msg + " MySQL Server Error No. : '";
+			msg = msg + std::to_string(mysql_errno((MYSQL*)conn));
+			msg = msg + "' ";
+			msg = msg + mysql_error((MYSQL*)conn);  
 			core::Error::write(SQLException(msg));
-			return NULL;
+			return false;
 		}
-                Datresult* dtrs = new Datresult(result);
-#ifdef COLLETION_ASSISTANT
-                addChild(dtrs);
-#endif    
-                return dtrs;
+		rs = (Result)result;   
+		return true;
 	}
 	core::Semver Connector::getVerionServer() const
 	{
@@ -429,7 +429,7 @@ namespace mysql
             
             return false; 
         }
-	RowNumber Connector::insert(const std::string& str)
+	RowNumber Connector::insert(const std::string& str,db::Datresult&)
 	{
             if (mysql_query((MYSQL*)conn, str.c_str()) == 0) 
             {
@@ -444,7 +444,7 @@ namespace mysql
         {
             return mysql_get_client_info();
         }*/
-	bool Connector::connect(const db::Datconnect* dtcon)
+	bool Connector::connect(const db::Datconnect& dtcon)
 	{
            	conn = mysql_init(NULL);
             if (conn == NULL)
@@ -457,7 +457,7 @@ namespace mysql
 				core::Error::write(SQLException(msg));
 				return false;
             }
-            if (mysql_real_connect((MYSQL*)conn, dtcon->getHost().c_str(), dtcon->getUser().c_str(), dtcon->getPassword().c_str(),dtcon->getDatabase().c_str(),dtcon->getPort(), NULL, 0) == NULL)
+            if (mysql_real_connect((MYSQL*)conn, dtcon.getHost().c_str(), dtcon.getUser().c_str(), dtcon.getPassword().c_str(),dtcon.getDatabase().c_str(),dtcon.getPort(), NULL, 0) == NULL)
             {
                 std::string msg = "";
                 msg = msg + " MySQL Server Error No. : '";
@@ -477,7 +477,7 @@ namespace mysql
 				core::Error::write(SQLException(msg));
 				return false;
             }        
-			datconn = dtcon;
+			datconn = &dtcon;
             return true;
 	}
 }

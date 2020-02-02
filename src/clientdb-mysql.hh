@@ -74,6 +74,7 @@ namespace mysql
 	public:
 		virtual ~Datresult();
 		Datresult(void* result);
+		Datresult();
 		//virtual db::Row* operator[](unsigned long long index);                
 		//virtual db::Row* next() __attribute__ ((deprecated));
 		virtual bool nextRow();
@@ -117,12 +118,12 @@ namespace mysql
 		const char* serverDescription();
 		virtual core::Semver getVerionServer() const;
 		//
-		virtual bool connect(const db::Datconnect* connector);
-		virtual db::Datresult* execute(const std::string& str);
-		virtual RowNumber insert(const std::string&);       
-		virtual Datresult* select(const std::string& str);
-		virtual RowNumber update(const std::string&);
-		virtual RowNumber remove(const std::string&);
+		virtual bool connect(const db::Datconnect& connector);
+		virtual bool execute(const std::string& str,db::Datresult&);
+		virtual RowNumber insert(const std::string&,db::Datresult&);       
+		virtual bool select(const std::string& str,db::Datresult&);
+		virtual RowNumber update(const std::string&,db::Datresult&);
+		virtual RowNumber remove(const std::string&,db::Datresult&);
 		virtual bool commit();
 		virtual bool begin();
 		virtual bool rollback();

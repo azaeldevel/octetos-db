@@ -150,27 +150,27 @@ namespace db
 		//void setConnecion(Connection,const Datconnect*);
             
 	public:
-            //
-            static bool is_ipv4_address(const std::string& str);
-            static bool is_ipv6_address(const std::string& str);
-            static bool is_valid_domain_name(const std::string& str);
-            virtual ~Connector();
-            Connector();
-            Connection getConnection()const;
-            const Datconnect* getDatconection() const; 
-            const Connector& operator=(const Connector& obj);
-			//
-            virtual bool connect(const Datconnect& connector)  = 0;            
-            virtual bool execute(const std::string& str,Datresult&) = 0;  
-            virtual RowNumber insert(const std::string&,Datresult&) = 0;         
-            virtual bool select(const std::string& str,Datresult&) = 0;
-            virtual RowNumber update(const std::string&,Datresult&) = 0;
-            virtual RowNumber remove(const std::string&,Datresult&) = 0;
-            virtual bool commit() = 0;
-            virtual bool begin() = 0;
-            virtual bool rollback() = 0;
-            virtual void close() = 0; 
-			virtual core::Semver getVerionServer() const = 0;
+		//
+		static bool is_ipv4_address(const std::string& str);
+		static bool is_ipv6_address(const std::string& str);
+		static bool is_valid_domain_name(const std::string& str);
+		virtual ~Connector();
+		Connector();
+		Connection getConnection()const;
+		const Datconnect* getDatconection() const; 
+		const Connector& operator=(const Connector& obj);
+		//
+		virtual bool connect(const Datconnect& connector)  = 0;            
+		virtual bool execute(const std::string& str,Datresult&) = 0;  
+		virtual RowNumber insert(const std::string&,Datresult&) = 0;         
+		virtual bool select(const std::string& str,Datresult&) = 0;
+		virtual RowNumber update(const std::string&,Datresult&) = 0;
+		virtual RowNumber remove(const std::string&,Datresult&) = 0;
+		virtual bool commit() = 0;
+		virtual bool begin() = 0;
+		virtual bool rollback() = 0;
+		virtual void close() = 0; 
+		virtual core::Semver getVerionServer() const = 0;
 	};
 
 }

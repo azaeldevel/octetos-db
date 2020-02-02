@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl Created by Anjuta application wizard.
 
-AC_INIT(octetos-db, 0.17.0-alpha,azael.devel@gmail.com)
+AC_INIT(octetos-db, 0.19.0-alpha,azael.devel@gmail.com)
 AC_CANONICAL_SYSTEM
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE
@@ -59,7 +59,7 @@ PKG_CHECK_MODULES(OCTETOS_CORE, octetos-core)
 AM_CONDITIONAL(WITH_MYSQL, test x"$with_mysql" = "xyes")
 AC_ARG_WITH([mysql], AS_HELP_STRING([--with-mysql], [Compilando con soporte para MySQL.]))
 if test "x$with_mysql" = "xyes"; then
-   	PKG_CHECK_MODULES(MYSQLCLIENT,mysqlclient)
+   	PKG_CHECK_MODULES(MYSQLCLIENT,libmariadb)	
 fi
 
 AM_CONDITIONAL(WITH_POSTGRESQL, test x"$with_postgresql" = "xyes")

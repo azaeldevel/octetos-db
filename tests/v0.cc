@@ -87,7 +87,7 @@ void testMySQL()
 	octetos::db::mysql::Datconnect dat("192.168.0.101",3306,"sysappv2.alpha","develop","123456");
 	bool flag = false;
 	octetos::db::mysql::Connector connector;
-	flag = connector.connect(&dat);
+	flag = connector.connect(dat);
     if(flag)
     {
         //printf("Version del Servidor  %s\n", connector.getVerionServer().toString().c_str());
@@ -101,13 +101,13 @@ void testMySQL()
     }
 
 	std::string queryStr = "select * from Persons";
-	octetos::db::Datresult* rs = connector.execute(queryStr);
-	while(rs->nextRow())
+	octetos::db::mysql::Datresult rs;
+	connector.execute(queryStr,rs);
+	while(rs.nextRow())
 	{
 		//std::cout << rs->getString(1) << "\n";
 	}
-
-	delete rs;
+	
 	connector.close();
 }
 #endif
