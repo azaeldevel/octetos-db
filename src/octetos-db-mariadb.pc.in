@@ -1,0 +1,13 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@prefix@/lib
+datarootdir=@datarootdir@
+datadir=@datadir@
+includedir=@prefix@/include
+
+Name: octetos-db
+Description: Libreria para Base de Dato de Octetos.
+Version: @VERSION@
+Requires: 
+Libs: -L${libdir} -loctetos-db-mariadb -loctetos-db -lmaridb -lconfig++
+Cflags: -I${includedir}

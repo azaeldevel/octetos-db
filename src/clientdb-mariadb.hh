@@ -1,5 +1,5 @@
-#ifndef OCTETOS_MYSQL_HH
-#define OCTETOS_MYSQL_HH
+#ifndef OCTETOS_MARIADB_HH
+#define OCTETOS_MARIADB_HH
 
 #include <vector>
 #include <string>
@@ -10,7 +10,7 @@ namespace octetos
 {
 namespace db
 {       
-namespace mysql
+namespace mariadb
 {	
         
         class Datconnect : public db::Datconnect

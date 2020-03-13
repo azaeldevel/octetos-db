@@ -1,5 +1,5 @@
-#ifndef TOOLKIT_CLIENTDB_HPP
-#define TOOLKIT_CLIENTDB_HPP
+#ifndef OCTETOS_CLIENTDB_HH
+#define OCTETOS_CLIENTDB_HH
 
 
 #include <octetos/core/Artifact.hh>
@@ -26,14 +26,14 @@ namespace db
 	 * \brief retorna la informacion del paquete usese ne lugar getPakageVersion y getPakageName
 	 **/
 	bool getPackageInfo(core::Artifact&);
-
-
+	
+	
 	class SQLException : public core::Error
 	{
 	public:
 		virtual ~SQLException() throw();
-		//virtual const char* what() const throw();
-		SQLException(const std::string &description) throw();
+		SQLException(const std::string& description) throw();
+		SQLException(const std::string&, int code) throw();
 	private:
 		//std::string description;
 	};
@@ -41,26 +41,30 @@ namespace db
 	{
 	public:
 		virtual ~SQLExceptionConnection() throw();
-		SQLExceptionConnection(const std::string &description) throw();
+		SQLExceptionConnection(const std::string& description) throw();
+		SQLExceptionConnection(const std::string& description, int code) throw();
 	};
 	class SQLExceptionQuery : public SQLException
 	{
 	public:
 		virtual ~SQLExceptionQuery() throw();
-		SQLExceptionQuery(const std::string &description) throw();
+		SQLExceptionQuery(const std::string& description) throw();
+		SQLExceptionQuery(const std::string& description, int code) throw();
 	};
 	class NotSupportedExcetion  : public SQLException
 	{
 	public:
 		virtual ~NotSupportedExcetion() throw();
-		NotSupportedExcetion(const std::string &description) throw();		
+		NotSupportedExcetion(const std::string& description) throw();
+		NotSupportedExcetion(const std::string& description, int code) throw();		
 	};
     
 	enum Driver
 	{
 		Unknow,
 		MySQL,
-		PostgreSQL
+		PostgreSQL,
+		MariaDB
 	};
 	const char* getDriverString(Driver);
 
@@ -89,12 +93,12 @@ namespace db
 		bool read(const std::string&);
             
 	private:
-            Driver driver;
-            std::string host;
-            std::string user;
-            std::string password;
-            std::string database;
-            unsigned int port;        
+		Driver driver;
+		std::string host;
+		std::string user;
+		std::string password;
+		std::string database;
+		unsigned int port;        
 	};		
         
         

@@ -20,7 +20,9 @@ endif
 if WITH_POSTGRESQL
 lib_LTLIBRARIES += liboctetos-db-postgresql.la 
 endif
-
+if WITH_MARIADB
+lib_LTLIBRARIES += liboctetos-db-mariadb.la
+endif
 
 
 liboctetos_db_la_LDFLAGS = -z now
@@ -41,6 +43,14 @@ liboctetos_db_mysql_la_LIBDADD = $(MYSQLCLIENT_LIBS) $(OCTETOS_CORE_LIBS)
 liboctetos_db_mysql_la_SOURCES = clientdb-mysql.cc 
 endif
 
+if WITH_MARIADB
+liboctetos_db_mariadb_la_LDFLAGS= 
+liboctetos_db_mariadb_la_CFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS)
+liboctetos_db_mariadb_la_CPPFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS)
+liboctetos_db_mariadb_la_LIBDADD = $(MYSQLCLIENT_LIBS) $(OCTETOS_CORE_LIBS) 
+liboctetos_db_mariadb_la_SOURCES = clientdb-mariadb.cc 
+endif
+
 if WITH_DBI
 liboctetos_db_dbi_la_LDFLAGS= 
 liboctetos_db_dbi_la_CFLAGS = $(DBI_CFLAGS) $(OCTETOS_CORE_CC_CFLAGS)
@@ -58,9 +68,22 @@ liboctetos_db_postgresql_la_SOURCES = clientdb-postgresql.cc
 endif
 
 octetos_db_includedir = $(includedir)/octetos/db
-octetos_db_include_HEADERS = clientdb.hh clientdb-mysql.hh clientdb-dbi.hh clientdb-postgresql.hh
-
+octetos_db_include_HEADERS = clientdb.hh 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = octetos-db-mysql.pc octetos-db-postgresql.pc
-
-EXTRA_DIST = octetos-db-mysql.pc.in octetos-db-postgresql.pc.in
+pkgconfig_DATA = 
+EXTRA_DIST = 
+if WITH_MYSQL
+pkgconfig_DATA += octetos-db-mysql.pc
+EXTRA_DIST += octetos-db-mysql.pc.in
+octetos_db_include_HEADERS += clientdb-mysql.hh
+endif
+if WITH_MARIADB
+pkgconfig_DATA += octetos-db-mariadb.pc
+EXTRA_DIST += octetos-db-mariadb.pc.in
+octetos_db_include_HEADERS += clientdb-mariadb.hh
+endif
+if WITH_POSTGRESQL
+pkgconfig_DATA += octetos-db-postgresql.pc
+EXTRA_DIST += octetos-db-postgresql.pc.in
+octetos_db_include_HEADERS += clientdb-postgresql.hh
+endif

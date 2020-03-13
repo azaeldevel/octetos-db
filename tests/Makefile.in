@@ -89,7 +89,7 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
-noinst_PROGRAMS = v0$(EXEEXT)
+noinst_PROGRAMS = v1$(EXEEXT)
 @WITH_POSTGRESQL_TRUE@am__append_1 = $(LIBPQ_CFLAGS) -DOCTETOS_POSTGRESQL
 @WITH_POSTGRESQL_TRUE@am__append_2 = $(LIBPQ_CFLAGS) -DOCTETOS_POSTGRESQL
 @WITH_POSTGRESQL_TRUE@am__append_3 = $(LIBPQ_CFLAGS) -DOCTETOS_POSTGRESQL
@@ -98,6 +98,18 @@ noinst_PROGRAMS = v0$(EXEEXT)
 @WITH_MYSQL_TRUE@am__append_6 = $(MYSQLCLIENT_CFLAGS) -DOCTETOS_MYSQL
 @WITH_MYSQL_TRUE@am__append_7 = $(MYSQLCLIENT_CFLAGS) -DOCTETOS_MYSQL
 @WITH_MYSQL_TRUE@am__append_8 = $(top_builddir)/src/liboctetos-db-mysql.la $(MYSQLCLIENT_LIBS) 
+@WITH_POSTGRESQL_TRUE@am__append_9 = $(LIBPQ_CFLAGS) -DOCTETOS_POSTGRESQL
+@WITH_POSTGRESQL_TRUE@am__append_10 = $(LIBPQ_CFLAGS) -DOCTETOS_POSTGRESQL
+@WITH_POSTGRESQL_TRUE@am__append_11 = $(LIBPQ_CFLAGS) -DOCTETOS_POSTGRESQL
+@WITH_POSTGRESQL_TRUE@am__append_12 = $(top_builddir)/src/liboctetos-db-postgresql.la $(LIBPQ_LIBS) 
+@WITH_MYSQL_TRUE@am__append_13 = $(MYSQLCLIENT_CFLAGS) -DOCTETOS_MYSQL
+@WITH_MYSQL_TRUE@am__append_14 = $(MYSQLCLIENT_CFLAGS) -DOCTETOS_MYSQL
+@WITH_MYSQL_TRUE@am__append_15 = $(MYSQLCLIENT_CFLAGS) -DOCTETOS_MYSQL
+@WITH_MYSQL_TRUE@am__append_16 = $(top_builddir)/src/liboctetos-db-mysql.la $(MYSQLCLIENT_LIBS) 
+@WITH_MARIADB_TRUE@am__append_17 = $(MARIADB_CFLAGS) -DOCTETOS_MARIADB
+@WITH_MARIADB_TRUE@am__append_18 = $(MARIADB_CFLAGS) -DOCTETOS_MARIADB
+@WITH_MARIADB_TRUE@am__append_19 = $(MARIADB_CFLAGS) -DOCTETOS_MARIADB
+@WITH_MARIADB_TRUE@am__append_20 = $(top_builddir)/src/liboctetos-db-mariadb.la $(MARIADB_LIBS) 
 subdir = tests
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -109,24 +121,26 @@ CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
-am_v0_OBJECTS = v0-v0.$(OBJEXT)
-v0_OBJECTS = $(am_v0_OBJECTS)
+am_v1_OBJECTS = v1-v1.$(OBJEXT)
+v1_OBJECTS = $(am_v1_OBJECTS)
 am__DEPENDENCIES_1 =
 @WITH_POSTGRESQL_TRUE@am__DEPENDENCIES_2 = $(top_builddir)/src/liboctetos-db-postgresql.la \
 @WITH_POSTGRESQL_TRUE@	$(am__DEPENDENCIES_1)
 @WITH_MYSQL_TRUE@am__DEPENDENCIES_3 =  \
 @WITH_MYSQL_TRUE@	$(top_builddir)/src/liboctetos-db-mysql.la \
 @WITH_MYSQL_TRUE@	$(am__DEPENDENCIES_1)
-v0_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+@WITH_MARIADB_TRUE@am__DEPENDENCIES_4 = $(top_builddir)/src/liboctetos-db-mariadb.la \
+@WITH_MARIADB_TRUE@	$(am__DEPENDENCIES_1)
+v1_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(top_builddir)/src/liboctetos-db.la $(am__DEPENDENCIES_2) \
-	$(am__DEPENDENCIES_3)
+	$(am__DEPENDENCIES_3) $(am__DEPENDENCIES_4)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
-v0_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(v0_CXXFLAGS) \
-	$(CXXFLAGS) $(v0_LDFLAGS) $(LDFLAGS) -o $@
+v1_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(v1_CXXFLAGS) \
+	$(CXXFLAGS) $(v1_LDFLAGS) $(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -142,7 +156,7 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = ./$(DEPDIR)/v0-v0.Po
+am__depfiles_remade = ./$(DEPDIR)/v1-v1.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -162,8 +176,8 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(v0_SOURCES)
-DIST_SOURCES = $(v0_SOURCES)
+SOURCES = $(v1_SOURCES)
+DIST_SOURCES = $(v1_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -263,6 +277,8 @@ LTLIBOBJS = @LTLIBOBJS@
 LT_SYS_LIBRARY_PATH = @LT_SYS_LIBRARY_PATH@
 MAKEINFO = @MAKEINFO@
 MANIFEST_TOOL = @MANIFEST_TOOL@
+MARIADB_CFLAGS = @MARIADB_CFLAGS@
+MARIADB_LIBS = @MARIADB_LIBS@
 MKDIR_P = @MKDIR_P@
 MKINSTALLDIRS = @MKINSTALLDIRS@
 MSGFMT = @MSGFMT@
@@ -382,6 +398,19 @@ v0_LDADD = $(OCTETOS_CORE_LIBS) $(CUNIT_LIBS) \
 	$(top_builddir)/src/liboctetos-db.la $(am__append_4) \
 	$(am__append_8)
 v0_SOURCES = v0.cc
+v1_CPPFLAGS = $(OCTETOS_CORE_CFLAGS) $(CUNIT_CFLAGS) \
+	-I$(top_srcdir)/src $(am__append_9) $(am__append_13) \
+	$(am__append_17)
+v1_CXXFLAGS = $(OCTETOS_CORE_CFLAGS) $(CUNIT_CFLAGS) \
+	-I$(top_srcdir)/src $(am__append_10) $(am__append_14) \
+	$(am__append_18)
+v1_CFLAGS = $(OCTETOS_CORE_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src \
+	$(am__append_11) $(am__append_15) $(am__append_19)
+v1_LDFLAGS = 
+v1_LDADD = $(OCTETOS_CORE_LIBS) $(CUNIT_LIBS) \
+	$(top_builddir)/src/liboctetos-db.la $(am__append_12) \
+	$(am__append_16) $(am__append_20)
+v1_SOURCES = v1.cc
 all: all-am
 
 .SUFFIXES:
@@ -425,9 +454,9 @@ clean-noinstPROGRAMS:
 	echo " rm -f" $$list; \
 	rm -f $$list
 
-v0$(EXEEXT): $(v0_OBJECTS) $(v0_DEPENDENCIES) $(EXTRA_v0_DEPENDENCIES) 
-	@rm -f v0$(EXEEXT)
-	$(AM_V_CXXLD)$(v0_LINK) $(v0_OBJECTS) $(v0_LDADD) $(LIBS)
+v1$(EXEEXT): $(v1_OBJECTS) $(v1_DEPENDENCIES) $(EXTRA_v1_DEPENDENCIES) 
+	@rm -f v1$(EXEEXT)
+	$(AM_V_CXXLD)$(v1_LINK) $(v1_OBJECTS) $(v1_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -435,7 +464,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/v0-v0.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/v1-v1.Po@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -464,19 +493,19 @@ am--depfiles: $(am__depfiles_remade)
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
 
-v0-v0.o: v0.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(v0_CPPFLAGS) $(CPPFLAGS) $(v0_CXXFLAGS) $(CXXFLAGS) -MT v0-v0.o -MD -MP -MF $(DEPDIR)/v0-v0.Tpo -c -o v0-v0.o `test -f 'v0.cc' || echo '$(srcdir)/'`v0.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/v0-v0.Tpo $(DEPDIR)/v0-v0.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='v0.cc' object='v0-v0.o' libtool=no @AMDEPBACKSLASH@
+v1-v1.o: v1.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(v1_CPPFLAGS) $(CPPFLAGS) $(v1_CXXFLAGS) $(CXXFLAGS) -MT v1-v1.o -MD -MP -MF $(DEPDIR)/v1-v1.Tpo -c -o v1-v1.o `test -f 'v1.cc' || echo '$(srcdir)/'`v1.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/v1-v1.Tpo $(DEPDIR)/v1-v1.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='v1.cc' object='v1-v1.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(v0_CPPFLAGS) $(CPPFLAGS) $(v0_CXXFLAGS) $(CXXFLAGS) -c -o v0-v0.o `test -f 'v0.cc' || echo '$(srcdir)/'`v0.cc
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(v1_CPPFLAGS) $(CPPFLAGS) $(v1_CXXFLAGS) $(CXXFLAGS) -c -o v1-v1.o `test -f 'v1.cc' || echo '$(srcdir)/'`v1.cc
 
-v0-v0.obj: v0.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(v0_CPPFLAGS) $(CPPFLAGS) $(v0_CXXFLAGS) $(CXXFLAGS) -MT v0-v0.obj -MD -MP -MF $(DEPDIR)/v0-v0.Tpo -c -o v0-v0.obj `if test -f 'v0.cc'; then $(CYGPATH_W) 'v0.cc'; else $(CYGPATH_W) '$(srcdir)/v0.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/v0-v0.Tpo $(DEPDIR)/v0-v0.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='v0.cc' object='v0-v0.obj' libtool=no @AMDEPBACKSLASH@
+v1-v1.obj: v1.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(v1_CPPFLAGS) $(CPPFLAGS) $(v1_CXXFLAGS) $(CXXFLAGS) -MT v1-v1.obj -MD -MP -MF $(DEPDIR)/v1-v1.Tpo -c -o v1-v1.obj `if test -f 'v1.cc'; then $(CYGPATH_W) 'v1.cc'; else $(CYGPATH_W) '$(srcdir)/v1.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/v1-v1.Tpo $(DEPDIR)/v1-v1.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='v1.cc' object='v1-v1.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(v0_CPPFLAGS) $(CPPFLAGS) $(v0_CXXFLAGS) $(CXXFLAGS) -c -o v0-v0.obj `if test -f 'v0.cc'; then $(CYGPATH_W) 'v0.cc'; else $(CYGPATH_W) '$(srcdir)/v0.cc'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(v1_CPPFLAGS) $(CPPFLAGS) $(v1_CXXFLAGS) $(CXXFLAGS) -c -o v1-v1.obj `if test -f 'v1.cc'; then $(CYGPATH_W) 'v1.cc'; else $(CYGPATH_W) '$(srcdir)/v1.cc'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -609,7 +638,7 @@ clean-am: clean-generic clean-libtool clean-noinstPROGRAMS \
 	mostlyclean-am
 
 distclean: distclean-am
-		-rm -f ./$(DEPDIR)/v0-v0.Po
+		-rm -f ./$(DEPDIR)/v1-v1.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -655,7 +684,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-		-rm -f ./$(DEPDIR)/v0-v0.Po
+		-rm -f ./$(DEPDIR)/v1-v1.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

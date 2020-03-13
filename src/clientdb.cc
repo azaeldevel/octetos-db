@@ -3,6 +3,7 @@
 #include <string.h>
 #include <sstream>
 #include <arpa/inet.h>
+#include <octetos/core/Error.hh>
 
 #include "config.h"
 #include "clientdb.hh"
@@ -53,14 +54,20 @@ namespace db
 	*/
         
 
-	NotSupportedExcetion::NotSupportedExcetion(const std::string &description) throw() : SQLException(description) 
+	NotSupportedExcetion::NotSupportedExcetion(const std::string &description,int code) throw() : SQLException(description,code) 
+	{	
+	}
+	NotSupportedExcetion::NotSupportedExcetion(const std::string &description) throw() : SQLException(description,(int)core::Error::Codes::ERROR_DB_SUPPORTED) 
 	{		
 	}	
 	NotSupportedExcetion::~NotSupportedExcetion() throw()
 	{		
 	}
 	
-	SQLExceptionQuery::SQLExceptionQuery(const std::string &description) throw() : SQLException(description) 
+	SQLExceptionQuery::SQLExceptionQuery(const std::string &description,int code) throw() : SQLException(description,code) 
+	{		
+	}
+	SQLExceptionQuery::SQLExceptionQuery(const std::string &description) throw() : SQLException(description,(int)core::Error::Codes::ERROR_DB_QUERY) 
 	{		
 	}	
 	SQLExceptionQuery::~SQLExceptionQuery() throw()
@@ -69,7 +76,10 @@ namespace db
 
     
     
-	SQLExceptionConnection::SQLExceptionConnection(const std::string &description) throw() : SQLException(description) 
+	SQLExceptionConnection::SQLExceptionConnection(const std::string &description,int code) throw() : SQLException(description,code) 
+	{		
+	}
+	SQLExceptionConnection::SQLExceptionConnection(const std::string &description) throw() : SQLException(description,(int)core::Error::Codes::ERROR_DB_CONNECTION) 
 	{		
 	}	
 	SQLExceptionConnection::~SQLExceptionConnection() throw()
@@ -77,7 +87,11 @@ namespace db
 	}	
     
     
-	SQLException::SQLException(const std::string &d)throw():core::Error(d) 
+	SQLException::SQLException(const std::string &d, int code)throw():core::Error(d,code) 
+	{
+		//this->description = description;
+	}
+	SQLException::SQLException(const std::string &d)throw():core::Error(d,(int)core::Error::Codes::ERROR_DB) 
 	{
 		//this->description = description;
 	}
@@ -444,10 +458,12 @@ namespace db
 	bool getPackageInfo(core::Artifact& packinfo)
 	{		
 		packinfo.name = PACKAGE;
-		packinfo.brief = "";
-		packinfo.url = "";
-		
-		packinfo.version.set(VERSION);
+		packinfo.brief = "Libreria para Base de Dato de Octetos";
+		packinfo.url = "https://github.com/azaeldevel/octetos-db.git";
+		if(!packinfo.version.set(VERSION))
+		{
+			return false;
+		}
 		
 		packinfo.licence.type = core::Licence::Type::GPL;		
 		packinfo.licence.name_public = packinfo.name;

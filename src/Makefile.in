@@ -94,18 +94,29 @@ target_triplet = @target@
 @WITH_MYSQL_TRUE@am__append_1 = liboctetos-db-mysql.la
 @WITH_DBI_TRUE@am__append_2 = liboctetos-db-dbi.la 
 @WITH_POSTGRESQL_TRUE@am__append_3 = liboctetos-db-postgresql.la 
-@PLATFORM_WIN32_TRUE@am__append_4 = -no-undefined
-@NATIVE_WIN32_TRUE@am__append_5 = -export-dynamic
+@WITH_MARIADB_TRUE@am__append_4 = liboctetos-db-mariadb.la
+@PLATFORM_WIN32_TRUE@am__append_5 = -no-undefined
+@NATIVE_WIN32_TRUE@am__append_6 = -export-dynamic
+@WITH_MYSQL_TRUE@am__append_7 = octetos-db-mysql.pc
+@WITH_MYSQL_TRUE@am__append_8 = octetos-db-mysql.pc.in
+@WITH_MYSQL_TRUE@am__append_9 = clientdb-mysql.hh
+@WITH_MARIADB_TRUE@am__append_10 = octetos-db-mariadb.pc
+@WITH_MARIADB_TRUE@am__append_11 = octetos-db-mariadb.pc.in
+@WITH_MARIADB_TRUE@am__append_12 = clientdb-mariadb.hh
+@WITH_POSTGRESQL_TRUE@am__append_13 = octetos-db-postgresql.pc
+@WITH_POSTGRESQL_TRUE@am__append_14 = octetos-db-postgresql.pc.in
+@WITH_POSTGRESQL_TRUE@am__append_15 = clientdb-postgresql.hh
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
-DIST_COMMON = $(srcdir)/Makefile.am $(octetos_db_include_HEADERS) \
-	$(am__DIST_COMMON)
+DIST_COMMON = $(srcdir)/Makefile.am \
+	$(am__octetos_db_include_HEADERS_DIST) $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
-CONFIG_CLEAN_FILES = octetos-db-mysql.pc octetos-db-postgresql.pc
+CONFIG_CLEAN_FILES = octetos-db-mysql.pc octetos-db-postgresql.pc \
+	octetos-db-mariadb.pc
 CONFIG_CLEAN_VPATH_FILES =
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
@@ -151,6 +162,17 @@ liboctetos_db_dbi_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(AM_CXXFLAGS) $(CXXFLAGS) $(liboctetos_db_dbi_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
 @WITH_DBI_TRUE@am_liboctetos_db_dbi_la_rpath = -rpath $(libdir)
+liboctetos_db_mariadb_la_LIBADD =
+am__liboctetos_db_mariadb_la_SOURCES_DIST = clientdb-mariadb.cc
+@WITH_MARIADB_TRUE@am_liboctetos_db_mariadb_la_OBJECTS = liboctetos_db_mariadb_la-clientdb-mariadb.lo
+liboctetos_db_mariadb_la_OBJECTS =  \
+	$(am_liboctetos_db_mariadb_la_OBJECTS)
+liboctetos_db_mariadb_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
+	$(AM_CXXFLAGS) $(CXXFLAGS) $(liboctetos_db_mariadb_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
+@WITH_MARIADB_TRUE@am_liboctetos_db_mariadb_la_rpath = -rpath \
+@WITH_MARIADB_TRUE@	$(libdir)
 liboctetos_db_mysql_la_LIBADD =
 am__liboctetos_db_mysql_la_SOURCES_DIST = clientdb-mysql.cc
 @WITH_MYSQL_TRUE@am_liboctetos_db_mysql_la_OBJECTS =  \
@@ -197,6 +219,7 @@ depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/clientdb.Plo \
 	./$(DEPDIR)/liboctetos_db_dbi_la-clientdb-dbi.Plo \
+	./$(DEPDIR)/liboctetos_db_mariadb_la-clientdb-mariadb.Plo \
 	./$(DEPDIR)/liboctetos_db_mysql_la-clientdb-mysql.Plo \
 	./$(DEPDIR)/liboctetos_db_postgresql_la-clientdb-postgresql.Plo
 am__mv = mv -f
@@ -219,10 +242,12 @@ am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
 SOURCES = $(liboctetos_db_dbi_la_SOURCES) \
+	$(liboctetos_db_mariadb_la_SOURCES) \
 	$(liboctetos_db_mysql_la_SOURCES) \
 	$(liboctetos_db_postgresql_la_SOURCES) \
 	$(liboctetos_db_la_SOURCES)
 DIST_SOURCES = $(am__liboctetos_db_dbi_la_SOURCES_DIST) \
+	$(am__liboctetos_db_mariadb_la_SOURCES_DIST) \
 	$(am__liboctetos_db_mysql_la_SOURCES_DIST) \
 	$(am__liboctetos_db_postgresql_la_SOURCES_DIST) \
 	$(liboctetos_db_la_SOURCES)
@@ -232,6 +257,8 @@ am__can_run_installinfo = \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
 DATA = $(pkgconfig_DATA)
+am__octetos_db_include_HEADERS_DIST = clientdb.hh clientdb-mysql.hh \
+	clientdb-mariadb.hh clientdb-postgresql.hh
 HEADERS = $(octetos_db_include_HEADERS)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 # Read a list of newline-separated strings from the standard input,
@@ -253,6 +280,7 @@ am__define_uniq_tagged_files = \
 ETAGS = etags
 CTAGS = ctags
 am__DIST_COMMON = $(srcdir)/Makefile.in \
+	$(srcdir)/octetos-db-mariadb.pc.in \
 	$(srcdir)/octetos-db-mysql.pc.in \
 	$(srcdir)/octetos-db-postgresql.pc.in $(top_srcdir)/depcomp
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -329,6 +357,8 @@ LTLIBOBJS = @LTLIBOBJS@
 LT_SYS_LIBRARY_PATH = @LT_SYS_LIBRARY_PATH@
 MAKEINFO = @MAKEINFO@
 MANIFEST_TOOL = @MANIFEST_TOOL@
+MARIADB_CFLAGS = @MARIADB_CFLAGS@
+MARIADB_LIBS = @MARIADB_LIBS@
 MKDIR_P = @MKDIR_P@
 MKINSTALLDIRS = @MKINSTALLDIRS@
 MSGFMT = @MSGFMT@
@@ -438,8 +468,8 @@ AM_CFLAGS = \
 	 -g
 
 lib_LTLIBRARIES = liboctetos-db.la $(am__append_1) $(am__append_2) \
-	$(am__append_3)
-liboctetos_db_la_LDFLAGS = -z now $(am__append_4) $(am__append_5)
+	$(am__append_3) $(am__append_4)
+liboctetos_db_la_LDFLAGS = -z now $(am__append_5) $(am__append_6)
 liboctetos_db_la_LIBADD = $(OCTETOS_CORE_LIBS)
 liboctetos_db_la_SOURCES = clientdb.cc
 @WITH_MYSQL_TRUE@liboctetos_db_mysql_la_LDFLAGS = 
@@ -447,6 +477,11 @@ liboctetos_db_la_SOURCES = clientdb.cc
 @WITH_MYSQL_TRUE@liboctetos_db_mysql_la_CPPFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS)
 @WITH_MYSQL_TRUE@liboctetos_db_mysql_la_LIBDADD = $(MYSQLCLIENT_LIBS) $(OCTETOS_CORE_LIBS) 
 @WITH_MYSQL_TRUE@liboctetos_db_mysql_la_SOURCES = clientdb-mysql.cc 
+@WITH_MARIADB_TRUE@liboctetos_db_mariadb_la_LDFLAGS = 
+@WITH_MARIADB_TRUE@liboctetos_db_mariadb_la_CFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS)
+@WITH_MARIADB_TRUE@liboctetos_db_mariadb_la_CPPFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS)
+@WITH_MARIADB_TRUE@liboctetos_db_mariadb_la_LIBDADD = $(MYSQLCLIENT_LIBS) $(OCTETOS_CORE_LIBS) 
+@WITH_MARIADB_TRUE@liboctetos_db_mariadb_la_SOURCES = clientdb-mariadb.cc 
 @WITH_DBI_TRUE@liboctetos_db_dbi_la_LDFLAGS = 
 @WITH_DBI_TRUE@liboctetos_db_dbi_la_CFLAGS = $(DBI_CFLAGS) $(OCTETOS_CORE_CC_CFLAGS)
 @WITH_DBI_TRUE@liboctetos_db_dbi_la_CPPFLAGS = $(DBI_CFLAGS) $(OCTETOS_CORE_CC_CFLAGS)
@@ -458,10 +493,11 @@ liboctetos_db_la_SOURCES = clientdb.cc
 @WITH_POSTGRESQL_TRUE@liboctetos_db_postgresql_la_LIBDADD = $(LIBPQ_LIBS) $(OCTETOS_CORE_LIBS) 
 @WITH_POSTGRESQL_TRUE@liboctetos_db_postgresql_la_SOURCES = clientdb-postgresql.cc 
 octetos_db_includedir = $(includedir)/octetos/db
-octetos_db_include_HEADERS = clientdb.hh clientdb-mysql.hh clientdb-dbi.hh clientdb-postgresql.hh
+octetos_db_include_HEADERS = clientdb.hh $(am__append_9) \
+	$(am__append_12) $(am__append_15)
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = octetos-db-mysql.pc octetos-db-postgresql.pc
-EXTRA_DIST = octetos-db-mysql.pc.in octetos-db-postgresql.pc.in
+pkgconfig_DATA = $(am__append_7) $(am__append_10) $(am__append_13)
+EXTRA_DIST = $(am__append_8) $(am__append_11) $(am__append_14)
 all: all-am
 
 .SUFFIXES:
@@ -498,6 +534,8 @@ $(am__aclocal_m4_deps):
 octetos-db-mysql.pc: $(top_builddir)/config.status $(srcdir)/octetos-db-mysql.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 octetos-db-postgresql.pc: $(top_builddir)/config.status $(srcdir)/octetos-db-postgresql.pc.in
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+octetos-db-mariadb.pc: $(top_builddir)/config.status $(srcdir)/octetos-db-mariadb.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 install-libLTLIBRARIES: $(lib_LTLIBRARIES)
@@ -538,6 +576,9 @@ clean-libLTLIBRARIES:
 liboctetos-db-dbi.la: $(liboctetos_db_dbi_la_OBJECTS) $(liboctetos_db_dbi_la_DEPENDENCIES) $(EXTRA_liboctetos_db_dbi_la_DEPENDENCIES) 
 	$(AM_V_CXXLD)$(liboctetos_db_dbi_la_LINK) $(am_liboctetos_db_dbi_la_rpath) $(liboctetos_db_dbi_la_OBJECTS) $(liboctetos_db_dbi_la_LIBADD) $(LIBS)
 
+liboctetos-db-mariadb.la: $(liboctetos_db_mariadb_la_OBJECTS) $(liboctetos_db_mariadb_la_DEPENDENCIES) $(EXTRA_liboctetos_db_mariadb_la_DEPENDENCIES) 
+	$(AM_V_CXXLD)$(liboctetos_db_mariadb_la_LINK) $(am_liboctetos_db_mariadb_la_rpath) $(liboctetos_db_mariadb_la_OBJECTS) $(liboctetos_db_mariadb_la_LIBADD) $(LIBS)
+
 liboctetos-db-mysql.la: $(liboctetos_db_mysql_la_OBJECTS) $(liboctetos_db_mysql_la_DEPENDENCIES) $(EXTRA_liboctetos_db_mysql_la_DEPENDENCIES) 
 	$(AM_V_CXXLD)$(liboctetos_db_mysql_la_LINK) $(am_liboctetos_db_mysql_la_rpath) $(liboctetos_db_mysql_la_OBJECTS) $(liboctetos_db_mysql_la_LIBADD) $(LIBS)
 
@@ -555,6 +596,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/clientdb.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/liboctetos_db_dbi_la-clientdb-dbi.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/liboctetos_db_mariadb_la-clientdb-mariadb.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/liboctetos_db_mysql_la-clientdb-mysql.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/liboctetos_db_postgresql_la-clientdb-postgresql.Plo@am__quote@ # am--include-marker
 
@@ -591,6 +633,13 @@ liboctetos_db_dbi_la-clientdb-dbi.lo: clientdb-dbi.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='clientdb-dbi.cc' object='liboctetos_db_dbi_la-clientdb-dbi.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(liboctetos_db_dbi_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o liboctetos_db_dbi_la-clientdb-dbi.lo `test -f 'clientdb-dbi.cc' || echo '$(srcdir)/'`clientdb-dbi.cc
+
+liboctetos_db_mariadb_la-clientdb-mariadb.lo: clientdb-mariadb.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(liboctetos_db_mariadb_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT liboctetos_db_mariadb_la-clientdb-mariadb.lo -MD -MP -MF $(DEPDIR)/liboctetos_db_mariadb_la-clientdb-mariadb.Tpo -c -o liboctetos_db_mariadb_la-clientdb-mariadb.lo `test -f 'clientdb-mariadb.cc' || echo '$(srcdir)/'`clientdb-mariadb.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/liboctetos_db_mariadb_la-clientdb-mariadb.Tpo $(DEPDIR)/liboctetos_db_mariadb_la-clientdb-mariadb.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='clientdb-mariadb.cc' object='liboctetos_db_mariadb_la-clientdb-mariadb.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(liboctetos_db_mariadb_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o liboctetos_db_mariadb_la-clientdb-mariadb.lo `test -f 'clientdb-mariadb.cc' || echo '$(srcdir)/'`clientdb-mariadb.cc
 
 liboctetos_db_mysql_la-clientdb-mysql.lo: clientdb-mysql.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(liboctetos_db_mysql_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT liboctetos_db_mysql_la-clientdb-mysql.lo -MD -MP -MF $(DEPDIR)/liboctetos_db_mysql_la-clientdb-mysql.Tpo -c -o liboctetos_db_mysql_la-clientdb-mysql.lo `test -f 'clientdb-mysql.cc' || echo '$(srcdir)/'`clientdb-mysql.cc
@@ -784,6 +833,7 @@ clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 distclean: distclean-am
 		-rm -f ./$(DEPDIR)/clientdb.Plo
 	-rm -f ./$(DEPDIR)/liboctetos_db_dbi_la-clientdb-dbi.Plo
+	-rm -f ./$(DEPDIR)/liboctetos_db_mariadb_la-clientdb-mariadb.Plo
 	-rm -f ./$(DEPDIR)/liboctetos_db_mysql_la-clientdb-mysql.Plo
 	-rm -f ./$(DEPDIR)/liboctetos_db_postgresql_la-clientdb-postgresql.Plo
 	-rm -f Makefile
@@ -834,6 +884,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 		-rm -f ./$(DEPDIR)/clientdb.Plo
 	-rm -f ./$(DEPDIR)/liboctetos_db_dbi_la-clientdb-dbi.Plo
+	-rm -f ./$(DEPDIR)/liboctetos_db_mariadb_la-clientdb-mariadb.Plo
 	-rm -f ./$(DEPDIR)/liboctetos_db_mysql_la-clientdb-mysql.Plo
 	-rm -f ./$(DEPDIR)/liboctetos_db_postgresql_la-clientdb-postgresql.Plo
 	-rm -f Makefile
