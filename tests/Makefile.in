@@ -109,7 +109,7 @@ noinst_PROGRAMS = v1$(EXEEXT)
 @WITH_MARIADB_TRUE@am__append_17 = $(MARIADB_CFLAGS) -DOCTETOS_MARIADB
 @WITH_MARIADB_TRUE@am__append_18 = $(MARIADB_CFLAGS) -DOCTETOS_MARIADB
 @WITH_MARIADB_TRUE@am__append_19 = $(MARIADB_CFLAGS) -DOCTETOS_MARIADB
-@WITH_MARIADB_TRUE@am__append_20 = $(top_builddir)/src/liboctetos-db-mariadb.la $(MARIADB_LIBS) 
+@WITH_MARIADB_TRUE@am__append_20 = $(top_builddir)/src/liboctetos-db-maria.la $(MARIADB_LIBS) 
 subdir = tests
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -129,7 +129,8 @@ am__DEPENDENCIES_1 =
 @WITH_MYSQL_TRUE@am__DEPENDENCIES_3 =  \
 @WITH_MYSQL_TRUE@	$(top_builddir)/src/liboctetos-db-mysql.la \
 @WITH_MYSQL_TRUE@	$(am__DEPENDENCIES_1)
-@WITH_MARIADB_TRUE@am__DEPENDENCIES_4 = $(top_builddir)/src/liboctetos-db-mariadb.la \
+@WITH_MARIADB_TRUE@am__DEPENDENCIES_4 =  \
+@WITH_MARIADB_TRUE@	$(top_builddir)/src/liboctetos-db-maria.la \
 @WITH_MARIADB_TRUE@	$(am__DEPENDENCIES_1)
 v1_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(top_builddir)/src/liboctetos-db.la $(am__DEPENDENCIES_2) \

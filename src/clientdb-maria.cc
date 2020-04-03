@@ -3,7 +3,7 @@
 #include <octetos/core/Artifact.hh>
 #include <string.h>
 
-#include "clientdb-mariadb.hh"
+#include "clientdb-maria.hh"
 #include "config.h"
 
 namespace octetos

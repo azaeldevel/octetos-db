@@ -53,6 +53,6 @@ if WITH_MARIADB
 v1_CPPFLAGS += $(MARIADB_CFLAGS) -DOCTETOS_MARIADB
 v1_CXXFLAGS += $(MARIADB_CFLAGS) -DOCTETOS_MARIADB
 v1_CFLAGS += $(MARIADB_CFLAGS) -DOCTETOS_MARIADB
-v1_LDADD += $(top_builddir)/src/liboctetos-db-mariadb.la $(MARIADB_LIBS) 
+v1_LDADD += $(top_builddir)/src/liboctetos-db-maria.la $(MARIADB_LIBS) 
 endif
 v1_SOURCES = v1.cc

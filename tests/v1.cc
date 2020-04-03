@@ -31,7 +31,7 @@
 	#include "clientdb-mysql.hh"
 #endif
 #ifdef OCTETOS_MARIADB
-	#include "clientdb-mariadb.hh"
+	#include "clientdb-maria.hh"
 #endif
 
 int init(void)
