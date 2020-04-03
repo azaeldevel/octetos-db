@@ -68,19 +68,19 @@ liboctetos_db_postgresql_la_SOURCES = clientdb-postgresql.cc
 endif
 
 octetos_db_includedir = $(includedir)/octetos/db
-octetos_db_include_HEADERS = clientdb.hh 
+octetos_db_include_HEADERS = clientdb.hh
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = 
-EXTRA_DIST = 
+pkgconfig_DATA = octetos-db.pc
+EXTRA_DIST = octetos-db.pc.in
 if WITH_MYSQL
 pkgconfig_DATA += octetos-db-mysql.pc
 EXTRA_DIST += octetos-db-mysql.pc.in
 octetos_db_include_HEADERS += clientdb-mysql.hh
 endif
 if WITH_MARIADB
-pkgconfig_DATA += octetos-db-maria.pc
-EXTRA_DIST += octetos-db-maria.pc.in
-octetos_db_include_HEADERS += clientdb-maria.hh
+pkgconfig_DATA = $pkgconfig_DATA octetos-db-maria.pc
+EXTRA_DIST = $(EXTRA_DIST) octetos-db-maria.pc.in
+octetos_db_include_HEADERS = $(octetos_db_include_HEADERS) clientdb-maria.hh
 endif
 if WITH_POSTGRESQL
 pkgconfig_DATA += octetos-db-postgresql.pc
