@@ -1,21 +1,21 @@
-#include <mysql.h>
+#include <sqlite3.h> 
 #include <iostream>
 #include <octetos/core/Artifact.hh>
 #include <string.h>
 
-#include "clientdb-mariadb.hh"
+#include "clientdb-sqlite.hh"
 #include "config.h"
 
 namespace octetos
 {
 namespace db
 {
-namespace mariadb
+namespace sqlite
 {        
         
 
 
-
+	/*
 	char Row::getchar(const std::string&)const
 	{
 		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
@@ -133,7 +133,7 @@ namespace mariadb
 	{
 		MYSQL_ROW r = (MYSQL_ROW)row;
 		return r[field] ? r[field] : "";
-	}
+	}*/
 	Row::~Row()
 	{
 #ifdef COLLETION_ASSISTANT
@@ -265,7 +265,7 @@ namespace mariadb
 	}
 	bool Datresult::nextRow()
 	{
-		MYSQL_ROW row  = mysql_fetch_row((MYSQL_RES*)getResult());
+		/*MYSQL_ROW row  = mysql_fetch_row((MYSQL_RES*)getResult());
 		if(actualRow)
 		{
 			delete actualRow;
@@ -275,17 +275,14 @@ namespace mariadb
 		addChild(actualRow);
 #endif 		
 		if(row) return true;
-		return false;
+		return false;*/
 	}
         
         Datresult::Datresult(void* result) : db::Datresult(result)
         {
 			actualRow = NULL;
         }
-	Datresult::Datresult()
-	{
-		actualRow = NULL;
-	}
+        
 	Datresult::~Datresult()
 	{
 		if(actualRow)
@@ -328,21 +325,21 @@ namespace mariadb
              return *this;
         }
         
-        Datconnect::Datconnect(const std::string& host, unsigned int port,const std::string& database,const std::string& user,const std::string& password) : db::Datconnect(Driver::MariaDB,host,port,database,user,password)
+        Datconnect::Datconnect(const std::string& host, unsigned int port,const std::string& database,const std::string& user,const std::string& password) : db::Datconnect(Driver::MySQL,host,port,database,user,password)
         {
         }
         
         
 
-	bool Connector::select(const std::string& str,db::Datresult& rs)
+	Datresult* Connector::select(const std::string& str)
 	{
-		return execute (str,rs);
+		return execute(str);
 	}		
-	RowNumber Connector::update(const std::string&,db::Datresult&)
+	RowNumber Connector::update(const std::string&)
 	{
 		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}		
-	RowNumber Connector::remove(const std::string&,db::Datresult&)
+	RowNumber Connector::remove(const std::string&)
 	{
 		throw NotSupportedExcetion("Aun se trabaja en esta cracteristica.");
 	}
@@ -359,36 +356,39 @@ namespace mariadb
 		}
 #endif
 	}
-	bool Connector::execute(const std::string& str,db::Datresult& rs)
+	db::Datresult* Connector::execute(const std::string& strq)
 	{
-		if (mysql_query((MYSQL*)conn, str.c_str())  != 0) 
+		/*if (mysql_query((MYSQL*)conn, strq.c_str())  != 0) 
 		{
-			std::string msg = "";
-			msg = msg + " MySQL Server Error No. : '";
-			msg = msg + std::to_string(mysql_errno((MYSQL*)conn));
-			msg = msg + "' ";
-			msg = msg + mysql_error((MYSQL*)conn);  
+                        std::string msg = "";
+                        msg = msg + " MySQL Server Error No. : '";
+                        msg = msg + std::to_string(mysql_errno((MYSQL*)conn));
+                        msg = msg + "' ";
+                        msg = msg + mysql_error((MYSQL*)conn);  
 			core::Error::write(SQLException(msg)); 
-			return false;
+			return NULL;
 		}
 		MYSQL_RES *result = mysql_store_result((MYSQL*)conn);
 		if (result == NULL && mysql_errno((MYSQL*)conn) != 0) 
 		{
-			std::string msg = "";
-			msg = msg + " MySQL Server Error No. : '";
-			msg = msg + std::to_string(mysql_errno((MYSQL*)conn));
-			msg = msg + "' ";
-			msg = msg + mysql_error((MYSQL*)conn);  
+                        std::string msg = "";
+                        msg = msg + " MySQL Server Error No. : '";
+                        msg = msg + std::to_string(mysql_errno((MYSQL*)conn));
+                        msg = msg + "' ";
+                        msg = msg + mysql_error((MYSQL*)conn);  
 			core::Error::write(SQLException(msg));
-			return false;
+			return NULL;
 		}
-		rs = (Result)result;   
-		return true;
+                Datresult* dtrs = new Datresult(result);*/
+#ifdef COLLETION_ASSISTANT
+                addChild(dtrs);
+#endif    
+                return dtrs;
 	}
 	core::Semver Connector::getVerionServer() const
 	{
 		core::Semver ver;
-		ver.set(mysql_get_server_version((MYSQL*)conn),core::Semver::ImportCode::MySQL);
+		//ver.set(mysql_get_server_version((MYSQL*)conn),core::semver::ImportCode::MySQL);
 		
 		return ver;
 	}
@@ -398,16 +398,16 @@ namespace mariadb
         }
 	void Connector::close()
 	{
-		if (conn) 
+		/*if (conn) 
 		{
 			mysql_close((MYSQL*)conn);
 			conn = NULL;
 			datconn = NULL;
-		}
+		}*/
 	}       
         bool Connector::rollback()
         {
-                if (conn != NULL)
+                /*if (conn != NULL)
                 {
                         if(mysql_rollback((MYSQL*)conn) == 0)
                         {
@@ -415,11 +415,11 @@ namespace mariadb
                         }
                 }
             
-                return false; 
+                return false; */
         }        
         bool Connector::commit()
         {
-            if (conn != NULL)
+            /*if (conn != NULL)
             {
                 if(mysql_commit((MYSQL*)conn) == 0)
                 {
@@ -427,58 +427,49 @@ namespace mariadb
                 }
             }
             
-            return false; 
+            return false;*/
         }
-	RowNumber Connector::insert(const std::string& str,db::Datresult&)
+	RowNumber Connector::insert(const std::string& str)
 	{
-            if (mysql_query((MYSQL*)conn, str.c_str()) == 0) 
-            {
-                return mysql_insert_id((MYSQL*)conn);
-            }
-            else
-            {   
-                return 0; 
-            }		
+		
 	}     
         /*const char* Connector::serverDescription()
         {
             return mysql_get_client_info();
         }*/
-	bool Connector::connect(const db::Datconnect& dtcon)
+
+    db::Datresult* execute(const std::string& str,int (*callback)(void*,int,char**,char**),void* obj)
+    {
+        char *zErrMsg = 0;
+        int rc = sqlite3_exec((sqlite3*)serverConnector, str.c_str(), callback, obj, &zErrMsg);
+        if( rc == SQLITE_OK )
+		{
+			return true;
+		}
+		else if( rc == SQLITE_NOTADB ) 
+        {
+            fprintf(stderr, "SQL error(%i): La base de datos tiene mal formato: %s\n",rc, zErrMsg);
+            sqlite3_free(zErrMsg);
+            return false;				
+        }
+        else if( rc == SQLITE_ABORT ) 
+        {
+            fprintf(stderr, "SQL error(%i) : %s\n Quiza la callback retorn no-zero valor.",rc, zErrMsg);
+            sqlite3_free(zErrMsg);
+            return false;				
+        }
+        else if( rc != SQLITE_OK ) 			
+        {
+            fprintf(stderr, "SQL error(%i): %s\n",rc, zErrMsg);
+            sqlite3_free(zErrMsg);
+            return false;			
+        }
+
+		return false;
+    }
+	bool Connector::connect(const db::Datconnect* dtcon)
 	{
-           	conn = mysql_init(NULL);
-            if (conn == NULL)
-            {
-                std::string msg = "";
-                msg = msg + " MySQL Server Error No. : '";
-                msg = msg + std::to_string(mysql_errno((MYSQL*)conn));
-                msg = msg + "' ";
-                msg = msg + mysql_error((MYSQL*)conn);  
-				core::Error::write(SQLException(msg));
-				return false;
-            }
-            if (mysql_real_connect((MYSQL*)conn, dtcon.getHost().c_str(), dtcon.getUser().c_str(), dtcon.getPassword().c_str(),dtcon.getDatabase().c_str(),dtcon.getPort(), NULL, 0) == NULL)
-            {
-                std::string msg = "";
-                msg = msg + " MySQL Server Error No. : '";
-                msg = msg + std::to_string(mysql_errno((MYSQL*)conn));
-                msg = msg + "' ";
-                msg = msg + mysql_error((MYSQL*)conn);
-				core::Error::write(SQLException(msg));
-				return false;
-            }        
-            if(mysql_autocommit((MYSQL*)conn,0) != 0)
-            {
-                std::string msg = "";
-                msg = msg + " MySQL Server Error No. : '";
-                msg = msg + std::to_string(mysql_errno((MYSQL*)conn));
-                msg = msg + "' ";
-                msg = msg + mysql_error((MYSQL*)conn);                
-				core::Error::write(SQLException(msg));
-				return false;
-            }        
-			datconn = &dtcon;
-            return true;
+		
 	}
 }
 }

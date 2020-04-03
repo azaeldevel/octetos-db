@@ -45,9 +45,9 @@ endif
 
 if WITH_MARIADB
 liboctetos_db_mariadb_la_LDFLAGS= 
-liboctetos_db_mariadb_la_CFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS)
-liboctetos_db_mariadb_la_CPPFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS)
-liboctetos_db_mariadb_la_LIBDADD = $(MYSQLCLIENT_LIBS) $(OCTETOS_CORE_LIBS) 
+liboctetos_db_mariadb_la_CFLAGS = $(MARIADB_CFLAGS) $(OCTETOS_CORE_CFLAGS)
+liboctetos_db_mariadb_la_CPPFLAGS = $(MARIADB_CFLAGS) $(OCTETOS_CORE_CFLAGS)
+liboctetos_db_mariadb_la_LIBDADD = $(MARIADB_LIBS) $(OCTETOS_CORE_LIBS) 
 liboctetos_db_mariadb_la_SOURCES = clientdb-mariadb.cc 
 endif
 

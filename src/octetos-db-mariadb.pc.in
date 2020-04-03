@@ -6,8 +6,8 @@ datadir=@datadir@
 includedir=@prefix@/include
 
 Name: octetos-db
-Description: Libreria para Base de Dato de Octetos.
+Description: C++ library for Database Acces.
 Version: @VERSION@
 Requires: 
-Libs: -L${libdir} -loctetos-db-mariadb -loctetos-db -lmaridb -lconfig++
+Libs: -L${libdir} -loctetos-db-mariadb -loctetos-db -lmariadb -lconfig++
 Cflags: -I${includedir}

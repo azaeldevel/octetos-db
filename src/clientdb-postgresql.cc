@@ -205,7 +205,7 @@ namespace postgresql
 	core::Semver Connector::getVerionServer() const
 	{
 		core::Semver ver;
-		ver.set(PQserverVersion((PGconn*)conn),core::semver::ImportCode::PostgreSQL);
+		ver.set(PQserverVersion((PGconn*)conn),core::Semver::ImportCode::PostgreSQL);
 
 		return ver;
 	}
