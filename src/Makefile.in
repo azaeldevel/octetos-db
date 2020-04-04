@@ -115,8 +115,8 @@ DIST_COMMON = $(srcdir)/Makefile.am \
 	$(am__octetos_db_include_HEADERS_DIST) $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
-CONFIG_CLEAN_FILES = octetos-db-mysql.pc octetos-db-postgresql.pc \
-	octetos-db-maria.pc
+CONFIG_CLEAN_FILES = octetos-db.pc octetos-db-mysql.pc \
+	octetos-db-postgresql.pc octetos-db-maria.pc
 CONFIG_CLEAN_VPATH_FILES =
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
@@ -281,7 +281,8 @@ CTAGS = ctags
 am__DIST_COMMON = $(srcdir)/Makefile.in \
 	$(srcdir)/octetos-db-maria.pc.in \
 	$(srcdir)/octetos-db-mysql.pc.in \
-	$(srcdir)/octetos-db-postgresql.pc.in $(top_srcdir)/depcomp
+	$(srcdir)/octetos-db-postgresql.pc.in \
+	$(srcdir)/octetos-db.pc.in $(top_srcdir)/depcomp
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 ALL_LINGUAS = @ALL_LINGUAS@
@@ -469,7 +470,7 @@ AM_CFLAGS = \
 
 lib_LTLIBRARIES = liboctetos-db.la $(am__append_1) $(am__append_2) \
 	$(am__append_3) $(am__append_4)
-liboctetos_db_la_LDFLAGS = -z now $(am__append_5) $(am__append_6)
+liboctetos_db_la_LDFLAGS = $(am__append_5) $(am__append_6)
 liboctetos_db_la_LIBADD = $(OCTETOS_CORE_LIBS)
 liboctetos_db_la_SOURCES = clientdb.cc
 @WITH_MYSQL_TRUE@liboctetos_db_mysql_la_LDFLAGS = 
@@ -492,12 +493,17 @@ liboctetos_db_la_SOURCES = clientdb.cc
 @WITH_POSTGRESQL_TRUE@liboctetos_db_postgresql_la_CPPFLAGS = $(LIBPQ_CFLAGS) $(OCTETOS_CORE_CFLAGS)
 @WITH_POSTGRESQL_TRUE@liboctetos_db_postgresql_la_LIBDADD = $(LIBPQ_LIBS) $(OCTETOS_CORE_LIBS) 
 @WITH_POSTGRESQL_TRUE@liboctetos_db_postgresql_la_SOURCES = clientdb-postgresql.cc 
+includeHEADERS = clientdb.hh $(am__append_9) $(am__append_12) \
+	$(am__append_15)
+pkgDATA = octetos-db.pc $(am__append_7) $(am__append_10) \
+	$(am__append_13)
+extraDist = octetos-db.pc.in $(am__append_8) $(am__append_11) \
+	$(am__append_14)
 octetos_db_includedir = $(includedir)/octetos/db
-octetos_db_include_HEADERS = clientdb.hh $(am__append_9) \
-	$(am__append_12) $(am__append_15)
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = $(am__append_7) $(am__append_10) $(am__append_13)
-EXTRA_DIST = $(am__append_8) $(am__append_11) $(am__append_14)
+octetos_db_include_HEADERS = $(includeHEADERS)
+pkgconfig_DATA = $(pkgDATA)
+EXTRA_DIST = $(extraDist)
 all: all-am
 
 .SUFFIXES:
@@ -531,6 +537,8 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
+octetos-db.pc: $(top_builddir)/config.status $(srcdir)/octetos-db.pc.in
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 octetos-db-mysql.pc: $(top_builddir)/config.status $(srcdir)/octetos-db-mysql.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 octetos-db-postgresql.pc: $(top_builddir)/config.status $(srcdir)/octetos-db-postgresql.pc.in
