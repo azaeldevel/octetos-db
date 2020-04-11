@@ -24,7 +24,6 @@ if WITH_MARIADB
 lib_LTLIBRARIES += liboctetos-db-maria.la
 endif
 
-
 liboctetos_db_la_LDFLAGS = 
 if PLATFORM_WIN32
 liboctetos_db_la_LDFLAGS += -no-undefined
@@ -87,7 +86,6 @@ pkgDATA += octetos-db-postgresql.pc
 extraDist += octetos-db-postgresql.pc.in
 includeHEADERS += clientdb-postgresql.hh
 endif
-
 
 octetos_db_includedir = $(includedir)/octetos/db
 pkgconfigdir = $(libdir)/pkgconfig

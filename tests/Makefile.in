@@ -98,18 +98,10 @@ noinst_PROGRAMS = v1$(EXEEXT)
 @WITH_MYSQL_TRUE@am__append_6 = $(MYSQLCLIENT_CFLAGS) -DOCTETOS_MYSQL
 @WITH_MYSQL_TRUE@am__append_7 = $(MYSQLCLIENT_CFLAGS) -DOCTETOS_MYSQL
 @WITH_MYSQL_TRUE@am__append_8 = $(top_builddir)/src/liboctetos-db-mysql.la $(MYSQLCLIENT_LIBS) 
-@WITH_POSTGRESQL_TRUE@am__append_9 = $(LIBPQ_CFLAGS) -DOCTETOS_POSTGRESQL
-@WITH_POSTGRESQL_TRUE@am__append_10 = $(LIBPQ_CFLAGS) -DOCTETOS_POSTGRESQL
-@WITH_POSTGRESQL_TRUE@am__append_11 = $(LIBPQ_CFLAGS) -DOCTETOS_POSTGRESQL
-@WITH_POSTGRESQL_TRUE@am__append_12 = $(top_builddir)/src/liboctetos-db-postgresql.la $(LIBPQ_LIBS) 
-@WITH_MYSQL_TRUE@am__append_13 = $(MYSQLCLIENT_CFLAGS) -DOCTETOS_MYSQL
-@WITH_MYSQL_TRUE@am__append_14 = $(MYSQLCLIENT_CFLAGS) -DOCTETOS_MYSQL
-@WITH_MYSQL_TRUE@am__append_15 = $(MYSQLCLIENT_CFLAGS) -DOCTETOS_MYSQL
-@WITH_MYSQL_TRUE@am__append_16 = $(top_builddir)/src/liboctetos-db-mysql.la $(MYSQLCLIENT_LIBS) 
-@WITH_MARIADB_TRUE@am__append_17 = $(MARIADB_CFLAGS) -DOCTETOS_MARIADB
-@WITH_MARIADB_TRUE@am__append_18 = $(MARIADB_CFLAGS) -DOCTETOS_MARIADB
-@WITH_MARIADB_TRUE@am__append_19 = $(MARIADB_CFLAGS) -DOCTETOS_MARIADB
-@WITH_MARIADB_TRUE@am__append_20 = $(top_builddir)/src/liboctetos-db-maria.la $(MARIADB_LIBS) 
+@WITH_MARIADB_TRUE@am__append_9 = $(MARIADB_CFLAGS) -DOCTETOS_MARIADB
+@WITH_MARIADB_TRUE@am__append_10 = $(MARIADB_CFLAGS) -DOCTETOS_MARIADB
+@WITH_MARIADB_TRUE@am__append_11 = $(MARIADB_CFLAGS) -DOCTETOS_MARIADB
+@WITH_MARIADB_TRUE@am__append_12 = $(top_builddir)/src/liboctetos-db-maria.la $(MARIADB_LIBS) 
 subdir = tests
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -389,29 +381,18 @@ AM_CFLAGS = \
 	 -Wall\
 	 -g
 
-v0_CPPFLAGS = $(OCTETOS_CORE_CFLAGS) $(CUNIT_CFLAGS) \
-	-I$(top_srcdir)/src $(am__append_1) $(am__append_5)
-v0_CXXFLAGS = $(OCTETOS_CORE_CFLAGS) $(CUNIT_CFLAGS) \
-	-I$(top_srcdir)/src $(am__append_2) $(am__append_6)
-v0_CFLAGS = $(OCTETOS_CORE_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src \
-	$(am__append_3) $(am__append_7)
-v0_LDFLAGS = 
-v0_LDADD = $(OCTETOS_CORE_LIBS) $(CUNIT_LIBS) \
-	$(top_builddir)/src/liboctetos-db.la $(am__append_4) \
-	$(am__append_8)
-v0_SOURCES = v0.cc
 v1_CPPFLAGS = $(OCTETOS_CORE_CFLAGS) $(CUNIT_CFLAGS) \
-	-I$(top_srcdir)/src $(am__append_9) $(am__append_13) \
-	$(am__append_17)
+	-I$(top_srcdir)/src $(am__append_1) $(am__append_5) \
+	$(am__append_9)
 v1_CXXFLAGS = $(OCTETOS_CORE_CFLAGS) $(CUNIT_CFLAGS) \
-	-I$(top_srcdir)/src $(am__append_10) $(am__append_14) \
-	$(am__append_18)
+	-I$(top_srcdir)/src $(am__append_2) $(am__append_6) \
+	$(am__append_10)
 v1_CFLAGS = $(OCTETOS_CORE_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src \
-	$(am__append_11) $(am__append_15) $(am__append_19)
+	$(am__append_3) $(am__append_7) $(am__append_11)
 v1_LDFLAGS = 
 v1_LDADD = $(OCTETOS_CORE_LIBS) $(CUNIT_LIBS) \
-	$(top_builddir)/src/liboctetos-db.la $(am__append_12) \
-	$(am__append_16) $(am__append_20)
+	$(top_builddir)/src/liboctetos-db.la $(am__append_4) \
+	$(am__append_8) $(am__append_12)
 v1_SOURCES = v1.cc
 all: all-am
 
