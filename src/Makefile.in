@@ -91,21 +91,8 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
-@WITH_MYSQL_TRUE@am__append_1 = liboctetos-db-mysql.la
-@WITH_DBI_TRUE@am__append_2 = liboctetos-db-dbi.la 
-@WITH_POSTGRESQL_TRUE@am__append_3 = liboctetos-db-postgresql.la 
-@WITH_MARIADB_TRUE@am__append_4 = liboctetos-db-maria.la
-@PLATFORM_WIN32_TRUE@am__append_5 = -no-undefined
-@NATIVE_WIN32_TRUE@am__append_6 = -export-dynamic
-@WITH_MYSQL_TRUE@am__append_7 = octetos-db-mysql.pc
-@WITH_MYSQL_TRUE@am__append_8 = octetos-db-mysql.pc.in
-@WITH_MYSQL_TRUE@am__append_9 = clientdb-mysql.hh
-@WITH_MARIADB_TRUE@am__append_10 = octetos-db-maria.pc
-@WITH_MARIADB_TRUE@am__append_11 = octetos-db-maria.pc.in
-@WITH_MARIADB_TRUE@am__append_12 = clientdb-maria.hh
-@WITH_POSTGRESQL_TRUE@am__append_13 = octetos-db-postgresql.pc
-@WITH_POSTGRESQL_TRUE@am__append_14 = octetos-db-postgresql.pc.in
-@WITH_POSTGRESQL_TRUE@am__append_15 = clientdb-postgresql.hh
+@PLATFORM_WIN32_TRUE@@WITH_MYSQL_FALSE@am__append_1 = -no-undefined
+@NATIVE_WIN32_TRUE@@WITH_MYSQL_FALSE@am__append_2 = -export-dynamic
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -148,55 +135,33 @@ am__uninstall_files_from_dir = { \
 am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(pkgconfigdir)" \
 	"$(DESTDIR)$(octetos_db_includedir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
-liboctetos_db_dbi_la_LIBADD =
-am__liboctetos_db_dbi_la_SOURCES_DIST = clientdb-dbi.cc
-@WITH_DBI_TRUE@am_liboctetos_db_dbi_la_OBJECTS =  \
-@WITH_DBI_TRUE@	liboctetos_db_dbi_la-clientdb-dbi.lo
-liboctetos_db_dbi_la_OBJECTS = $(am_liboctetos_db_dbi_la_OBJECTS)
+liboctetos_db_maria_la_LIBADD =
+am__liboctetos_db_maria_la_SOURCES_DIST = clientdb-maria.cc \
+	clientdb.cc
+@WITH_MYSQL_TRUE@am_liboctetos_db_maria_la_OBJECTS =  \
+@WITH_MYSQL_TRUE@	liboctetos_db_maria_la-clientdb-maria.lo \
+@WITH_MYSQL_TRUE@	liboctetos_db_maria_la-clientdb.lo
+liboctetos_db_maria_la_OBJECTS = $(am_liboctetos_db_maria_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
-liboctetos_db_dbi_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
-	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
-	$(AM_CXXFLAGS) $(CXXFLAGS) $(liboctetos_db_dbi_la_LDFLAGS) \
-	$(LDFLAGS) -o $@
-@WITH_DBI_TRUE@am_liboctetos_db_dbi_la_rpath = -rpath $(libdir)
-liboctetos_db_maria_la_LIBADD =
-am__liboctetos_db_maria_la_SOURCES_DIST = clientdb-maria.cc \
-	clientdb.cc
-@WITH_MARIADB_TRUE@am_liboctetos_db_maria_la_OBJECTS =  \
-@WITH_MARIADB_TRUE@	liboctetos_db_maria_la-clientdb-maria.lo \
-@WITH_MARIADB_TRUE@	liboctetos_db_maria_la-clientdb.lo
-liboctetos_db_maria_la_OBJECTS = $(am_liboctetos_db_maria_la_OBJECTS)
 liboctetos_db_maria_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
 	$(AM_CXXFLAGS) $(CXXFLAGS) $(liboctetos_db_maria_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
-@WITH_MARIADB_TRUE@am_liboctetos_db_maria_la_rpath = -rpath $(libdir)
-liboctetos_db_mysql_la_LIBADD =
-am__liboctetos_db_mysql_la_SOURCES_DIST = clientdb-mysql.cc
-@WITH_MYSQL_TRUE@am_liboctetos_db_mysql_la_OBJECTS =  \
-@WITH_MYSQL_TRUE@	liboctetos_db_mysql_la-clientdb-mysql.lo
-liboctetos_db_mysql_la_OBJECTS = $(am_liboctetos_db_mysql_la_OBJECTS)
-liboctetos_db_mysql_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
+@WITH_MYSQL_TRUE@am_liboctetos_db_maria_la_rpath = -rpath $(libdir)
+am__DEPENDENCIES_1 =
+@WITH_MYSQL_FALSE@liboctetos_db_la_DEPENDENCIES =  \
+@WITH_MYSQL_FALSE@	$(am__DEPENDENCIES_1)
+am__liboctetos_db_la_SOURCES_DIST = clientdb.cc
+@WITH_MYSQL_FALSE@am_liboctetos_db_la_OBJECTS = clientdb.lo
+liboctetos_db_la_OBJECTS = $(am_liboctetos_db_la_OBJECTS)
+liboctetos_db_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
-	$(AM_CXXFLAGS) $(CXXFLAGS) $(liboctetos_db_mysql_la_LDFLAGS) \
+	$(AM_CXXFLAGS) $(CXXFLAGS) $(liboctetos_db_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
-@WITH_MYSQL_TRUE@am_liboctetos_db_mysql_la_rpath = -rpath $(libdir)
-liboctetos_db_postgresql_la_LIBADD =
-am__liboctetos_db_postgresql_la_SOURCES_DIST = clientdb-postgresql.cc \
-	clientdb.cc
-@WITH_POSTGRESQL_TRUE@am_liboctetos_db_postgresql_la_OBJECTS = liboctetos_db_postgresql_la-clientdb-postgresql.lo \
-@WITH_POSTGRESQL_TRUE@	liboctetos_db_postgresql_la-clientdb.lo
-liboctetos_db_postgresql_la_OBJECTS =  \
-	$(am_liboctetos_db_postgresql_la_OBJECTS)
-liboctetos_db_postgresql_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
-	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
-	$(AM_CXXFLAGS) $(CXXFLAGS) \
-	$(liboctetos_db_postgresql_la_LDFLAGS) $(LDFLAGS) -o $@
-@WITH_POSTGRESQL_TRUE@am_liboctetos_db_postgresql_la_rpath = -rpath \
-@WITH_POSTGRESQL_TRUE@	$(libdir)
+@WITH_MYSQL_FALSE@am_liboctetos_db_la_rpath = -rpath $(libdir)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -212,13 +177,9 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade =  \
-	./$(DEPDIR)/liboctetos_db_dbi_la-clientdb-dbi.Plo \
+am__depfiles_remade = ./$(DEPDIR)/clientdb.Plo \
 	./$(DEPDIR)/liboctetos_db_maria_la-clientdb-maria.Plo \
-	./$(DEPDIR)/liboctetos_db_maria_la-clientdb.Plo \
-	./$(DEPDIR)/liboctetos_db_mysql_la-clientdb-mysql.Plo \
-	./$(DEPDIR)/liboctetos_db_postgresql_la-clientdb-postgresql.Plo \
-	./$(DEPDIR)/liboctetos_db_postgresql_la-clientdb.Plo
+	./$(DEPDIR)/liboctetos_db_maria_la-clientdb.Plo
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -238,22 +199,18 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(liboctetos_db_dbi_la_SOURCES) \
-	$(liboctetos_db_maria_la_SOURCES) \
-	$(liboctetos_db_mysql_la_SOURCES) \
-	$(liboctetos_db_postgresql_la_SOURCES)
-DIST_SOURCES = $(am__liboctetos_db_dbi_la_SOURCES_DIST) \
-	$(am__liboctetos_db_maria_la_SOURCES_DIST) \
-	$(am__liboctetos_db_mysql_la_SOURCES_DIST) \
-	$(am__liboctetos_db_postgresql_la_SOURCES_DIST)
+SOURCES = $(liboctetos_db_maria_la_SOURCES) \
+	$(liboctetos_db_la_SOURCES)
+DIST_SOURCES = $(am__liboctetos_db_maria_la_SOURCES_DIST) \
+	$(am__liboctetos_db_la_SOURCES_DIST)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
 DATA = $(pkgconfig_DATA)
-am__octetos_db_include_HEADERS_DIST = clientdb.hh clientdb-mysql.hh \
-	clientdb-maria.hh clientdb-postgresql.hh
+am__octetos_db_include_HEADERS_DIST = clientdb.hh \
+	clientdb-postgresql.hh
 HEADERS = $(octetos_db_include_HEADERS)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 # Read a list of newline-separated strings from the standard input,
@@ -463,37 +420,38 @@ AM_CFLAGS = \
 	 -Wall\
 	 -g
 
-lib_LTLIBRARIES = $(am__append_1) $(am__append_2) $(am__append_3) \
-	$(am__append_4)
-liboctetos_db_a_LDFLAGS = $(am__append_5) $(am__append_6)
-liboctetos_db_a_LIBADD = $(OCTETOS_CORE_LIBS)
-liboctetos_db_a_SOURCES = clientdb.cc
+@WITH_MYSQL_FALSE@lib_LTLIBRARIES = liboctetos-db.la
+@WITH_MYSQL_TRUE@lib_LTLIBRARIES = liboctetos-db-maria.la
 @WITH_MYSQL_TRUE@liboctetos_db_mysql_la_LDFLAGS = 
 @WITH_MYSQL_TRUE@liboctetos_db_mysql_la_CFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS)
 @WITH_MYSQL_TRUE@liboctetos_db_mysql_la_CPPFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS)
 @WITH_MYSQL_TRUE@liboctetos_db_mysql_la_LIBDADD = $(MYSQLCLIENT_LIBS) $(OCTETOS_CORE_LIBS) 
-@WITH_MYSQL_TRUE@liboctetos_db_mysql_la_SOURCES = clientdb-mysql.cc 
-@WITH_MARIADB_TRUE@liboctetos_db_maria_la_LDFLAGS = 
-@WITH_MARIADB_TRUE@liboctetos_db_maria_la_CFLAGS = $(MARIADB_CFLAGS) $(OCTETOS_CORE_CFLAGS)
-@WITH_MARIADB_TRUE@liboctetos_db_maria_la_CPPFLAGS = $(MARIADB_CFLAGS) $(OCTETOS_CORE_CFLAGS)
-@WITH_MARIADB_TRUE@liboctetos_db_maria_la_LIBDADD = $(MARIADB_LIBS) $(OCTETOS_CORE_LIBS) 
-@WITH_MARIADB_TRUE@liboctetos_db_maria_la_SOURCES = clientdb-maria.cc clientdb.cc
-@WITH_DBI_TRUE@liboctetos_db_dbi_la_LDFLAGS = 
-@WITH_DBI_TRUE@liboctetos_db_dbi_la_CFLAGS = $(DBI_CFLAGS) $(OCTETOS_CORE_CC_CFLAGS)
-@WITH_DBI_TRUE@liboctetos_db_dbi_la_CPPFLAGS = $(DBI_CFLAGS) $(OCTETOS_CORE_CC_CFLAGS)
-@WITH_DBI_TRUE@liboctetos_db_dbi_la_LIBDADD = $(DBI_LIBS) $(OCTETOS_CORE_CC_LIBS) liboctetos-db.la 
-@WITH_DBI_TRUE@liboctetos_db_dbi_la_SOURCES = clientdb-dbi.cc
-@WITH_POSTGRESQL_TRUE@liboctetos_db_postgresql_la_LDFLAGS = 
-@WITH_POSTGRESQL_TRUE@liboctetos_db_postgresql_la_CFLAGS = $(LIBPQ_CFLAGS) $(OCTETOS_CORE_CFLAGS)
-@WITH_POSTGRESQL_TRUE@liboctetos_db_postgresql_la_CPPFLAGS = $(LIBPQ_CFLAGS) $(OCTETOS_CORE_CFLAGS)
-@WITH_POSTGRESQL_TRUE@liboctetos_db_postgresql_la_LIBDADD = $(LIBPQ_LIBS) $(OCTETOS_CORE_LIBS) 
-@WITH_POSTGRESQL_TRUE@liboctetos_db_postgresql_la_SOURCES = clientdb-postgresql.cc clientdb.cc
-includeHEADERS = clientdb.hh $(am__append_9) $(am__append_12) \
-	$(am__append_15)
-pkgDATA = octetos-db.pc $(am__append_7) $(am__append_10) \
-	$(am__append_13)
-extraDist = octetos-db.pc.in $(am__append_8) $(am__append_11) \
-	$(am__append_14)
+@WITH_MYSQL_TRUE@liboctetos_db_mysql_la_SOURCES = clientdb-mysql.cc clientdb.cc
+@WITH_MYSQL_TRUE@liboctetos_db_maria_la_LDFLAGS = 
+@WITH_MYSQL_TRUE@liboctetos_db_maria_la_CFLAGS = $(MARIADB_CFLAGS) $(OCTETOS_CORE_CFLAGS)
+@WITH_MYSQL_TRUE@liboctetos_db_maria_la_CPPFLAGS = $(MARIADB_CFLAGS) $(OCTETOS_CORE_CFLAGS)
+@WITH_MYSQL_TRUE@liboctetos_db_maria_la_LIBDADD = $(MARIADB_LIBS) $(OCTETOS_CORE_LIBS) 
+@WITH_MYSQL_TRUE@liboctetos_db_maria_la_SOURCES = clientdb-maria.cc clientdb.cc
+@WITH_MYSQL_TRUE@liboctetos_db_dbi_la_LDFLAGS = 
+@WITH_MYSQL_TRUE@liboctetos_db_dbi_la_CFLAGS = $(DBI_CFLAGS) $(OCTETOS_CORE_CC_CFLAGS)
+@WITH_MYSQL_TRUE@liboctetos_db_dbi_la_CPPFLAGS = $(DBI_CFLAGS) $(OCTETOS_CORE_CC_CFLAGS)
+@WITH_MYSQL_TRUE@liboctetos_db_dbi_la_LIBDADD = $(DBI_LIBS) $(OCTETOS_CORE_CC_LIBS)
+@WITH_MYSQL_TRUE@liboctetos_db_dbi_la_SOURCES = clientdb-dbi.cc clientdb.cc
+@WITH_MYSQL_TRUE@liboctetos_db_postgresql_la_LDFLAGS = 
+@WITH_MYSQL_TRUE@liboctetos_db_postgresql_la_CFLAGS = $(LIBPQ_CFLAGS) $(OCTETOS_CORE_CFLAGS)
+@WITH_MYSQL_TRUE@liboctetos_db_postgresql_la_CPPFLAGS = $(LIBPQ_CFLAGS) $(OCTETOS_CORE_CFLAGS)
+@WITH_MYSQL_TRUE@liboctetos_db_postgresql_la_LIBDADD = $(LIBPQ_LIBS) $(OCTETOS_CORE_LIBS) 
+@WITH_MYSQL_TRUE@liboctetos_db_postgresql_la_SOURCES = clientdb-postgresql.cc clientdb.cc
+@WITH_MYSQL_FALSE@liboctetos_db_la_LDFLAGS = $(am__append_1) \
+@WITH_MYSQL_FALSE@	$(am__append_2)
+@WITH_MYSQL_FALSE@liboctetos_db_la_LIBADD = $(OCTETOS_CORE_LIBS)
+@WITH_MYSQL_FALSE@liboctetos_db_la_SOURCES = clientdb.cc
+@WITH_MYSQL_FALSE@pkgDATA = octetos-db.pc
+@WITH_MYSQL_TRUE@pkgDATA = octetos-db-postgresql.pc
+@WITH_MYSQL_FALSE@extraDist = octetos-db.pc.in
+@WITH_MYSQL_TRUE@extraDist = octetos-db-postgresql.pc.in
+@WITH_MYSQL_FALSE@includeHEADERS = clientdb.hh
+@WITH_MYSQL_TRUE@includeHEADERS = clientdb-postgresql.hh
 octetos_db_includedir = $(includedir)/octetos/db
 pkgconfigdir = $(libdir)/pkgconfig
 octetos_db_include_HEADERS = $(includeHEADERS)
@@ -576,17 +534,11 @@ clean-libLTLIBRARIES:
 	  rm -f $${locs}; \
 	}
 
-liboctetos-db-dbi.la: $(liboctetos_db_dbi_la_OBJECTS) $(liboctetos_db_dbi_la_DEPENDENCIES) $(EXTRA_liboctetos_db_dbi_la_DEPENDENCIES) 
-	$(AM_V_CXXLD)$(liboctetos_db_dbi_la_LINK) $(am_liboctetos_db_dbi_la_rpath) $(liboctetos_db_dbi_la_OBJECTS) $(liboctetos_db_dbi_la_LIBADD) $(LIBS)
-
 liboctetos-db-maria.la: $(liboctetos_db_maria_la_OBJECTS) $(liboctetos_db_maria_la_DEPENDENCIES) $(EXTRA_liboctetos_db_maria_la_DEPENDENCIES) 
 	$(AM_V_CXXLD)$(liboctetos_db_maria_la_LINK) $(am_liboctetos_db_maria_la_rpath) $(liboctetos_db_maria_la_OBJECTS) $(liboctetos_db_maria_la_LIBADD) $(LIBS)
 
-liboctetos-db-mysql.la: $(liboctetos_db_mysql_la_OBJECTS) $(liboctetos_db_mysql_la_DEPENDENCIES) $(EXTRA_liboctetos_db_mysql_la_DEPENDENCIES) 
-	$(AM_V_CXXLD)$(liboctetos_db_mysql_la_LINK) $(am_liboctetos_db_mysql_la_rpath) $(liboctetos_db_mysql_la_OBJECTS) $(liboctetos_db_mysql_la_LIBADD) $(LIBS)
-
-liboctetos-db-postgresql.la: $(liboctetos_db_postgresql_la_OBJECTS) $(liboctetos_db_postgresql_la_DEPENDENCIES) $(EXTRA_liboctetos_db_postgresql_la_DEPENDENCIES) 
-	$(AM_V_CXXLD)$(liboctetos_db_postgresql_la_LINK) $(am_liboctetos_db_postgresql_la_rpath) $(liboctetos_db_postgresql_la_OBJECTS) $(liboctetos_db_postgresql_la_LIBADD) $(LIBS)
+liboctetos-db.la: $(liboctetos_db_la_OBJECTS) $(liboctetos_db_la_DEPENDENCIES) $(EXTRA_liboctetos_db_la_DEPENDENCIES) 
+	$(AM_V_CXXLD)$(liboctetos_db_la_LINK) $(am_liboctetos_db_la_rpath) $(liboctetos_db_la_OBJECTS) $(liboctetos_db_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -594,12 +546,9 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/liboctetos_db_dbi_la-clientdb-dbi.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/clientdb.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/liboctetos_db_maria_la-clientdb-maria.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/liboctetos_db_maria_la-clientdb.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/liboctetos_db_mysql_la-clientdb-mysql.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/liboctetos_db_postgresql_la-clientdb-postgresql.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/liboctetos_db_postgresql_la-clientdb.Plo@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -628,13 +577,6 @@ am--depfiles: $(am__depfiles_remade)
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
 
-liboctetos_db_dbi_la-clientdb-dbi.lo: clientdb-dbi.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(liboctetos_db_dbi_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT liboctetos_db_dbi_la-clientdb-dbi.lo -MD -MP -MF $(DEPDIR)/liboctetos_db_dbi_la-clientdb-dbi.Tpo -c -o liboctetos_db_dbi_la-clientdb-dbi.lo `test -f 'clientdb-dbi.cc' || echo '$(srcdir)/'`clientdb-dbi.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/liboctetos_db_dbi_la-clientdb-dbi.Tpo $(DEPDIR)/liboctetos_db_dbi_la-clientdb-dbi.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='clientdb-dbi.cc' object='liboctetos_db_dbi_la-clientdb-dbi.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(liboctetos_db_dbi_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o liboctetos_db_dbi_la-clientdb-dbi.lo `test -f 'clientdb-dbi.cc' || echo '$(srcdir)/'`clientdb-dbi.cc
-
 liboctetos_db_maria_la-clientdb-maria.lo: clientdb-maria.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(liboctetos_db_maria_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT liboctetos_db_maria_la-clientdb-maria.lo -MD -MP -MF $(DEPDIR)/liboctetos_db_maria_la-clientdb-maria.Tpo -c -o liboctetos_db_maria_la-clientdb-maria.lo `test -f 'clientdb-maria.cc' || echo '$(srcdir)/'`clientdb-maria.cc
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/liboctetos_db_maria_la-clientdb-maria.Tpo $(DEPDIR)/liboctetos_db_maria_la-clientdb-maria.Plo
@@ -648,27 +590,6 @@ liboctetos_db_maria_la-clientdb.lo: clientdb.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='clientdb.cc' object='liboctetos_db_maria_la-clientdb.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(liboctetos_db_maria_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o liboctetos_db_maria_la-clientdb.lo `test -f 'clientdb.cc' || echo '$(srcdir)/'`clientdb.cc
-
-liboctetos_db_mysql_la-clientdb-mysql.lo: clientdb-mysql.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(liboctetos_db_mysql_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT liboctetos_db_mysql_la-clientdb-mysql.lo -MD -MP -MF $(DEPDIR)/liboctetos_db_mysql_la-clientdb-mysql.Tpo -c -o liboctetos_db_mysql_la-clientdb-mysql.lo `test -f 'clientdb-mysql.cc' || echo '$(srcdir)/'`clientdb-mysql.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/liboctetos_db_mysql_la-clientdb-mysql.Tpo $(DEPDIR)/liboctetos_db_mysql_la-clientdb-mysql.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='clientdb-mysql.cc' object='liboctetos_db_mysql_la-clientdb-mysql.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(liboctetos_db_mysql_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o liboctetos_db_mysql_la-clientdb-mysql.lo `test -f 'clientdb-mysql.cc' || echo '$(srcdir)/'`clientdb-mysql.cc
-
-liboctetos_db_postgresql_la-clientdb-postgresql.lo: clientdb-postgresql.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(liboctetos_db_postgresql_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT liboctetos_db_postgresql_la-clientdb-postgresql.lo -MD -MP -MF $(DEPDIR)/liboctetos_db_postgresql_la-clientdb-postgresql.Tpo -c -o liboctetos_db_postgresql_la-clientdb-postgresql.lo `test -f 'clientdb-postgresql.cc' || echo '$(srcdir)/'`clientdb-postgresql.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/liboctetos_db_postgresql_la-clientdb-postgresql.Tpo $(DEPDIR)/liboctetos_db_postgresql_la-clientdb-postgresql.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='clientdb-postgresql.cc' object='liboctetos_db_postgresql_la-clientdb-postgresql.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(liboctetos_db_postgresql_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o liboctetos_db_postgresql_la-clientdb-postgresql.lo `test -f 'clientdb-postgresql.cc' || echo '$(srcdir)/'`clientdb-postgresql.cc
-
-liboctetos_db_postgresql_la-clientdb.lo: clientdb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(liboctetos_db_postgresql_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT liboctetos_db_postgresql_la-clientdb.lo -MD -MP -MF $(DEPDIR)/liboctetos_db_postgresql_la-clientdb.Tpo -c -o liboctetos_db_postgresql_la-clientdb.lo `test -f 'clientdb.cc' || echo '$(srcdir)/'`clientdb.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/liboctetos_db_postgresql_la-clientdb.Tpo $(DEPDIR)/liboctetos_db_postgresql_la-clientdb.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='clientdb.cc' object='liboctetos_db_postgresql_la-clientdb.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(liboctetos_db_postgresql_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o liboctetos_db_postgresql_la-clientdb.lo `test -f 'clientdb.cc' || echo '$(srcdir)/'`clientdb.cc
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -846,12 +767,9 @@ clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 	mostlyclean-am
 
 distclean: distclean-am
-		-rm -f ./$(DEPDIR)/liboctetos_db_dbi_la-clientdb-dbi.Plo
+		-rm -f ./$(DEPDIR)/clientdb.Plo
 	-rm -f ./$(DEPDIR)/liboctetos_db_maria_la-clientdb-maria.Plo
 	-rm -f ./$(DEPDIR)/liboctetos_db_maria_la-clientdb.Plo
-	-rm -f ./$(DEPDIR)/liboctetos_db_mysql_la-clientdb-mysql.Plo
-	-rm -f ./$(DEPDIR)/liboctetos_db_postgresql_la-clientdb-postgresql.Plo
-	-rm -f ./$(DEPDIR)/liboctetos_db_postgresql_la-clientdb.Plo
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -898,12 +816,9 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-		-rm -f ./$(DEPDIR)/liboctetos_db_dbi_la-clientdb-dbi.Plo
+		-rm -f ./$(DEPDIR)/clientdb.Plo
 	-rm -f ./$(DEPDIR)/liboctetos_db_maria_la-clientdb-maria.Plo
 	-rm -f ./$(DEPDIR)/liboctetos_db_maria_la-clientdb.Plo
-	-rm -f ./$(DEPDIR)/liboctetos_db_mysql_la-clientdb-mysql.Plo
-	-rm -f ./$(DEPDIR)/liboctetos_db_postgresql_la-clientdb-postgresql.Plo
-	-rm -f ./$(DEPDIR)/liboctetos_db_postgresql_la-clientdb.Plo
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
@@ -943,6 +858,14 @@ uninstall-am: uninstall-libLTLIBRARIES \
 
 .PRECIOUS: Makefile
 
+@WITH_MYSQL_TRUE@else if WITH_DBI
+@WITH_MYSQL_TRUE@else if WITH_POSTGRESQL
+@WITH_MYSQL_TRUE@else if WITH_MARIADB
+@WITH_MYSQL_TRUE@else if WITH_MARIADB
+@WITH_MYSQL_TRUE@else if WITH_DBI
+@WITH_MYSQL_TRUE@else if WITH_POSTGRESQL
+@WITH_MYSQL_TRUE@else if WITH_MARIADB
+@WITH_MYSQL_TRUE@else if WITH_POSTGRESQL
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

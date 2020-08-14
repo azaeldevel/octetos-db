@@ -11,81 +11,77 @@ AM_CFLAGS =\
 	 -g
 
 
-lib_LTLIBRARIES = 
+
+
 if WITH_MYSQL
-lib_LTLIBRARIES += liboctetos-db-mysql.la
-endif
-if WITH_DBI
-lib_LTLIBRARIES += liboctetos-db-dbi.la 
-endif
-if WITH_POSTGRESQL
-lib_LTLIBRARIES += liboctetos-db-postgresql.la 
-endif
-if WITH_MARIADB
-lib_LTLIBRARIES += liboctetos-db-maria.la
+lib_LTLIBRARIES = liboctetos-db-mysql.la
+else if WITH_DBI
+lib_LTLIBRARIES = liboctetos-db-dbi.la 
+else if WITH_POSTGRESQL
+lib_LTLIBRARIES = liboctetos-db-postgresql.la 
+else if WITH_MARIADB
+lib_LTLIBRARIES = liboctetos-db-maria.la
+else
+lib_LTLIBRARIES = liboctetos-db.la
 endif
 
-liboctetos_db_a_LDFLAGS = 
-if PLATFORM_WIN32
-liboctetos_db_a_LDFLAGS += -no-undefined
-endif
-if NATIVE_WIN32
-liboctetos_db_a_LDFLAGS += -export-dynamic
-endif
-liboctetos_db_a_LIBADD = $(OCTETOS_CORE_LIBS)
-liboctetos_db_a_SOURCES = clientdb.cc
+
 
 if WITH_MYSQL
 liboctetos_db_mysql_la_LDFLAGS= 
 liboctetos_db_mysql_la_CFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS)
 liboctetos_db_mysql_la_CPPFLAGS = $(MYSQLCLIENT_CFLAGS) $(OCTETOS_CORE_CFLAGS)
 liboctetos_db_mysql_la_LIBDADD = $(MYSQLCLIENT_LIBS) $(OCTETOS_CORE_LIBS) 
-liboctetos_db_mysql_la_SOURCES = clientdb-mysql.cc 
-endif
-
-if WITH_MARIADB
+liboctetos_db_mysql_la_SOURCES = clientdb-mysql.cc clientdb.cc
+else if WITH_MARIADB
 liboctetos_db_maria_la_LDFLAGS= 
 liboctetos_db_maria_la_CFLAGS = $(MARIADB_CFLAGS) $(OCTETOS_CORE_CFLAGS)
 liboctetos_db_maria_la_CPPFLAGS = $(MARIADB_CFLAGS) $(OCTETOS_CORE_CFLAGS)
 liboctetos_db_maria_la_LIBDADD = $(MARIADB_LIBS) $(OCTETOS_CORE_LIBS) 
 liboctetos_db_maria_la_SOURCES = clientdb-maria.cc clientdb.cc
-endif
-
-if WITH_DBI
+else if WITH_DBI
 liboctetos_db_dbi_la_LDFLAGS= 
 liboctetos_db_dbi_la_CFLAGS = $(DBI_CFLAGS) $(OCTETOS_CORE_CC_CFLAGS)
 liboctetos_db_dbi_la_CPPFLAGS = $(DBI_CFLAGS) $(OCTETOS_CORE_CC_CFLAGS)
-liboctetos_db_dbi_la_LIBDADD = $(DBI_LIBS) $(OCTETOS_CORE_CC_LIBS) liboctetos-db.la 
-liboctetos_db_dbi_la_SOURCES = clientdb-dbi.cc
-endif
-
-if WITH_POSTGRESQL
+liboctetos_db_dbi_la_LIBDADD = $(DBI_LIBS) $(OCTETOS_CORE_CC_LIBS)
+liboctetos_db_dbi_la_SOURCES = clientdb-dbi.cc clientdb.cc
+else if WITH_POSTGRESQL
 liboctetos_db_postgresql_la_LDFLAGS= 
 liboctetos_db_postgresql_la_CFLAGS = $(LIBPQ_CFLAGS) $(OCTETOS_CORE_CFLAGS)
 liboctetos_db_postgresql_la_CPPFLAGS = $(LIBPQ_CFLAGS) $(OCTETOS_CORE_CFLAGS)
 liboctetos_db_postgresql_la_LIBDADD = $(LIBPQ_LIBS) $(OCTETOS_CORE_LIBS) 
 liboctetos_db_postgresql_la_SOURCES = clientdb-postgresql.cc clientdb.cc
+else 
+liboctetos_db_la_LDFLAGS = 
+if PLATFORM_WIN32
+liboctetos_db_la_LDFLAGS += -no-undefined
+endif
+if NATIVE_WIN32
+liboctetos_db_la_LDFLAGS += -export-dynamic
+endif
+liboctetos_db_la_LIBADD = $(OCTETOS_CORE_LIBS)
+liboctetos_db_la_SOURCES = clientdb.cc
 endif
 
 
+
+
+if WITH_MYSQL
+pkgDATA = octetos-db-mysql.pc
+extraDist = octetos-db-mysql.pc.in
+includeHEADERS = clientdb-mysql.hh
+else if WITH_MARIADB
+pkgDATA = octetos-db-maria.pc
+extraDist = octetos-db-maria.pc.in
+includeHEADERS = clientdb-maria.hh
+else if WITH_POSTGRESQL
+pkgDATA = octetos-db-postgresql.pc
+extraDist = octetos-db-postgresql.pc.in
+includeHEADERS = clientdb-postgresql.hh
+else 
 includeHEADERS = clientdb.hh
 pkgDATA = octetos-db.pc
 extraDist = octetos-db.pc.in
-
-if WITH_MYSQL
-pkgDATA += octetos-db-mysql.pc
-extraDist += octetos-db-mysql.pc.in
-includeHEADERS += clientdb-mysql.hh
-endif
-if WITH_MARIADB
-pkgDATA += octetos-db-maria.pc
-extraDist += octetos-db-maria.pc.in
-includeHEADERS += clientdb-maria.hh
-endif
-if WITH_POSTGRESQL
-pkgDATA += octetos-db-postgresql.pc
-extraDist += octetos-db-postgresql.pc.in
-includeHEADERS += clientdb-postgresql.hh
 endif
 
 octetos_db_includedir = $(includedir)/octetos/db
