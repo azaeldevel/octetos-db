@@ -10,7 +10,8 @@ AM_CFLAGS =\
 	 -Wall\
 	 -g
 
-lib_LTLIBRARIES = liboctetos-db.la
+
+lib_LTLIBRARIES = 
 if WITH_MYSQL
 lib_LTLIBRARIES += liboctetos-db-mysql.la
 endif
@@ -24,15 +25,15 @@ if WITH_MARIADB
 lib_LTLIBRARIES += liboctetos-db-maria.la
 endif
 
-liboctetos_db_la_LDFLAGS = 
+liboctetos_db_a_LDFLAGS = 
 if PLATFORM_WIN32
-liboctetos_db_la_LDFLAGS += -no-undefined
+liboctetos_db_a_LDFLAGS += -no-undefined
 endif
 if NATIVE_WIN32
-liboctetos_db_la_LDFLAGS += -export-dynamic
+liboctetos_db_a_LDFLAGS += -export-dynamic
 endif
-liboctetos_db_la_LIBADD = $(OCTETOS_CORE_LIBS)
-liboctetos_db_la_SOURCES = clientdb.cc
+liboctetos_db_a_LIBADD = $(OCTETOS_CORE_LIBS)
+liboctetos_db_a_SOURCES = clientdb.cc
 
 if WITH_MYSQL
 liboctetos_db_mysql_la_LDFLAGS= 
@@ -47,7 +48,7 @@ liboctetos_db_maria_la_LDFLAGS=
 liboctetos_db_maria_la_CFLAGS = $(MARIADB_CFLAGS) $(OCTETOS_CORE_CFLAGS)
 liboctetos_db_maria_la_CPPFLAGS = $(MARIADB_CFLAGS) $(OCTETOS_CORE_CFLAGS)
 liboctetos_db_maria_la_LIBDADD = $(MARIADB_LIBS) $(OCTETOS_CORE_LIBS) 
-liboctetos_db_maria_la_SOURCES = clientdb-maria.cc 
+liboctetos_db_maria_la_SOURCES = clientdb-maria.cc clientdb.cc
 endif
 
 if WITH_DBI
@@ -63,7 +64,7 @@ liboctetos_db_postgresql_la_LDFLAGS=
 liboctetos_db_postgresql_la_CFLAGS = $(LIBPQ_CFLAGS) $(OCTETOS_CORE_CFLAGS)
 liboctetos_db_postgresql_la_CPPFLAGS = $(LIBPQ_CFLAGS) $(OCTETOS_CORE_CFLAGS)
 liboctetos_db_postgresql_la_LIBDADD = $(LIBPQ_LIBS) $(OCTETOS_CORE_LIBS) 
-liboctetos_db_postgresql_la_SOURCES = clientdb-postgresql.cc 
+liboctetos_db_postgresql_la_SOURCES = clientdb-postgresql.cc clientdb.cc
 endif
 
 

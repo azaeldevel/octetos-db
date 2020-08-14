@@ -1,2 +1,13 @@
+2020-08-11 Azael Reyes <azael.devel@gmail.com>
+v1.3.0
+	- Se elimina el componete de API Abstracta
+		Ya que los componente se compila e instalan por separado al intentar 
+		instalar el segundo la API Abstracta se tendria que sobre escriber 
+		ocurriendo un coflicto. Aun que sigen estando diponible a travez
+		de los restantes componetes.
 
-
+2020-08-11 Azael Reyes <azael.devel@gmail.com>
+v1.2.2
+	- Soporta para MySQL
+	- Soporte Para Postgresql
+	- API abstracta

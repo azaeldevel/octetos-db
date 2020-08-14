@@ -51,7 +51,7 @@ int clean(void)
 #ifdef OCTETOS_POSTGRESQL
 void testPostgreSQL()
 {
-	octetos::db::postgresql::Datconnect dat("192.168.0.101",5432,"sysapp_v0001","sysapp","123456");
+	octetos::db::postgresql::Datconnect dat("localhost",5432,"sysapp_alpha","sysapp","123456");
 	bool flag = false;
 	octetos::db::postgresql::Connector connector;
 	flag = connector.connect(dat);
@@ -62,7 +62,7 @@ void testPostgreSQL()
     }
     else
     {
-        //printf("Fallo '%s' .\n",dat.toString().c_str());
+        printf("Fallo '%s' .\n",dat.toString().c_str());
 		CU_ASSERT(false);
     }
 
@@ -76,7 +76,7 @@ void testPostgreSQL()
 	}
 	while(rs.nextRow())
 	{
-		//std::cout << rs->getString(0) << "," << rs->getString(1) << "\n";
+		//std::cout << rs.getString(0) << "," << rs.getString(1) << "\n";
 	}
 
 	connector.close();
