@@ -450,7 +450,7 @@ namespace mariadb
             if (conn == NULL)
             {
                 std::string msg = "";
-                msg = msg + " MySQL Server Error No. : '";
+                msg = msg + " MariaDB Server Error No. : '";
                 msg = msg + std::to_string(mysql_errno((MYSQL*)conn));
                 msg = msg + "' ";
                 msg = msg + mysql_error((MYSQL*)conn);  
@@ -460,7 +460,7 @@ namespace mariadb
             if (mysql_real_connect((MYSQL*)conn, dtcon.getHost().c_str(), dtcon.getUser().c_str(), dtcon.getPassword().c_str(),dtcon.getDatabase().c_str(),dtcon.getPort(), NULL, 0) == NULL)
             {
                 std::string msg = "";
-                msg = msg + " MySQL Server Error No. : '";
+                msg = msg + " MariaDB Server Error No. : '";
                 msg = msg + std::to_string(mysql_errno((MYSQL*)conn));
                 msg = msg + "' ";
                 msg = msg + mysql_error((MYSQL*)conn);
@@ -470,7 +470,7 @@ namespace mariadb
             if(mysql_autocommit((MYSQL*)conn,0) != 0)
             {
                 std::string msg = "";
-                msg = msg + " MySQL Server Error No. : '";
+                msg = msg + " MariaDB Server Error No. : '";
                 msg = msg + std::to_string(mysql_errno((MYSQL*)conn));
                 msg = msg + "' ";
                 msg = msg + mysql_error((MYSQL*)conn);                

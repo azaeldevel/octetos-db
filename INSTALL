@@ -9,7 +9,52 @@ are permitted in any medium without royalty provided the copyright
 notice and this notice are preserved.  This file is offered as-is,
 without warranty of any kind.
 
-Basic Installation
+INSTALATION INSTRUCTIONS.
+========================
+
+Dependencies
+============
+Firts you need install all dependencies
+    octetos-core        https://github.com/azaeldevel/octetos-core
+    CUnit               if you need testing.
+
+octetos-db could by instaled y three diferents way:
+	1.- Gentoo based metode
+	2.- Arch Linux base metode.
+	3.- Source base metode.
+
+Gentoo based metode
+===================
+You can install la guru repository then just installl the pakage like any oter pacakge.
+dev-libs/octetos-db is divided in three packges, tha abstract layer, the mariadb componeny and postgresql component.
+	sudo layman -a guru        
+    emerge -a dev-libs/octetos-db-mariadb
+    emerge -a dev-libs/octetos-db-postgresql
+
+Arch Linux base metode
+======================
+You can build octetos-db from AUR repository, a posble way is:
+	cd ~
+    mkdir aur-octetos
+    cd aur-octetos        
+	git clone https://aur.archlinux.org/octetos-db.git
+    cd octetos-db
+    makepkg -si
+	cd ~
+    mkdir aur-octetos
+    cd aur-octetos        
+	git clone https://aur.archlinux.org/octetos-db-maria.git
+    cd octetos-db-maria
+    makepkg -si
+	cd ~
+    mkdir aur-octetos
+    cd aur-octetos        
+	git clone https://aur.archlinux.org/octetos-db-postgresql.git
+    cd octetos-db-postgresql
+    makepkg -si
+
+
+Source base metode
 ==================
 
    Briefly, the shell command './configure && make && make install'
@@ -317,6 +362,12 @@ workaround:
 
    'configure' recognizes the following options to control how it
 operates.
+
+--with-abstract     Build the abstract layer component.
+--with-mariadb      Build the mariadb component.
+--with-postgresql   Build the postgresql component.
+--with--tests       Build testing.
+
 
 '--help'
 '-h'
