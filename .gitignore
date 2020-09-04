@@ -17,3 +17,6 @@ missing
 octetos-db.anjuta
 .anjuta/
 .anjuta_sym_db.db
+Makefile.in
+src/Makefile.in
+tests/Makefile.in

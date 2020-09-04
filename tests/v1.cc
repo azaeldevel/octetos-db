@@ -51,6 +51,7 @@ int clean(void)
 #ifdef OCTETOS_POSTGRESQL
 void testPostgreSQL()
 {
+	//std::cout << "testPostgreSQL : Step 1 \n";
 	octetos::db::postgresql::Datconnect dat("localhost",5432,"sysapp_alpha","sysapp","123456");
 	bool flag = false;
 	octetos::db::postgresql::Connector connector;
@@ -70,7 +71,10 @@ void testPostgreSQL()
 	octetos::db::postgresql::Datresult rs;
 	if(!connector.execute(queryStr,rs))
 	{
-		std::cout << "'" << queryStr << "' no retorno resultado\n";
+		if(octetos::core::Error::check())
+		{
+			std::cout << "Error: " << octetos::core::Error::get().describe();
+		}
 		CU_ASSERT(false);
 		return;
 	}

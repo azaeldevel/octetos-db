@@ -3,6 +3,7 @@
 
 
 #include <octetos/core/Artifact.hh>
+#include <octetos/core/Error.hh>
 #include <vector>
 #include <string>
 
