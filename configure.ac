@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl Created by Anjuta application wizard.
 
-AC_INIT(octetos-db,1.3.1-alpha,zael.devel@gmail.com)
+AC_INIT(octetos-db,1.3.2-alpha,zael.devel@gmail.com)
 AC_CANONICAL_SYSTEM
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE
@@ -50,15 +50,17 @@ case $host_os in
 esac
 AM_CONDITIONAL(PLATFORM_WIN32, test x"$platform_win32" = "xyes")
 AM_CONDITIONAL(NATIVE_WIN32, test x"$native_win32" = "xyes")
-
-
 LT_INIT([win32-dll])
+
+
+
+
 
 PKG_CHECK_MODULES(OCTETOS_CORE, octetos-core)
 
 
 
-SLECTED_COMP=0
+SLECTED_COMP=None
 
 AM_CONDITIONAL(WITH_ABSTRACT, test x"$with_abstract" = "xyes")
 AC_ARG_WITH([abstract], AS_HELP_STRING([--with-abstract], [Compilando con soporte para Pruebas.]))
@@ -83,7 +85,7 @@ fi
 AM_CONDITIONAL(WITH_POSTGRESQL, test x"$with_postgresql" = "xyes")
 AC_ARG_WITH([postgresql], AS_HELP_STRING([--with-postgresql], [Compilando con soporte para PostgreSQL.]))
 if test "x$with_postgresql" = "xyes"; then
-   	PKG_CHECK_MODULES(LIBPQ,libpq)
+   	PKG_CHECK_MODULES(LIBPQ,libpq,,[PKG_CHECK_MODULES(LIBPQ,libpqxx)])
 	SLECTED_COMP=PostgreSQL
 fi
 
@@ -94,33 +96,15 @@ if test "x$with_dbi" = "xyes"; then
 	SLECTED_COMP=DBI
 fi
 
-case $SLECTED_COMP in
-  Abstract)
-    
-    ;;
-  MySQL)
-    
-    ;;
-  MariaDB)
-    
-    ;;
-  PostgreSQL)
-    
-    ;;
-
-  DBI)
-    
-    ;;
-  *)
+if [$SLECTED_COMP == None]; then
 	echo "Use : "
-  	echo "	Use --with-abstract			Para el componete de API Abstracta."
-  	echo "	Use --with-mysql			Para el componete de MySQL."
-  	echo "	Use --with-mariadb			Para el componete de MariaDB"
-  	echo "	Use --with-postrgresql		Para el componete de PostgreSQL"
+  	echo "	--with-abstract			Para el componete de API Abstracta."
+  	echo "	--with-mysql			Para el componete de MySQL."
+  	echo "	--with-mariadb			Para el componete de MariaDB"
+  	echo "	--with-postrgresql		Para el componete de PostgreSQL"
   	#echo "Use --with-dbi				Para el componete de DBI."
   	AC_MSG_ERROR([Se deve incar un componete para inicar la compilacion])
-    ;;
-esac
+fi
 
 
 
