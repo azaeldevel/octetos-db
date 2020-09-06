@@ -1,17 +1,14 @@
 AUTOMAKE_OPTIONS=foreign 1.4
 
-
 AM_CPPFLAGS = \
 	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\" \
 	-DPACKAGE_SRC_DIR=\""$(srcdir)"\" \
 	-DPACKAGE_DATA_DIR=\""$(pkgdatadir)"\" \
-	$(CPPUNIT_CFLAGS)
+	$(CUNIT_CFLAGS)
 
 AM_CFLAGS =\
 	 -Wall\
 	 -g
-
-
 
 
 if WITH_ABSTRACT
@@ -64,9 +61,6 @@ if WITH_ABSTRACT
 liboctetos_db_la_LIBADD = $(OCTETOS_CORE_LIBS)
 liboctetos_db_la_SOURCES = clientdb.cc
 endif
-
-
-
 
 if WITH_ABSTRACT
 includeHEADERS = clientdb.hh
