@@ -319,26 +319,26 @@ namespace postgresql
         }        
 	bool Connector::execute(const std::string& str,db::Datresult& rs)
 	{
-		std::cout << "Connector::execute : Step 1 \n";
+		//std::cout << "Connector::execute : Step 1 \n";
 		PGresult *res = PQexec((PGconn*)conn, str.c_str());
 		if(res == NULL)
 		{
-			std::cout << "Connector::execute : Step 1.1 \n";
+			//std::cout << "Connector::execute : Step 1.1 \n";
 			std::string msg = "Fail on proceses query.";
 			SQLException ex(msg);
 			octetos::core::Error::write(ex);
 			return false;
 		}
-		if (PQresultStatus(res) != PGRES_COMMAND_OK)
+		if (PQresultStatus(res) != PGRES_TUPLES_OK)
 		{
-			std::cout << "Connector::execute : Step 2.1 \n";
+			//std::cout << "Connector::execute : Step 2.1 \n";
 			std::string msg = PQerrorMessage((PGconn*)conn);
 			SQLException ex(msg);
 			octetos::core::Error::write(ex);
 			return false;
 		}
 		
-		std::cout << "Connector::execute : Step 3 \n";
+		//std::cout << "Connector::execute : Step 3 \n";
 		rs = (Result)res;
 		return true;
 	}
