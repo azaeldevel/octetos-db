@@ -1,0 +1,3 @@
+- Rescribir sistema de mensajes de error en forma de excepciones.
+- Agregar Lectura de version del servidor.
+- Activar 'make check'
