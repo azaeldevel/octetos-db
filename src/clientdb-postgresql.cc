@@ -231,18 +231,21 @@ namespace postgresql
         }        
         bool Connector::begin()
         {
-			Datresult rs;
-            return execute("BEGIN",rs); 
+			PGresult *res = PQexec((PGconn*)conn, "BEGIN");
+            if (PQresultStatus(res) == PGRES_COMMAND_OK)  return true;
+			return false; 
         }
         bool Connector::rollback()
         {
-			Datresult rs;
-            return execute("ROLLBACK",rs); 
+			PGresult *res = PQexec((PGconn*)conn, "ROLLBACK");
+            if (PQresultStatus(res) == PGRES_COMMAND_OK)  return true;
+			return false; 
         }        
         bool Connector::commit()
-        {
-			Datresult rs;
-            return execute("COMMIT",rs); 
+        { 
+			PGresult *res = PQexec((PGconn*)conn, "COMMIT"); 
+			if (PQresultStatus(res) == PGRES_COMMAND_OK)  return true;
+			return false;
         }
 
 		RowNumber Connector::insert(const std::string& str,db::Datresult& rs)
