@@ -244,34 +244,40 @@ namespace postgresql
 			Datresult rs;
             return execute("COMMIT",rs); 
         }
-        RowNumber Connector::insert(const std::string& str,db::Datresult& rs)
+
+		RowNumber Connector::insert(const std::string& str,db::Datresult& rs)
         {
         	PGresult *res = PQexec((PGconn*)conn, str.c_str()); 
-            	if (res == NULL)
-            	{
-                	throw SQLExceptionQuery("La consuta de insert fallo.");        
-                	PQclear(res);
-            	}        
+            if (res == NULL)
+            {       
+                PQclear(res);
+				std::string msg = "La consuta de insert fallo: ";
+				msg += PQerrorMessage((PGconn*)conn);
+                throw SQLExceptionQuery(msg); 
+            }        
 			
 			res = PQexec((PGconn*)conn, "SELECT lastval()"); 
-            	if (res == NULL)
-            	{
+            if (res == NULL)
+            {
                 	throw SQLExceptionQuery("No se retorno datos.");        
                 	PQclear(res);
-            	}
-            	int ID = 0;
-            	int countR = PQntuples(res);
-            	if(countR == 1)
-            	{
-			ID = std::stoi(PQgetvalue(res, 0, 0));
-		}
-		else
-		{
-			ID = 0;
-			//throw SQLException("la funcion 'lastval()' no retorno resultdo.");
-		}
-		rs = (Result)res;
-            	return ID;		
+            }
+            int ID = 0;
+            int countR = PQntuples(res);
+            if(countR == 1)
+            {
+				ID = std::stoi(PQgetvalue(res, 0, 0));
+			}
+			else if(countR > 1)
+			{
+				throw SQLException("la funcion 'lastval()' retorno muchos resutlados.");
+			}
+			else
+			{
+				throw SQLException("la funcion 'lastval()' no retorno resultdo.");
+			}
+			rs = (Result)res;
+            return ID;		
         }
         bool Connector::connect(const db::Datconnect& conection)
         {

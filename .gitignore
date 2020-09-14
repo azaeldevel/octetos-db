@@ -20,3 +20,4 @@ octetos-db.anjuta
 Makefile.in
 src/Makefile.in
 tests/Makefile.in
+test-driver

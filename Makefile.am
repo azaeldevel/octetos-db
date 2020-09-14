@@ -1,7 +1,7 @@
 AUTOMAKE_OPTIONS=foreign 1.4
 
 
-SUBDIRS = src po
+SUBDIRS = src
 if WITH_TESTS
 SUBDIRS += tests
 endif

@@ -67,6 +67,24 @@ void testPostgreSQL()
 		CU_ASSERT(false);
     }
 
+	octetos::db::postgresql::Datresult rsInsert;
+	std::string insertStr = "INSERT INTO \"Persons\"(name1) values('n1')";
+	octetos::db::RowNumber id = 0;
+	try
+	{
+		id = connector.insert(insertStr,rsInsert);
+	}
+	catch(octetos::db::SQLException e)
+	{
+		std::cout << "Fallo en insert '" << insertStr << "'\n";
+		CU_ASSERT(false);
+	}
+	//connector.commit ();
+	
+	//std::cout << "ID generated : " << id << "\n";
+	CU_ASSERT(true);
+
+
 	std::string queryStr = "select * from \"Persons\"";
 	octetos::db::postgresql::Datresult rs;
 	if(!connector.execute(queryStr,rs))
@@ -78,9 +96,10 @@ void testPostgreSQL()
 		CU_ASSERT(false);
 		return;
 	}
+	std::cout << "\n\n";
 	while(rs.nextRow())
 	{
-		//std::cout << rs.getString(0) << "," << rs.getString(1) << "\n";
+		std::cout << rs.getString(0) << "," << rs.getString(1) << "\n";
 	}
 
 	connector.close();
