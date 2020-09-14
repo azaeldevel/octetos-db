@@ -67,7 +67,7 @@ void testPostgreSQL()
 		CU_ASSERT(false);
     }
 
-	std::string queryStr = "select * from Versions";
+	std::string queryStr = "select * from \"Persons\"";
 	octetos::db::postgresql::Datresult rs;
 	if(!connector.execute(queryStr,rs))
 	{
