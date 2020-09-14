@@ -1,3 +1,9 @@
 - Rescribir sistema de mensajes de error en forma de excepciones.
 - Agregar Lectura de version del servidor.
 - Activar 'make check'
+- Eliminar enlazado dinamico de las pruebas.
+- Activar las transacciones
+	- fucnione para habilitar/desabilitar por default
+	- Fuciones para habilitar/desabilitar
+- getString en minúsculas.
+- Agregar attibuto de version de servidor
