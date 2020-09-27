@@ -1,14 +1,4 @@
-AUTOMAKE_OPTIONS=foreign 1.4
 
-AM_CPPFLAGS = \
-	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\" \
-	-DPACKAGE_SRC_DIR=\""$(srcdir)"\" \
-	-DPACKAGE_DATA_DIR=\""$(pkgdatadir)"\" \
-	$(CUNIT_CFLAGS)
-
-AM_CFLAGS =\
-	 -Wall\
-	 -g
 
 check_PROGRAMS = v1
 TESTS= $(check_PROGRAMS)
@@ -20,17 +10,10 @@ v1_CFLAGS = $(OCTETOS_CORE_CFLAGS) $(CUNIT_CFLAGS) -I$(top_srcdir)/src
 v1_LDFLAGS = 
 v1_LDADD = $(OCTETOS_CORE_LIBS) $(CUNIT_LIBS)
 if WITH_POSTGRESQL
-v1_SOURCES += $(top_builddir)/src/clientdb-postgresql.cc $(top_builddir)/src/clientdb.cc
 v1_CPPFLAGS += $(LIBPQ_CFLAGS) -DOCTETOS_POSTGRESQL
 v1_CXXFLAGS += $(LIBPQ_CFLAGS) -DOCTETOS_POSTGRESQL
 v1_CFLAGS += $(LIBPQ_CFLAGS) -DOCTETOS_POSTGRESQL
-v1_LDADD +=  $(LIBPQ_LIBS) 
-endif
-if WITH_MYSQL
-v1_CPPFLAGS += $(MYSQLCLIENT_CFLAGS) -DOCTETOS_MYSQL
-v1_CXXFLAGS += $(MYSQLCLIENT_CFLAGS) -DOCTETOS_MYSQL
-v1_CFLAGS += $(MYSQLCLIENT_CFLAGS) -DOCTETOS_MYSQL
-v1_LDADD += $(top_builddir)/src/liboctetos-db-mysql.la $(MYSQLCLIENT_LIBS) 
+v1_LDADD +=  $(LIBPQ_LIBS) $(top_builddir)/../libocteos-db.la $(top_builddir)/../libocteos-db-postgresql.la
 endif
 if WITH_MARIADB
 v1_CPPFLAGS += $(MARIADB_CFLAGS) -DOCTETOS_MARIADB

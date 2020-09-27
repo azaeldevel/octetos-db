@@ -1,9 +1,8 @@
 
 
-AC_INIT(octetos-db,1.3.10-alpha,azael.devel@gmail.com)
+AC_INIT(octetos-db,1.4.0-alpha,azael.devel@gmail.com)
 AC_CONFIG_AUX_DIR([.])
-AC_CONFIG_HEADERS([config.h])
-AM_INIT_AUTOMAKE([gnu subdir-objects])
+AM_INIT_AUTOMAKE
 
 
 AM_PROG_AS
@@ -77,6 +76,9 @@ if test "x$with_postgresql" = "xyes"; then
 fi
 if test "x$with_mariadb" = "xyes"; then
    	AC_CONFIG_SUBDIRS([mariadb])
+fi
+if test "x$with_tests" = "xyes"; then
+	AC_CONFIG_SUBDIRS([tests])
 fi
 
 AC_OUTPUT
