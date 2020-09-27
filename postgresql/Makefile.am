@@ -4,8 +4,8 @@ AUTOMAKE_OPTIONS=foreign 1.4
 lib_LTLIBRARIES = liboctetos-db-postgresql.la
 
 
-liboctetos_db_postgresql_la_CXXFLAGS = -I$(top_srcdir)/../abstract
-liboctetos_db_postgresql_la_LIBADD = $(OCTETOS_CORE_LIBS)
+liboctetos_db_postgresql_la_CXXFLAGS = $(LIBPQ_CFLAGS) -I$(top_srcdir)/../abstract 
+liboctetos_db_postgresql_la_LIBADD = $(OCTETOS_CORE_LIBS) 
 liboctetos_db_postgresql_la_SOURCES = clientdb-postgresql.cc
 
 

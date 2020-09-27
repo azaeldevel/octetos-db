@@ -18,7 +18,6 @@ AC_PROG_LIBTOOL
 
 
 
-OCTETOS_DB_DIR=$(pwd)
 
 
 PKG_CHECK_MODULES(OCTETOS_CORE, octetos-core)
@@ -75,6 +74,9 @@ AC_CONFIG_SUBDIRS([abstract])
 
 if test "x$with_postgresql" = "xyes"; then
    	AC_CONFIG_SUBDIRS([postgresql])
+fi
+if test "x$with_mariadb" = "xyes"; then
+   	AC_CONFIG_SUBDIRS([mariadb])
 fi
 
 AC_OUTPUT
