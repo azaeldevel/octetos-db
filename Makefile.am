@@ -3,6 +3,10 @@ AUTOMAKE_OPTIONS=foreign 1.4
 
 SUBDIRS = abstract
 
+if WITH_POSTGRESQL
+SUBDIRS += postgresql
+endif
+
 if WITH_TESTS
 SUBDIRS += tests
 endif

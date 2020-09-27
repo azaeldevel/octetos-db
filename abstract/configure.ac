@@ -1,6 +1,6 @@
 
 
-AC_INIT(octetos-db,1.3.10-alpha,azael.devel@gmail.com)
+AC_INIT(octetos-db-abstract,1.3.10-alpha,azael.devel@gmail.com)
 AC_CONFIG_AUX_DIR([.])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE
@@ -16,12 +16,6 @@ AC_PROG_MAKE_SET
 AC_PROG_LIBTOOL
 
 
-
-
-
-
-
-PKG_CHECK_MODULES(OCTETOS_CORE, octetos-core)
 
 
 
