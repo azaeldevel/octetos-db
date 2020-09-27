@@ -1,6 +1,6 @@
 
 
-AC_INIT(octetos-db,1.4.0-alpha,azael.devel@gmail.com)
+AC_INIT(octetos-db,1.4.1-alpha,azael.devel@gmail.com)
 AC_CONFIG_AUX_DIR([.])
 AM_INIT_AUTOMAKE
 
