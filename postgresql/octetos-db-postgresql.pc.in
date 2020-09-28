@@ -9,5 +9,5 @@ Name: octetos-db-postgreql
 Description: C++ library for Database Acces.
 Version: @VERSION@
 Requires: octetos-db
-Libs: -L${libdir} -loctetos-db-postgresql -loctetos-db -lconfig++
+Libs: -L${libdir} -loctetos-db-postgresql
 Cflags: -I${includedir}

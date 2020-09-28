@@ -8,6 +8,6 @@ includedir=@prefix@/include/octetos/db
 Name: octetos-db
 Description: C++ library for Database Acces.
 Version: @VERSION@
-Requires: 
-Libs: -L${libdir} -loctetos-db -lconfig++
+Requires: octetos-core config++
+Libs: -L${libdir} -loctetos-db
 Cflags: -I${includedir}

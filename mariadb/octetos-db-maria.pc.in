@@ -9,5 +9,5 @@ Name: octetos-db
 Description: C++ library for Database Acces.
 Version: @VERSION@
 Requires: octetos-db
-Libs: -L${libdir} -loctetos-db-maria -loctetos-db -lmariadb -lconfig++
+Libs: -L${libdir} -loctetos-db-maria
 Cflags: -I${includedir}
