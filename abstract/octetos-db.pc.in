@@ -1,9 +1,9 @@
 prefix=@prefix@
 exec_prefix=@exec_prefix@
-libdir=@prefix@/lib
+libdir=@libdir@
 datarootdir=@datarootdir@
 datadir=@datadir@
-includedir=@prefix@/include
+includedir=@prefix@/include/octetos/db
 
 Name: octetos-db
 Description: C++ library for Database Acces.

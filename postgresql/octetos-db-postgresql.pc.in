@@ -1,13 +1,13 @@
 prefix=@prefix@
 exec_prefix=@exec_prefix@
-libdir=@prefix@/lib
+libdir=@libdir@
 datarootdir=@datarootdir@
 datadir=@datadir@
-includedir=@prefix@/include
+includedir=@prefix@/include/octetos/db
 
 Name: octetos-db-postgreql
 Description: C++ library for Database Acces.
 Version: @VERSION@
-Requires: 
+Requires: octetos-db
 Libs: -L${libdir} -loctetos-db-postgresql -loctetos-db -lconfig++
 Cflags: -I${includedir}
