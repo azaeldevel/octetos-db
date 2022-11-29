@@ -1,0 +1,103 @@
+# depslib dependency file v1.0
+1646282261 source:c:\users\azael\documents\develop\octetos\db\src\inet_pton.cc
+	<arpa/inet.h>
+	<Winsock2.h>
+	"inet_pton.hh"
+
+1646282577 c:\users\azael\documents\develop\octetos\db\src\inet_pton.hh
+	"clientdb.hh"
+
+1669687899 c:\users\azael\documents\develop\octetos\db\src\clientdb.hh
+	<octetos/core/Artifact.hh>
+	<octetos/core/Error.hh>
+	<Artifact.hh>
+	<Error.hh>
+	<ws2tcpip.h>
+	<vector>
+	<string>
+
+1649963238 c:\users\azael\documents\develop\octetos\core\src\artifact.hh
+	"Artifact-v2.hh"
+	"Version-v2.hh"
+	"Licence.hh"
+
+1649989793 c:\users\azael\documents\develop\octetos\core\src\version.hh
+	"Version-v2.hh"
+	"Version-v3.hh"
+
+1655160268 c:\users\azael\documents\develop\octetos\core\src\error.hh
+	<string>
+	<exception>
+	"Exception.hh"
+
+1649935532 c:\users\azael\documents\develop\octetos\core\src\exception.hh
+	"Exception-v2.hh"
+	"Exception-v3.hh"
+
+1669618675 c:\users\azael\documents\develop\octetos\core\src\core.hh
+	<string>
+	<execinfo.h>
+	<csignal>
+	"defines.hh"
+
+1649985533 c:\users\azael\documents\develop\octetos\core\src\defines.hh
+
+1649979585 c:\users\azael\documents\develop\octetos\core\src\object.hh
+	"defines.hh"
+
+1655862911 c:\users\azael\documents\develop\octetos\core\src\common.h
+
+1638326553 c:\users\azael\documents\develop\octetos\core\src\semver-lexer.h
+	"common.h"
+
+1650086121 c:\users\azael\documents\develop\octetos\core\src\licence.hh
+	<iostream>
+	<iomanip>
+	<cstdlib>
+	<libconfig.h++>
+	"Version.hh"
+
+1669687546 source:c:\users\azael\documents\develop\octetos\db\src\clientdb.cc
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<sstream>
+	<arpa/inet.h>
+	"config.h"
+	<Winsock2.h>
+	"config-win.h"
+	"clientdb.hh"
+	"inet_pton.hh"
+
+1655160268 c:\users\azael\documents\develop\octetos\core\src\artifact-v2.hh
+	"Version-v2.hh"
+	"Licence.hh"
+
+1669618675 c:\users\azael\documents\develop\octetos\core\src\version-v2.hh
+	<string>
+	<vector>
+	"Error.hh"
+	"Buffer.hh"
+	"common.h"
+
+1650866524 c:\users\azael\documents\develop\octetos\core\src\exception-v2.hh
+	<exception>
+	"core.hh"
+	"Object.hh"
+
+1669618674 c:\users\azael\documents\develop\octetos\core\src\exception-v3.hh
+	<exception>
+	"core.hh"
+
+1649988070 c:\users\azael\documents\develop\octetos\core\src\buffer.hh
+	<list>
+	"defines.hh"
+
+1650169826 c:\users\azael\documents\develop\octetos\core\src\version-v3.hh
+	<string>
+	<vector>
+	"Exception-v3.hh"
+	"Buffer.hh"
+
+1669687596 c:\users\azael\documents\develop\octetos\db\src\config-win.h
+
