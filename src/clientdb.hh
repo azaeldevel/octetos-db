@@ -11,6 +11,7 @@
 #else
     #error "Plataforma desconocida"
 #endif
+
 #include <vector>
 #include <string>
 
